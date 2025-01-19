@@ -7,6 +7,7 @@ const icons = {
   index: "house-chimney",
   map: "map",
   information: "circle-info",
+  explore: "compass",
 };
 
 export default function TabLayout() {

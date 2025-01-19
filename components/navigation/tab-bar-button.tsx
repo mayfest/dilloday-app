@@ -1,6 +1,7 @@
 import { FontAwesome6 } from "@expo/vector-icons";
-import { Image, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import BalloonLogo from "@/assets/images/balloonlogopink.svg";
+
 interface TabBarButtonProps {
   focused: boolean;
   icon: string;
@@ -44,7 +45,7 @@ export default function TabBarButton({
       onLongPress={onLongPress}
     >
       {home ? (
-        <BalloonLogo width={32} height={32} />
+        <BalloonLogo width={34} height={34} />
       ) : (
         <FontAwesome6
           name={icon}
