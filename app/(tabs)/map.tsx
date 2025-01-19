@@ -214,10 +214,8 @@ class AnimatedViews extends React.Component<any, any> {
     panX.addListener(this.onPanXChange);
     panY.addListener(this.onPanYChange);
 
-    // Stop any existing animations
     region.stopAnimation();
 
-    // Create the interpolated values first
     const latitudeInputRange = markers.map((m: any, i: any) => i * SNAP_WIDTH);
     const latitudeOutputRange = markers.map((m: any) => m.coordinate.latitude);
     const longitudeInputRange = markers.map((m: any, i: any) => i * SNAP_WIDTH);
@@ -225,7 +223,6 @@ class AnimatedViews extends React.Component<any, any> {
       (m: any) => m.coordinate.longitude
     );
 
-    // Then set up the animation
     region
       .timing({
         latitude: scrollX.interpolate({
@@ -246,7 +243,7 @@ class AnimatedViews extends React.Component<any, any> {
     const { panX, panY, region } = this.state;
     panX.removeListener(this.onPanXChange);
     panY.removeListener(this.onPanYChange);
-    region.stopAnimation(); // Make sure to stop any running animations
+    region.stopAnimation();
   }
 
   onStartShouldSetPanResponder = (e: any) => {
@@ -255,7 +252,6 @@ class AnimatedViews extends React.Component<any, any> {
     const topOfMainWindow = ITEM_PREVIEW_HEIGHT + panY.__getValue();
     const topOfTap = screen.height - pageY;
 
-    // Add threshold to prevent accidental triggers
     const threshold = 20;
     return Math.abs(topOfTap - topOfMainWindow) < threshold;
   };
@@ -288,11 +284,8 @@ class AnimatedViews extends React.Component<any, any> {
 
       if (!shouldBeMovable) {
         const { coordinate } = markers[index];
-
-        // Stop any existing animations before starting new ones
         region.stopAnimation();
 
-        // Create interpolated values first
         const latitudeInput = scrollY.interpolate({
           inputRange: [0, BREAKPOINT1],
           outputRange: [

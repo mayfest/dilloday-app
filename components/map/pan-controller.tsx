@@ -190,7 +190,6 @@ class PanController extends React.Component<any, any> {
     const value = anim._value;
     let targetValue = value;
 
-    // Calculate target based on current position and bounds
     if (value < min) {
       targetValue = min;
     } else if (value > max) {
@@ -199,7 +198,6 @@ class PanController extends React.Component<any, any> {
       targetValue = Math.round(value / snapSpacing) * snapSpacing;
     }
 
-    // Use a single spring animation for all cases
     Animated.spring(anim, {
       toValue: targetValue,
       velocity: velocity,
@@ -229,13 +227,11 @@ class PanController extends React.Component<any, any> {
     velocity: any,
     overshoot: any
   ) {
-    // Remove any existing listener
     if (this._listener) {
       anim.removeListener(this._listener);
       this._listener = null;
     }
 
-    // Use spring animation instead of decay
     const targetValue = Math.max(
       min,
       Math.min(max, anim._value + velocity * 200)
@@ -257,7 +253,6 @@ class PanController extends React.Component<any, any> {
     velocity: any,
     spacing: any
   ) {
-    // Remove any existing listener
     if (this._listener) {
       anim.removeListener(this._listener);
       this._listener = null;
@@ -267,7 +262,6 @@ class PanController extends React.Component<any, any> {
     endX = Math.max(endX, min);
     endX = Math.min(endX, max);
 
-    // Rather than using decay + spring, just use spring directly
     Animated.spring(anim, {
       toValue: endX,
       velocity: velocity,
@@ -331,7 +325,6 @@ class PanController extends React.Component<any, any> {
 
   componentWillUnmount() {
     if (this._listener) {
-      // Clean up any remaining animation listeners
       const { panX, panY } = this.props;
       if (panX && this._listener) panX.removeListener(this._listener);
       if (panY && this._listener) panY.removeListener(this._listener);
