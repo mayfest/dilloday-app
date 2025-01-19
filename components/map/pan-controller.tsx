@@ -1,31 +1,39 @@
 import React from "react";
-
 import { View, Animated, PanResponder } from "react-native";
 
 class PanController extends React.Component<any, any> {
   _responder: any = null;
   _listener: any = null;
   _direction: any = null;
-  deceleration;
+  _animating: boolean = false;
+  deceleration: number;
 
   constructor(props: any) {
     super(props);
 
     this.deceleration = 0.997;
-    if (
-      props.momentumDecayConfig &&
-      this.props.momentumDecayConfig.deceleration
-    ) {
-      this.deceleration = this.props.momentumDecayConfig.deceleration;
+    if (props.momentumDecayConfig?.deceleration) {
+      this.deceleration = props.momentumDecayConfig.deceleration;
     }
+
     this._responder = PanResponder.create({
       onStartShouldSetPanResponder: this.props.onStartShouldSetPanResponder,
       onMoveShouldSetPanResponder: this.props.onMoveShouldSetPanResponder,
+
       onPanResponderGrant: (...args) => {
+        if (this._animating) {
+          // Stop any ongoing animations when user touches
+          const { panX, panY } = this.props;
+          panX && panX.stopAnimation();
+          panY && panY.stopAnimation();
+          this._animating = false;
+        }
+
         if (this.props.onPanResponderGrant) {
           this.props.onPanResponderGrant(...args);
         }
-        let { panX, panY, horizontal, vertical, xMode, yMode } = this.props;
+
+        const { panX, panY, horizontal, vertical, xMode, yMode } = this.props;
 
         this.handleResponderGrant(panX, xMode);
         this.handleResponderGrant(panY, yMode);
@@ -34,8 +42,8 @@ class PanController extends React.Component<any, any> {
           horizontal && !vertical ? "x" : vertical && !horizontal ? "y" : null;
       },
 
-      onPanResponderMove: (_, { dx, dy, x0, y0 }) => {
-        let {
+      onPanResponderMove: (_, { dx, dy, x0, y0, moveX, moveY }) => {
+        const {
           panX,
           panY,
           xBounds,
@@ -48,7 +56,7 @@ class PanController extends React.Component<any, any> {
           directionLockDistance,
         } = this.props;
 
-        if (!this._direction) {
+        if (!this._direction && (horizontal || vertical)) {
           const dx2 = dx * dx;
           const dy2 = dy * dy;
           if (dx2 + dy2 > directionLockDistance) {
@@ -66,20 +74,18 @@ class PanController extends React.Component<any, any> {
         }
 
         if (horizontal && (!lockDirection || dir === "x")) {
-          let [xMin, xMax] = xBounds;
-
+          const [xMin, xMax] = xBounds;
           this.handleResponderMove(panX, dx, xMin, xMax, overshootX);
         }
 
         if (vertical && (!lockDirection || dir === "y")) {
-          let [yMin, yMax] = yBounds;
-
+          const [yMin, yMax] = yBounds;
           this.handleResponderMove(panY, dy, yMin, yMax, overshootY);
         }
       },
 
-      onPanResponderRelease: (_, { vx, vy, dx, dy }) => {
-        let {
+      onPanResponderRelease: (_, { dx, dy, vx, vy }) => {
+        const {
           panX,
           panY,
           xBounds,
@@ -95,16 +101,15 @@ class PanController extends React.Component<any, any> {
           snapSpacingY,
         } = this.props;
 
-        let cancel = false;
-
         const dir = this._direction;
+        let cancel = false;
 
         if (this.props.onRelease) {
           cancel = this.props.onRelease({ vx, vy, dx, dy }) === false;
         }
 
         if (!cancel && horizontal && (!lockDirection || dir === "x")) {
-          let [xMin, xMax] = xBounds;
+          const [xMin, xMax] = xBounds;
           if (this.props.onReleaseX) {
             cancel = this.props.onReleaseX({ vx, vy, dx, dy }) === false;
           }
@@ -113,7 +118,7 @@ class PanController extends React.Component<any, any> {
               panX,
               xMin,
               xMax,
-              vx,
+              vx * 1000, // Convert to pixels per second
               overshootX,
               xMode,
               snapSpacingX
@@ -121,7 +126,7 @@ class PanController extends React.Component<any, any> {
         }
 
         if (!cancel && vertical && (!lockDirection || dir === "y")) {
-          let [yMin, yMax] = yBounds;
+          const [yMin, yMax] = yBounds;
           if (this.props.onReleaseY) {
             cancel = this.props.onReleaseY({ vx, vy, dx, dy }) === false;
           }
@@ -130,7 +135,7 @@ class PanController extends React.Component<any, any> {
               panY,
               yMin,
               yMax,
-              vy,
+              vy * 1000,
               overshootY,
               yMode,
               snapSpacingY
@@ -152,12 +157,14 @@ class PanController extends React.Component<any, any> {
   ) {
     let val = anim._offset + delta;
 
+    // Enforce stricter bounds checking
     if (val > max) {
       switch (overshoot) {
         case "spring":
-          val = max + (val - max) / this.props.overshootReductionFactor;
+          val = max + (val - max) / 3;
           break;
         case "clamp":
+        default:
           val = max;
           break;
       }
@@ -165,13 +172,15 @@ class PanController extends React.Component<any, any> {
     if (val < min) {
       switch (overshoot) {
         case "spring":
-          val = min - (min - val) / this.props.overshootReductionFactor;
+          val = min - (min - val) / 3;
           break;
         case "clamp":
+        default:
           val = min;
           break;
       }
     }
+
     val = val - anim._offset;
     anim.setValue(val);
   }
@@ -186,25 +195,53 @@ class PanController extends React.Component<any, any> {
     snapSpacing: any
   ) {
     anim.flattenOffset();
-
-    const value = anim._value;
+    let value = anim._value;
     let targetValue = value;
 
-    if (value < min) {
-      targetValue = min;
-    } else if (value > max) {
-      targetValue = max;
-    } else if (mode === "snap" && snapSpacing) {
-      targetValue = Math.round(value / snapSpacing) * snapSpacing;
+    if (mode === "snap" && snapSpacing) {
+      // Calculate nearest snap point
+      const currentIndex = Math.round(value / snapSpacing);
+      const velocityThreshold = 500; // pixels per second
+
+      if (Math.abs(velocity) > velocityThreshold) {
+        // If velocity is high enough, move to next/previous snap point
+        const direction = Math.sign(velocity);
+        targetValue = (currentIndex + direction) * snapSpacing;
+      } else {
+        // Otherwise snap to nearest point
+        targetValue = currentIndex * snapSpacing;
+      }
     }
 
+    // Ensure we stay within bounds
+    targetValue = Math.max(min, Math.min(max, targetValue));
+
+    this._animating = true;
     Animated.spring(anim, {
       toValue: targetValue,
       velocity: velocity,
-      tension: 50,
-      friction: 7,
+      tension: 65,
+      friction: 10,
       useNativeDriver: false,
-    }).start();
+    }).start(() => {
+      this._animating = false;
+      // Ensure we ended up at a valid snap point
+      if (mode === "snap" && snapSpacing) {
+        const finalValue = anim._value;
+        const nearestSnap = Math.round(finalValue / snapSpacing) * snapSpacing;
+        if (Math.abs(finalValue - nearestSnap) > 0.1) {
+          this.handleResponderRelease(
+            anim,
+            min,
+            max,
+            0,
+            overshoot,
+            mode,
+            snapSpacing
+          );
+        }
+      }
+    });
   }
 
   handleResponderGrant(anim: any, mode: any) {
@@ -220,114 +257,18 @@ class PanController extends React.Component<any, any> {
     }
   }
 
-  handleMomentumScroll(
-    anim: any,
-    min: any,
-    max: any,
-    velocity: any,
-    overshoot: any
-  ) {
-    if (this._listener) {
-      anim.removeListener(this._listener);
-      this._listener = null;
-    }
-
-    const targetValue = Math.max(
-      min,
-      Math.min(max, anim._value + velocity * 200)
-    );
-
-    Animated.spring(anim, {
-      toValue: targetValue,
-      velocity: velocity,
-      tension: 50,
-      friction: 7,
-      useNativeDriver: false,
-    }).start();
-  }
-
-  handleSnappedScroll(
-    anim: any,
-    min: any,
-    max: any,
-    velocity: any,
-    spacing: any
-  ) {
-    if (this._listener) {
-      anim.removeListener(this._listener);
-      this._listener = null;
-    }
-
-    let endX = this.momentumCenter(anim._value, velocity, spacing);
-    endX = Math.max(endX, min);
-    endX = Math.min(endX, max);
-
-    Animated.spring(anim, {
-      toValue: endX,
-      velocity: velocity,
-      tension: 50,
-      friction: 7,
-      useNativeDriver: false,
-    }).start();
-  }
-
-  closestCenter(x: any, spacing: any) {
-    const plus = x % spacing < spacing / 2 ? 0 : spacing;
-    return Math.round(x / spacing) * spacing + plus;
-  }
-
-  momentumCenter(x0: any, vx: any, spacing: any) {
-    let t = 0;
-    let x1 = x0;
-    let x = x1;
-
-    while (true) {
-      t += 16;
-      x =
-        x0 +
-        (vx / (1 - this.deceleration)) *
-          (1 - Math.exp(-(1 - this.deceleration) * t));
-      if (Math.abs(x - x1) < 0.1) {
-        x1 = x;
-        break;
-      }
-      x1 = x;
-    }
-    return this.closestCenter(x1, spacing);
-  }
-
-  velocityAtBounds(x0: any, vx: any, bounds: any) {
-    let t = 0;
-    let x1 = x0;
-    let x = x1;
-    let vf;
-    while (true) {
-      t += 16;
-      x =
-        x0 +
-        (vx / (1 - this.deceleration)) *
-          (1 - Math.exp(-(1 - this.deceleration) * t));
-      vf = (x - x1) / 16;
-      if (x > bounds[0] && x < bounds[1]) {
-        break;
-      }
-      if (Math.abs(vf) < 0.1) {
-        break;
-      }
-      x1 = x;
-    }
-    return vf;
-  }
-
   render() {
     return <View {...this.props} {...this._responder.panHandlers} />;
   }
 
   componentWillUnmount() {
+    const { panX, panY } = this.props;
+    if (panX) panX.stopAnimation();
+    if (panY) panY.stopAnimation();
+
     if (this._listener) {
-      const { panX, panY } = this.props;
-      if (panX && this._listener) panX.removeListener(this._listener);
-      if (panY && this._listener) panY.removeListener(this._listener);
+      if (panX) panX.removeListener(this._listener);
+      if (panY) panY.removeListener(this._listener);
     }
   }
 }
