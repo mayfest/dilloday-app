@@ -252,11 +252,34 @@ class AnimatedViews extends React.Component<any, any> {
     return topOfTap < topOfMainWindow;
   };
 
+  updateMapRegion = (index: number) => {
+    const { markers, region } = this.state;
+    if (index >= 0 && index < markers.length) {
+      region.stopAnimation();
+      region
+        .timing({
+          ...markers[index].coordinate,
+          latitudeDelta: LATITUDE_DELTA,
+          longitudeDelta: LONGITUDE_DELTA,
+          duration: 250,
+          useNativeDriver: true,
+        })
+        .start();
+    }
+  };
+
   onPanXChange = ({ value }: any) => {
-    const { index } = this.state;
-    const newIndex = Math.floor((-1 * value + SNAP_WIDTH / 2) / SNAP_WIDTH);
-    if (index !== newIndex) {
-      this.setState({ index: newIndex });
+    const { index, markers } = this.state;
+    const newIndex = Math.min(
+      markers.length - 1,
+      Math.max(0, Math.floor((-1 * value + SNAP_WIDTH / 2) / SNAP_WIDTH))
+    );
+
+    if (index !== newIndex && newIndex >= 0 && newIndex < markers.length) {
+      this.setState({ index: newIndex }, () => {
+        // Update map region when index changes
+        this.updateMapRegion(newIndex);
+      });
     }
   };
 
@@ -331,6 +354,8 @@ class AnimatedViews extends React.Component<any, any> {
           snapSpacingX={SNAP_WIDTH}
           yBounds={[-1 * screen.height, 0]}
           xBounds={[-screen.width * (markers.length - 1), 0]}
+          overshootX="clamp" // Add this to prevent overshooting at edges
+          overshootY="clamp" // Add this to prevent overshooting at edges
           panY={panY}
           panX={panX}
           onStartShouldSetPanResponder={this.onStartShouldSetPanResponder}
