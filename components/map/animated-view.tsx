@@ -26,8 +26,8 @@ const SCALE_END = screen.width / ITEM_WIDTH;
 const BREAKPOINT1 = 246;
 const BREAKPOINT2 = 350;
 const ONE = new Animated.Value(1);
-const DRAWER_CLOSED_HEIGHT = 150; // Height when closed
-const DRAWER_OPEN_HEIGHT = 400; // Max height when opened
+const DRAWER_CLOSED_HEIGHT = 150;
+const DRAWER_OPEN_HEIGHT = 400;
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const xLeft = -SNAP_WIDTH * i + SNAP_WIDTH / 2;
@@ -439,7 +439,7 @@ const styles = StyleSheet.create({
   },
   item: {
     width: ITEM_WIDTH,
-    height: DRAWER_OPEN_HEIGHT, // Fixed height instead of screen height
+    height: DRAWER_OPEN_HEIGHT,
     backgroundColor: 'red',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',

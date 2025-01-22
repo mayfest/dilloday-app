@@ -28,7 +28,6 @@ class PanController extends React.Component<any, any> {
         };
         this._isMoving = false;
 
-        // Always return true for horizontal movement if we're on a card
         return this.props.onStartShouldSetPanResponder
           ? this.props.onStartShouldSetPanResponder(e)
           : false;
@@ -110,7 +109,6 @@ class PanController extends React.Component<any, any> {
           directionLockDistance,
         } = this.props;
 
-        // More responsive direction locking
         if (!this._direction && (horizontal || vertical)) {
           const absX = Math.abs(dx);
           const absY = Math.abs(dy);
@@ -160,7 +158,6 @@ class PanController extends React.Component<any, any> {
 
         const dir = this._direction;
 
-        // Adjust velocity threshold based on movement speed
         const velocityMultiplier = this._isMoving ? 1200 : 800;
 
         if (horizontal && (!lockDirection || dir === 'x')) {
@@ -209,9 +206,7 @@ class PanController extends React.Component<any, any> {
 
     let val = anim._offset + delta;
 
-    // For vertical movement (drawer)
     if (this._direction === 'y') {
-      // Add stronger resistance near the bounds
       if (val > max) {
         val = max + (val - max) / 6;
       }
@@ -219,7 +214,6 @@ class PanController extends React.Component<any, any> {
         val = min + (val - min) / 6;
       }
     } else {
-      // For horizontal movement (keep existing logic)
       if (val > max) {
         val = overshoot === 'spring' ? max + (val - max) / 3 : max;
       }
@@ -246,7 +240,6 @@ class PanController extends React.Component<any, any> {
     let targetValue = value;
 
     if (mode === 'snap' && snapSpacing) {
-      // Horizontal snap logic (keep as is)
       const velocityThreshold = Math.abs(velocity) > 1000 ? 100 : 200;
       const currentIndex = Math.round(value / snapSpacing);
       const maxIndex = Math.floor(max / snapSpacing);
@@ -262,22 +255,18 @@ class PanController extends React.Component<any, any> {
           Math.max(minIndex, Math.min(maxIndex, currentIndex)) * snapSpacing;
       }
     } else {
-      // Vertical drawer logic
       const totalTravel = Math.abs(max - min);
       const velocityThreshold = 0.5;
       const positionThreshold = totalTravel / 2;
 
       if (Math.abs(velocity) > velocityThreshold) {
-        // If moving fast enough, snap based on velocity direction
         targetValue = velocity > 0 ? max : min;
       } else {
-        // If moving slowly, snap based on position
         const distanceFromClosed = Math.abs(value - max);
         targetValue = distanceFromClosed < positionThreshold ? max : min;
       }
     }
 
-    // Ensure we stay within bounds
     targetValue = Math.max(min, Math.min(max, targetValue));
 
     this._animating = true;

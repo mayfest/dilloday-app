@@ -49,7 +49,6 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
     extrapolate: 'clamp',
   });
 
-  // Simplified translations and animations for drawer-style behavior
   const translateY = Animated.multiply(
     isIndex,
     scrollY.interpolate({
