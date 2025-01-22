@@ -39,12 +39,10 @@ class PanController extends React.Component<any, any> {
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
 
-        // If we're already moving vertically, lock to vertical movement
         if (this._direction === 'y') {
           return absY > absX;
         }
 
-        // If we're already moving horizontally, lock to horizontal movement
         if (this._direction === 'x') {
           return absX > absY;
         }

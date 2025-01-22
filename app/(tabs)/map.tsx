@@ -61,15 +61,9 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
 
   const scale = ONE; // Remove scaling effect
 
-  const opacity = Animated.multiply(isNotIndex, 0.5).interpolate({
-    inputRange: [0, 0.5],
-    outputRange: [1, 0.5],
-  });
+  const opacity = 1
 
-  const markerOpacity = isNotIndex.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 0.6],
-  });
+  const markerOpacity = 1
 
   const markerScale = selected.interpolate({
     inputRange: [0, 1],
