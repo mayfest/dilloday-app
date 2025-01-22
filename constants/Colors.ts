@@ -1,26 +1,49 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+// Brand book colors
+const primaryBlue = '#173885';
+const primaryPurple = '#841973';
+const accentYellow = '#F6F2A3';
+const accentPink = '#FFB1CD';
+const accentRed = '#D61919';
+const neutralGrayBlue = '#AABCCD';
 
 export const Colors = {
   light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
+    text: primaryBlue,
+    background: primaryBlue,
+    tint: accentYellow,
+    icon: neutralGrayBlue,
+    tabIconDefault: neutralGrayBlue,
+    tabIconSelected: accentYellow,
+    card: accentYellow,
+    cardAlt: accentPink,
+    cardText: primaryBlue,
+    action: primaryPurple,
+    actionText: accentYellow,
+    alert: accentRed,
   },
   dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
+    text: accentYellow,
+    background: primaryBlue,
+    tint: accentYellow,
+    icon: neutralGrayBlue,
+    tabIconDefault: neutralGrayBlue,
+    tabIconSelected: accentYellow,
+    card: accentYellow,
+    cardAlt: accentPink,
+    cardText: primaryBlue,
+    action: primaryPurple,
+    actionText: accentYellow,
+    alert: accentRed,
   },
+};
+
+export const SemanticColors = {
+  primary: primaryBlue,
+  secondary: primaryPurple,
+  accent: accentYellow,
+  error: accentRed,
+  inactive: neutralGrayBlue,
+  success: primaryPurple,
+  warning: accentYellow,
+  info: accentPink,
 };
