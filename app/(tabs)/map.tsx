@@ -22,7 +22,7 @@ const ITEM_PREVIEW = 10;
 const ITEM_WIDTH = screen.width - 2 * ITEM_SPACING - 2 * ITEM_PREVIEW;
 const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
 const DRAWER_EXPANDED_HEIGHT = screen.height * 0.8;
-const DRAWER_PREVIEW_HEIGHT = 250;
+const DRAWER_PREVIEW_HEIGHT = 300;
 const ONE = new Animated.Value(1);
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
@@ -36,11 +36,11 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
     extrapolate: 'clamp',
   });
 
-  const isNotIndex = panX.interpolate({
-    inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
-    outputRange: [1, 0, 0, 1],
-    extrapolate: 'clamp',
-  });
+  // const isNotIndex = panX.interpolate({
+  //   inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
+  //   outputRange: [1, 0, 0, 1],
+  //   extrapolate: 'clamp',
+  // });
 
   const selected = panX.interpolate({
     inputRange: [xRight, xPos, xLeft],
@@ -247,7 +247,9 @@ class AnimatedViews extends React.Component<any, any> {
                       transform: [{ translateY }, { translateX }, { scale }],
                     },
                   ]}
-                />
+                >
+                  <View style={styles.drawerHandle} />
+                </Animated.View>
               );
             })}
           </View>
@@ -258,6 +260,14 @@ class AnimatedViews extends React.Component<any, any> {
 }
 
 const styles = StyleSheet.create({
+  drawerHandle: {
+    width: 48,
+    height: 4,
+    backgroundColor: '#E0E0E0',
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginTop: 8,
+  },
   container: {
     ...StyleSheet.absoluteFillObject,
   },
@@ -275,12 +285,13 @@ const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
     height: DRAWER_EXPANDED_HEIGHT,
-    backgroundColor: 'rgba(255,255,255, 1)',
+    backgroundColor: 'rgba(255, 255, 255, 1.0)',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
     borderRadius: 12,
     borderColor: '#000',
   },
 });
+
 
 export default AnimatedViews;
