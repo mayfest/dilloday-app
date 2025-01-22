@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { Animated, PanResponder, View } from 'react-native';
 
 class PanController extends React.Component<any, any> {
@@ -40,18 +39,25 @@ class PanController extends React.Component<any, any> {
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
 
-        // Easier horizontal movement
-        const horizontalThreshold = 1;
-        const verticalThreshold = 5;
+        // If we're already moving vertically, lock to vertical movement
+        if (this._direction === 'y') {
+          return absY > absX;
+        }
 
-        // For horizontal movement (card switching)
-        if (absX > horizontalThreshold && absX > absY * 0.5) {
+        // If we're already moving horizontally, lock to horizontal movement
+        if (this._direction === 'x') {
+          return absX > absY;
+        }
+
+        // Initial direction detection
+        if (absX > absY * 0.5) {
+          this._direction = 'x';
           this._isMoving = true;
           return true;
         }
 
-        // For vertical movement (drawer opening/closing)
-        if (absY > verticalThreshold && absY > absX) {
+        if (absY > absX) {
+          this._direction = 'y';
           this._isMoving = true;
           return this.props.onMoveShouldSetPanResponder
             ? this.props.onMoveShouldSetPanResponder(e, gestureState)
@@ -73,7 +79,7 @@ class PanController extends React.Component<any, any> {
           this.props.onPanResponderGrant(...args);
         }
 
-        const { panX, panY, horizontal, vertical, xMode, yMode } = this.props;
+        const { panX, panY, xMode, yMode } = this.props;
 
         this._lastValue = {
           x: panX?._value || 0,
@@ -82,20 +88,9 @@ class PanController extends React.Component<any, any> {
 
         this.handleResponderGrant(panX, xMode);
         this.handleResponderGrant(panY, yMode);
-
-        this._direction =
-          horizontal && !vertical ? 'x' : vertical && !horizontal ? 'y' : null;
       },
 
-      onPanResponderMove: (_, { dx, dy, x0, y0 }) => {
-        if (!this._isMoving) {
-          const absX = Math.abs(dx);
-          const absY = Math.abs(dy);
-          if (absX > 1 || absY > 1) {
-            this._isMoving = true;
-          }
-        }
-
+      onPanResponderMove: (_, { dx, dy }) => {
         const {
           panX,
           panY,
@@ -105,33 +100,15 @@ class PanController extends React.Component<any, any> {
           overshootY,
           horizontal,
           vertical,
-          lockDirection,
-          directionLockDistance,
         } = this.props;
 
-        if (!this._direction && (horizontal || vertical)) {
-          const absX = Math.abs(dx);
-          const absY = Math.abs(dy);
-
-          if (
-            absX > directionLockDistance * 0.5 ||
-            absY > directionLockDistance * 0.5
-          ) {
-            this._direction = absX * 1.2 > absY ? 'x' : 'y';
-            if (this.props.onDirectionChange) {
-              this.props.onDirectionChange(this._direction, { dx, dy, x0, y0 });
-            }
-          }
-        }
-
-        const dir = this._direction;
-
-        if (horizontal && (!lockDirection || dir === 'x')) {
+        // Only allow movement in the locked direction
+        if (this._direction === 'x' && horizontal) {
           const [xMin, xMax] = xBounds;
           this.handleResponderMove(panX, dx, xMin, xMax, overshootX);
         }
 
-        if (vertical && (!lockDirection || dir === 'y')) {
+        if (this._direction === 'y' && vertical) {
           const [yMin, yMax] = yBounds;
           this.handleResponderMove(panY, dy, yMin, yMax, overshootY);
         }
@@ -149,7 +126,6 @@ class PanController extends React.Component<any, any> {
           overshootY,
           horizontal,
           vertical,
-          lockDirection,
           xMode,
           yMode,
           snapSpacingX,
@@ -157,10 +133,9 @@ class PanController extends React.Component<any, any> {
         } = this.props;
 
         const dir = this._direction;
+        const velocityMultiplier = 1200;
 
-        const velocityMultiplier = this._isMoving ? 1200 : 800;
-
-        if (horizontal && (!lockDirection || dir === 'x')) {
+        if (dir === 'x' && horizontal) {
           const [xMin, xMax] = xBounds;
           const adjustedVx =
             Math.sign(vx) * Math.min(Math.abs(vx * velocityMultiplier), 2000);
@@ -175,7 +150,7 @@ class PanController extends React.Component<any, any> {
           );
         }
 
-        if (vertical && (!lockDirection || dir === 'y')) {
+        if (dir === 'y' && vertical) {
           const [yMin, yMax] = yBounds;
           const adjustedVy =
             Math.sign(vy) * Math.min(Math.abs(vy * velocityMultiplier), 2000);

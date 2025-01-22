@@ -21,8 +21,7 @@ const ITEM_SPACING = 10;
 const ITEM_PREVIEW = 10;
 const ITEM_WIDTH = screen.width - 2 * ITEM_SPACING - 2 * ITEM_PREVIEW;
 const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
-const ITEM_PREVIEW_HEIGHT = 150;
-const DRAWER_EXPANDED_HEIGHT = 1500;
+const DRAWER_EXPANDED_HEIGHT = screen.height * 0.8;
 const DRAWER_PREVIEW_HEIGHT = 250;
 const ONE = new Animated.Value(1);
 
@@ -282,10 +281,10 @@ const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
     height: DRAWER_EXPANDED_HEIGHT,
-    backgroundColor: 'red',
+    backgroundColor: 'rgba(255,255,255, 1)',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
-    borderRadius: 3,
+    borderRadius: 12,
     borderColor: '#000',
   },
 });
