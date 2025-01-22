@@ -22,8 +22,8 @@ const ITEM_PREVIEW = 10;
 const ITEM_WIDTH = screen.width - 2 * ITEM_SPACING - 2 * ITEM_PREVIEW;
 const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
 const ITEM_PREVIEW_HEIGHT = 150;
-const DRAWER_EXPANDED_HEIGHT = 1500; // New constant for expanded drawer height
-const DRAWER_PREVIEW_HEIGHT = 250; // Height when collapsed
+const DRAWER_EXPANDED_HEIGHT = 1500;
+const DRAWER_PREVIEW_HEIGHT = 250;
 const ONE = new Animated.Value(1);
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
