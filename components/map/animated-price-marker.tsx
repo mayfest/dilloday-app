@@ -1,15 +1,16 @@
-import React from "react";
-import { StyleSheet, Text, Animated } from "react-native";
+import React from 'react';
+
+import { Animated, StyleSheet, Text } from 'react-native';
 
 const PriceMarker = ({ amount, selected, style }) => {
   const background = selected.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#FF5A5F", "#4da2ab"],
+    outputRange: ['#FF5A5F', '#4da2ab'],
   });
 
   const border = selected.interpolate({
     inputRange: [0, 1],
-    outputRange: ["#D23F44", "#007a87"],
+    outputRange: ['#D23F44', '#007a87'],
   });
 
   return (
@@ -34,42 +35,42 @@ const PriceMarker = ({ amount, selected, style }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "column",
-    alignSelf: "flex-start",
+    flexDirection: 'column',
+    alignSelf: 'flex-start',
   },
   bubble: {
     flex: 0,
-    flexDirection: "row",
-    alignSelf: "flex-start",
-    backgroundColor: "#FF5A5F",
+    flexDirection: 'row',
+    alignSelf: 'flex-start',
+    backgroundColor: '#FF5A5F',
     paddingVertical: 2,
     paddingHorizontal: 4,
     borderRadius: 3,
-    borderColor: "#D23F44",
+    borderColor: '#D23F44',
     borderWidth: 0.5,
   },
   dollar: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 10,
   },
   amount: {
-    color: "#fff",
+    color: '#fff',
     fontSize: 13,
   },
   arrow: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
     borderWidth: 4,
-    borderTopColor: "#FF5A5F",
-    alignSelf: "center",
+    borderTopColor: '#FF5A5F',
+    alignSelf: 'center',
     marginTop: -9,
   },
   arrowBorder: {
-    backgroundColor: "transparent",
-    borderColor: "transparent",
+    backgroundColor: 'transparent',
+    borderColor: 'transparent',
     borderWidth: 4,
-    borderTopColor: "#D23F44",
-    alignSelf: "center",
+    borderTopColor: '#D23F44',
+    alignSelf: 'center',
     marginTop: -0.5,
   },
 });

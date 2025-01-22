@@ -1,15 +1,15 @@
-import React from "react";
-import { StyleSheet, View, Dimensions, Animated } from "react-native";
+import React from 'react';
 
+import PriceMarker from '@/components/map/animated-price-marker';
+import PanController from '@/components/map/pan-controller';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import {
   Animated as AnimatedMap,
   AnimatedRegion,
   Marker,
-} from "react-native-maps";
-import PanController from "@/components/map/pan-controller";
-import PriceMarker from "@/components/map/animated-price-marker";
+} from 'react-native-maps';
 
-const screen = Dimensions.get("window");
+const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE = 37.78825;
@@ -26,6 +26,8 @@ const SCALE_END = screen.width / ITEM_WIDTH;
 const BREAKPOINT1 = 246;
 const BREAKPOINT2 = 350;
 const ONE = new Animated.Value(1);
+const DRAWER_CLOSED_HEIGHT = 150; // Height when closed
+const DRAWER_OPEN_HEIGHT = 400; // Max height when opened
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const xLeft = -SNAP_WIDTH * i + SNAP_WIDTH / 2;
@@ -35,25 +37,25 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const isIndex = panX.interpolate({
     inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
     outputRange: [0, 1, 1, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const isNotIndex = panX.interpolate({
     inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
     outputRange: [1, 0, 0, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const center = panX.interpolate({
     inputRange: [xPos - 10, xPos, xPos + 10],
     outputRange: [0, 1, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const selected = panX.interpolate({
     inputRange: [xRight, xPos, xLeft],
     outputRange: [0, 1, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const translateY = Animated.multiply(isIndex, panY);
@@ -65,7 +67,7 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
     scrollY.interpolate({
       inputRange: [0, BREAKPOINT1],
       outputRange: [0, 1],
-      extrapolate: "clamp",
+      extrapolate: 'clamp',
     })
   );
 
@@ -76,7 +78,7 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
       scrollY.interpolate({
         inputRange: [BREAKPOINT1, BREAKPOINT2],
         outputRange: [0, SCALE_END - 1],
-        extrapolate: "clamp",
+        extrapolate: 'clamp',
       })
     )
   );
@@ -85,7 +87,7 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   let opacity = scrollY.interpolate({
     inputRange: [BREAKPOINT1, BREAKPOINT2],
     outputRange: [0, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   // if i === index: [0 => 0]
@@ -102,7 +104,7 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   let markerOpacity = scrollY.interpolate({
     inputRange: [0, BREAKPOINT1],
     outputRange: [0, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   markerOpacity = Animated.multiply(isNotIndex, markerOpacity).interpolate({
@@ -136,8 +138,9 @@ class AnimatedViews extends React.Component<any, any> {
     const panY = new Animated.Value(0);
 
     const scrollY = panY.interpolate({
-      inputRange: [-1, 1],
-      outputRange: [1, -1],
+      inputRange: [-DRAWER_OPEN_HEIGHT + DRAWER_CLOSED_HEIGHT, 0],
+      outputRange: [1, 0],
+      extrapolate: 'clamp',
     });
 
     const scrollX = panX.interpolate({
@@ -148,13 +151,13 @@ class AnimatedViews extends React.Component<any, any> {
     const scale = scrollY.interpolate({
       inputRange: [0, BREAKPOINT1],
       outputRange: [1, 1.6],
-      extrapolate: "clamp",
+      extrapolate: 'clamp',
     });
 
     const translateY = scrollY.interpolate({
       inputRange: [0, BREAKPOINT1],
       outputRange: [0, -100],
-      extrapolate: "clamp",
+      extrapolate: 'clamp',
     });
 
     const markers = [
@@ -243,13 +246,22 @@ class AnimatedViews extends React.Component<any, any> {
     return topOfTap < topOfMainWindow;
   };
 
-  onMoveShouldSetPanResponder = (e: any) => {
+  onMoveShouldSetPanResponder = (e: any, gestureState: any) => {
     const { panY } = this.state;
     const { pageY } = e.nativeEvent;
+    const { dy, dx } = gestureState;
     const topOfMainWindow = ITEM_PREVIEW_HEIGHT + panY.__getValue();
     const topOfTap = screen.height - pageY;
 
-    return topOfTap < topOfMainWindow;
+    // If we're touching the drawer area
+    if (topOfTap < topOfMainWindow) {
+      // For vertical movement, require more intentional gesture
+      const absX = Math.abs(dx);
+      const absY = Math.abs(dy);
+      return absY > absX && absY > 5;
+    }
+
+    return false;
   };
 
   updateMapRegion = (index: number) => {
@@ -300,17 +312,17 @@ class AnimatedViews extends React.Component<any, any> {
                 coordinate.latitude,
                 coordinate.latitude - LATITUDE_DELTA * 0.5 * 0.375,
               ],
-              extrapolate: "clamp",
+              extrapolate: 'clamp',
             }),
             latitudeDelta: scrollY.interpolate({
               inputRange: [0, BREAKPOINT1],
               outputRange: [LATITUDE_DELTA, LATITUDE_DELTA * 0.5],
-              extrapolate: "clamp",
+              extrapolate: 'clamp',
             }),
             longitudeDelta: scrollY.interpolate({
               inputRange: [0, BREAKPOINT1],
               outputRange: [LONGITUDE_DELTA, LONGITUDE_DELTA * 0.5],
-              extrapolate: "clamp",
+              extrapolate: 'clamp',
             }),
             useNativeDriver: true, // defaults to false if not passed explictly
             duration: 0,
@@ -350,12 +362,12 @@ class AnimatedViews extends React.Component<any, any> {
           style={styles.container}
           vertical
           horizontal={canMoveHorizontal}
-          xMode="snap"
+          xMode='snap'
           snapSpacingX={SNAP_WIDTH}
-          yBounds={[-1 * screen.height, 0]}
+          yBounds={[-DRAWER_OPEN_HEIGHT + DRAWER_CLOSED_HEIGHT, 0]}
           xBounds={[-screen.width * (markers.length - 1), 0]}
-          overshootX="clamp" // Add this to prevent overshooting at edges
-          overshootY="clamp" // Add this to prevent overshooting at edges
+          overshootX='clamp' // Add this to prevent overshooting at edges
+          overshootY='clamp' // Add this to prevent overshooting at edges
           panY={panY}
           panX={panX}
           onStartShouldSetPanResponder={this.onStartShouldSetPanResponder}
@@ -413,26 +425,26 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   itemContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
     paddingHorizontal: ITEM_SPACING / 2 + ITEM_PREVIEW,
-    position: "absolute",
+    position: 'absolute',
     // top: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     paddingTop: screen.height - ITEM_PREVIEW_HEIGHT - 64,
     // paddingTop: !ANDROID ? 0 : screen.height - ITEM_PREVIEW_HEIGHT - 64,
   },
   map: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     ...StyleSheet.absoluteFillObject,
   },
   item: {
     width: ITEM_WIDTH,
-    height: screen.height + 2 * ITEM_PREVIEW_HEIGHT,
-    backgroundColor: "red",
+    height: DRAWER_OPEN_HEIGHT, // Fixed height instead of screen height
+    backgroundColor: 'red',
     marginHorizontal: ITEM_SPACING / 2,
-    overflow: "hidden",
+    overflow: 'hidden',
     borderRadius: 3,
-    borderColor: "#000",
+    borderColor: '#000',
   },
 });
 

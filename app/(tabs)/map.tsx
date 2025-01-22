@@ -1,14 +1,15 @@
-import React from "react";
-import { StyleSheet, View, Dimensions, Animated } from "react-native";
+import React from 'react';
+
+import PriceMarker from '@/components/map/animated-price-marker';
+import PanController from '@/components/map/pan-controller';
+import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import {
   Animated as AnimatedMap,
   AnimatedRegion,
   Marker,
-} from "react-native-maps";
-import PanController from "@/components/map/pan-controller";
-import PriceMarker from "@/components/map/animated-price-marker";
+} from 'react-native-maps';
 
-const screen = Dimensions.get("window");
+const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
 const LATITUDE = 37.78825;
@@ -33,19 +34,19 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const isIndex = panX.interpolate({
     inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
     outputRange: [0, 1, 1, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const isNotIndex = panX.interpolate({
     inputRange: [xRight - 1, xRight, xLeft, xLeft + 1],
     outputRange: [1, 0, 0, 1],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   const selected = panX.interpolate({
     inputRange: [xRight, xPos, xLeft],
     outputRange: [0, 1, 0],
-    extrapolate: "clamp",
+    extrapolate: 'clamp',
   });
 
   // Simplified translations and animations for drawer-style behavior
@@ -54,7 +55,7 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
     scrollY.interpolate({
       inputRange: [0, 1],
       outputRange: [0, DRAWER_PREVIEW_HEIGHT - DRAWER_EXPANDED_HEIGHT],
-      extrapolate: "clamp",
+      extrapolate: 'clamp',
     })
   );
 
@@ -125,7 +126,7 @@ class AnimatedViews extends React.Component<any, any> {
     const scrollY = panY.interpolate({
       inputRange: [-DRAWER_EXPANDED_HEIGHT, 0],
       outputRange: [1, 0],
-      extrapolate: "clamp",
+      extrapolate: 'clamp',
     });
 
     const animations = markers.map((m, i) =>
@@ -213,7 +214,7 @@ class AnimatedViews extends React.Component<any, any> {
           style={styles.container}
           vertical
           horizontal={canMoveHorizontal}
-          xMode="snap"
+          xMode='snap'
           snapSpacingX={SNAP_WIDTH}
           yBounds={[-DRAWER_EXPANDED_HEIGHT, 0]}
           xBounds={[-SNAP_WIDTH * (markers.length - 1), 0]}
@@ -269,24 +270,24 @@ const styles = StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
   },
   itemContainer: {
-    backgroundColor: "transparent",
-    flexDirection: "row",
+    backgroundColor: 'transparent',
+    flexDirection: 'row',
     paddingHorizontal: ITEM_SPACING / 2 + ITEM_PREVIEW,
-    position: "absolute",
+    position: 'absolute',
     paddingTop: screen.height - DRAWER_PREVIEW_HEIGHT,
   },
   map: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     ...StyleSheet.absoluteFillObject,
   },
   item: {
     width: ITEM_WIDTH,
     height: DRAWER_EXPANDED_HEIGHT,
-    backgroundColor: "red",
+    backgroundColor: 'red',
     marginHorizontal: ITEM_SPACING / 2,
-    overflow: "hidden",
+    overflow: 'hidden',
     borderRadius: 3,
-    borderColor: "#000",
+    borderColor: '#000',
   },
 });
 

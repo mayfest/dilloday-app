@@ -1,6 +1,6 @@
-import { FontAwesome6 } from "@expo/vector-icons";
-import { TouchableOpacity } from "react-native";
-import BalloonLogo from "@/assets/images/balloonlogopink.svg";
+import BalloonLogo from '@/assets/images/balloonlogopink.svg';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { TouchableOpacity } from 'react-native';
 
 interface TabBarButtonProps {
   focused: boolean;
@@ -19,7 +19,7 @@ export default function TabBarButton({
 }: TabBarButtonProps) {
   const onPress = () => {
     const event = navigation.emit({
-      type: "tabPress",
+      type: 'tabPress',
       target: route.key,
       canPreventDefault: true,
     });
@@ -31,7 +31,7 @@ export default function TabBarButton({
 
   const onLongPress = () => {
     navigation.emit({
-      type: "tabLongPress",
+      type: 'tabLongPress',
       target: route.key,
     });
   };
@@ -39,7 +39,7 @@ export default function TabBarButton({
   return (
     <TouchableOpacity
       className={`p-2 rounded-full w-[50px] max-w-[50px] h-[50px] flex-1 items-center justify-center ${
-        focused ? "bg-accent" : "bg-transparent"
+        focused ? 'bg-accent' : 'bg-transparent'
       }`}
       onPress={onPress}
       onLongPress={onLongPress}
@@ -50,7 +50,7 @@ export default function TabBarButton({
         <FontAwesome6
           name={icon}
           size={20}
-          color={focused ? "#173885" : "#F6F2A3"}
+          color={focused ? '#173885' : '#F6F2A3'}
         />
       )}
     </TouchableOpacity>

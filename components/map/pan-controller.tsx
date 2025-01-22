@@ -1,5 +1,6 @@
-import React from "react";
-import { View, Animated, PanResponder } from "react-native";
+import React from 'react';
+
+import { Animated, PanResponder, View } from 'react-native';
 
 class PanController extends React.Component<any, any> {
   _responder: any = null;
@@ -40,21 +41,22 @@ class PanController extends React.Component<any, any> {
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
 
-        // Even more lenient horizontal movement detection
-        const horizontalThreshold = 1; // Extremely sensitive to horizontal movement
-        const verticalThreshold = 8; // Still strict for vertical to prevent accidental drawer opens
+        // Easier horizontal movement
+        const horizontalThreshold = 1;
+        const verticalThreshold = 5;
 
-        // Quick horizontal movements should always be captured
+        // For horizontal movement (card switching)
         if (absX > horizontalThreshold && absX > absY * 0.5) {
           this._isMoving = true;
           return true;
         }
 
-        // For vertical movement, maintain stricter control
-        if (absY > verticalThreshold && absY > absX * 1.2) {
+        // For vertical movement (drawer opening/closing)
+        if (absY > verticalThreshold && absY > absX) {
+          this._isMoving = true;
           return this.props.onMoveShouldSetPanResponder
             ? this.props.onMoveShouldSetPanResponder(e, gestureState)
-            : false;
+            : true;
         }
 
         return false;
@@ -83,7 +85,7 @@ class PanController extends React.Component<any, any> {
         this.handleResponderGrant(panY, yMode);
 
         this._direction =
-          horizontal && !vertical ? "x" : vertical && !horizontal ? "y" : null;
+          horizontal && !vertical ? 'x' : vertical && !horizontal ? 'y' : null;
       },
 
       onPanResponderMove: (_, { dx, dy, x0, y0 }) => {
@@ -117,7 +119,7 @@ class PanController extends React.Component<any, any> {
             absX > directionLockDistance * 0.5 ||
             absY > directionLockDistance * 0.5
           ) {
-            this._direction = absX * 1.2 > absY ? "x" : "y";
+            this._direction = absX * 1.2 > absY ? 'x' : 'y';
             if (this.props.onDirectionChange) {
               this.props.onDirectionChange(this._direction, { dx, dy, x0, y0 });
             }
@@ -126,12 +128,12 @@ class PanController extends React.Component<any, any> {
 
         const dir = this._direction;
 
-        if (horizontal && (!lockDirection || dir === "x")) {
+        if (horizontal && (!lockDirection || dir === 'x')) {
           const [xMin, xMax] = xBounds;
           this.handleResponderMove(panX, dx, xMin, xMax, overshootX);
         }
 
-        if (vertical && (!lockDirection || dir === "y")) {
+        if (vertical && (!lockDirection || dir === 'y')) {
           const [yMin, yMax] = yBounds;
           this.handleResponderMove(panY, dy, yMin, yMax, overshootY);
         }
@@ -161,7 +163,7 @@ class PanController extends React.Component<any, any> {
         // Adjust velocity threshold based on movement speed
         const velocityMultiplier = this._isMoving ? 1200 : 800;
 
-        if (horizontal && (!lockDirection || dir === "x")) {
+        if (horizontal && (!lockDirection || dir === 'x')) {
           const [xMin, xMax] = xBounds;
           const adjustedVx =
             Math.sign(vx) * Math.min(Math.abs(vx * velocityMultiplier), 2000);
@@ -176,7 +178,7 @@ class PanController extends React.Component<any, any> {
           );
         }
 
-        if (vertical && (!lockDirection || dir === "y")) {
+        if (vertical && (!lockDirection || dir === 'y')) {
           const [yMin, yMax] = yBounds;
           const adjustedVy =
             Math.sign(vy) * Math.min(Math.abs(vy * velocityMultiplier), 2000);
@@ -207,11 +209,23 @@ class PanController extends React.Component<any, any> {
 
     let val = anim._offset + delta;
 
-    if (val > max) {
-      val = overshoot === "spring" ? max + (val - max) / 4 : max;
-    }
-    if (val < min) {
-      val = overshoot === "spring" ? min - (min - val) / 4 : min;
+    // For vertical movement (drawer)
+    if (this._direction === 'y') {
+      // Add stronger resistance near the bounds
+      if (val > max) {
+        val = max + (val - max) / 6;
+      }
+      if (val < min) {
+        val = min + (val - min) / 6;
+      }
+    } else {
+      // For horizontal movement (keep existing logic)
+      if (val > max) {
+        val = overshoot === 'spring' ? max + (val - max) / 3 : max;
+      }
+      if (val < min) {
+        val = overshoot === 'spring' ? min + (val - min) / 3 : min;
+      }
     }
 
     val = val - anim._offset;
@@ -231,8 +245,8 @@ class PanController extends React.Component<any, any> {
     let value = anim._value;
     let targetValue = value;
 
-    if (mode === "snap" && snapSpacing) {
-      // More generous snap threshold for quick movements
+    if (mode === 'snap' && snapSpacing) {
+      // Horizontal snap logic (keep as is)
       const velocityThreshold = Math.abs(velocity) > 1000 ? 100 : 200;
       const currentIndex = Math.round(value / snapSpacing);
       const maxIndex = Math.floor(max / snapSpacing);
@@ -247,19 +261,31 @@ class PanController extends React.Component<any, any> {
         targetValue =
           Math.max(minIndex, Math.min(maxIndex, currentIndex)) * snapSpacing;
       }
+    } else {
+      // Vertical drawer logic
+      const totalTravel = Math.abs(max - min);
+      const velocityThreshold = 0.5;
+      const positionThreshold = totalTravel / 2;
 
-      targetValue = Math.max(min, Math.min(max, targetValue));
+      if (Math.abs(velocity) > velocityThreshold) {
+        // If moving fast enough, snap based on velocity direction
+        targetValue = velocity > 0 ? max : min;
+      } else {
+        // If moving slowly, snap based on position
+        const distanceFromClosed = Math.abs(value - max);
+        targetValue = distanceFromClosed < positionThreshold ? max : min;
+      }
     }
 
-    const isAtEdge =
-      Math.abs(targetValue - min) < 1 || Math.abs(targetValue - max) < 1;
+    // Ensure we stay within bounds
+    targetValue = Math.max(min, Math.min(max, targetValue));
 
     this._animating = true;
     Animated.spring(anim, {
       toValue: targetValue,
       velocity: velocity,
-      tension: isAtEdge ? 65 : 40, // Even lower tension for smoother movement
-      friction: isAtEdge ? 12 : 7, // Lower friction for more responsive feel
+      tension: 65,
+      friction: 12,
       useNativeDriver: false,
     }).start(() => {
       this._animating = false;
@@ -268,11 +294,11 @@ class PanController extends React.Component<any, any> {
 
   handleResponderGrant(anim: any, mode: any) {
     switch (mode) {
-      case "spring-origin":
+      case 'spring-origin':
         anim.setValue(0);
         break;
-      case "snap":
-      case "decay":
+      case 'snap':
+      case 'decay':
         anim.setOffset(anim._value + anim._offset);
         anim.setValue(0);
         break;
