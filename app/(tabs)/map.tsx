@@ -12,9 +12,10 @@ import {
 const screen = Dimensions.get('window');
 
 const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE = 42.055126;
+const LONGITUDE = -87.670787;
+// const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.0111;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
 const ITEM_SPACING = 10;
