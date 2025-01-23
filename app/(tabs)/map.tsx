@@ -218,6 +218,10 @@ class AnimatedViews extends React.Component<any, any> {
             provider={this.props.provider}
             style={styles.map}
             region={region}
+            scrollEnabled={false}
+            zoomEnabled={false}
+            rotateEnabled={false}
+            pitchEnabled={false}
           >
             {markers.map((marker: any, i: any) => {
               const { selected, markerOpacity, markerScale } = animations[i];
