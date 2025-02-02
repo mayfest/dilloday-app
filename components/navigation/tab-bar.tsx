@@ -8,6 +8,7 @@ interface TabBarProps extends BottomTabBarProps {
 }
 
 export default function TabBar({ state, navigation, icons }: TabBarProps) {
+
   return (
     <View className='absolute w-[90%] h-16 left-[5%] bottom-8 rounded-full overflow-hidden bg-background'>
       <BlurView intensity={10} className='flex-1'>

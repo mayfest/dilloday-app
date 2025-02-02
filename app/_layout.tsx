@@ -1,20 +1,15 @@
-import { useEffect } from 'react';
-
+import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
-
 import '../global.css';
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -34,12 +29,46 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-        <Stack.Screen name='+not-found' />
-      </Stack>
-      <StatusBar style='auto' />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Drawer
+          screenOptions={{
+            headerShown: false,
+            drawerType: 'front',
+            drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+            drawerInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
+            drawerItemStyle: { paddingLeft: 16 },
+            drawerStyle: {
+              paddingTop: 40,
+              width: '70%',
+              backgroundColor: Colors[colorScheme ?? 'light'].background,
+            },
+          }}
+        >
+          <Drawer.Screen
+            name="(drawer)"
+            options={{
+              drawerLabel: 'Settings',
+              title: 'Settings',
+              drawerIcon: () => null,
+            }}
+          />
+          <Drawer.Screen
+            name="(tabs)"
+            options={{
+              drawerItemStyle: { display: 'none' },
+            }}
+          />
+          <Drawer.Screen
+            name="+not-found"
+            options={{
+              drawerItemStyle: { display: 'none' },
+              title: '404',
+            }}
+          />
+        </Drawer>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </GestureHandlerRootView>
   );
 }

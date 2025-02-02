@@ -8,6 +8,7 @@ const icons = {
   map: 'map',
   information: 'circle-info',
   explore: 'compass',
+  settings: 'gear',
 };
 
 export default function TabLayout() {
@@ -18,11 +19,36 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen name='announcements' />
-      <Tabs.Screen name='schedule' />
-      <Tabs.Screen name='index' />
-      <Tabs.Screen name='map' />
-      <Tabs.Screen name='information' />
+      <Tabs.Screen 
+        name="announcements" 
+        options={{
+          title: 'Announcements'
+        }}
+      />
+      <Tabs.Screen 
+        name="schedule" 
+        options={{
+          title: 'Schedule'
+        }}
+      />
+      <Tabs.Screen 
+        name="index" 
+        options={{
+          title: 'Home'
+        }}
+      />
+      <Tabs.Screen 
+        name="map" 
+        options={{
+          title: 'Map'
+        }}
+      />
+      <Tabs.Screen 
+        name="information" 
+        options={{
+          title: 'Information'
+        }}
+      />
     </Tabs>
   );
 }
