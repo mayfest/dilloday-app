@@ -7,7 +7,7 @@ import { View } from 'react-native';
 
 export default function DrawerLayout() {
   const colorScheme = useColorScheme();
-  
+
   const routes = [
     { key: 'announcements', name: 'announcements' },
     { key: 'schedule', name: 'schedule' },
@@ -17,12 +17,15 @@ export default function DrawerLayout() {
   ];
 
   const handleNavigation = (name: string) => {
-    switch(name) {
+    switch (name) {
       case 'index':
         router.push('/(tabs)/');
         break;
       case 'settings':
         router.push('/(drawer)/settings');
+        break;
+      case 'products':
+        router.push('/(drawer)/products');
         break;
       default:
         router.push(`/(tabs)/${name}`);
@@ -30,7 +33,15 @@ export default function DrawerLayout() {
   };
 
   const navigation = {
-    emit: ({ type, target, canPreventDefault }: { type: string; target?: string; canPreventDefault?: boolean }) => ({
+    emit: ({
+      type,
+      target,
+      canPreventDefault,
+    }: {
+      type: string;
+      target?: string;
+      canPreventDefault?: boolean;
+    }) => ({
       defaultPrevented: false,
       preventDefault: () => {},
       type: type,
@@ -51,11 +62,11 @@ export default function DrawerLayout() {
     getParent: () => null,
     getState: () => ({
       routes,
-      index: routes.findIndex(r => r.name === 'settings'),  // Update index based on current route
+      index: -1,
       key: 'drawer-tab-state',
-      routeNames: routes.map(r => r.name),
+      routeNames: routes.map((r) => r.name),
       stale: false,
-      type: 'tab'
+      type: 'tab',
     }),
   };
 
@@ -66,7 +77,8 @@ export default function DrawerLayout() {
           headerShown: false,
           drawerType: 'front',
           drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-          drawerInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
+          drawerInactiveTintColor:
+            Colors[colorScheme ?? 'light'].tabIconDefault,
           drawerItemStyle: { paddingLeft: 16 },
           drawerStyle: {
             paddingTop: 40,
@@ -75,22 +87,29 @@ export default function DrawerLayout() {
           },
         }}
       >
-        <Drawer.Screen 
-          name="settings" 
+        <Drawer.Screen
+          name='products'
+          options={{
+            drawerLabel: 'Products',
+            title: 'Products',
+          }}
+        />
+        <Drawer.Screen
+          name='settings'
           options={{
             drawerLabel: 'Settings',
-            title: 'Settings'
+            title: 'Settings',
           }}
         />
       </Drawer>
       <TabBar
         state={{
           routes,
-          index: routes.findIndex(r => r.name === 'settings'),  // Set index to settings when in drawer
+          index: -1,
           key: 'drawer-tab-state',
-          routeNames: routes.map(r => r.name),
+          routeNames: routes.map((r) => r.name),
           stale: false,
-          type: 'tab'
+          type: 'tab',
         }}
         navigation={navigation as any}
         icons={{
@@ -101,6 +120,7 @@ export default function DrawerLayout() {
           information: 'circle-info',
           explore: 'compass',
           settings: 'gear',
+          products: 'shopping-bag',
         }}
       />
     </View>

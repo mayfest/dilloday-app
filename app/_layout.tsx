@@ -1,13 +1,19 @@
+import { useEffect } from 'react';
+
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
+
 import '../global.css';
 
 SplashScreen.preventAutoHideAsync();
@@ -36,7 +42,8 @@ export default function RootLayout() {
             headerShown: false,
             drawerType: 'front',
             drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-            drawerInactiveTintColor: Colors[colorScheme ?? 'light'].tabIconDefault,
+            drawerInactiveTintColor:
+              Colors[colorScheme ?? 'light'].tabIconDefault,
             drawerItemStyle: { paddingLeft: 16 },
             drawerStyle: {
               paddingTop: 40,
@@ -46,7 +53,7 @@ export default function RootLayout() {
           }}
         >
           <Drawer.Screen
-            name="(drawer)"
+            name='(drawer)'
             options={{
               drawerLabel: 'Settings',
               title: 'Settings',
@@ -54,20 +61,20 @@ export default function RootLayout() {
             }}
           />
           <Drawer.Screen
-            name="(tabs)"
+            name='(tabs)'
             options={{
               drawerItemStyle: { display: 'none' },
             }}
           />
           <Drawer.Screen
-            name="+not-found"
+            name='+not-found'
             options={{
               drawerItemStyle: { display: 'none' },
               title: '404',
             }}
           />
         </Drawer>
-        <StatusBar style="auto" />
+        <StatusBar style='auto' />
       </ThemeProvider>
     </GestureHandlerRootView>
   );

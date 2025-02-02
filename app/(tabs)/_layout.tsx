@@ -19,34 +19,34 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen 
-        name="announcements" 
+      <Tabs.Screen
+        name='announcements'
         options={{
-          title: 'Announcements'
+          title: 'Announcements',
         }}
       />
-      <Tabs.Screen 
-        name="schedule" 
+      <Tabs.Screen
+        name='schedule'
         options={{
-          title: 'Schedule'
+          title: 'Schedule',
         }}
       />
-      <Tabs.Screen 
-        name="index" 
+      <Tabs.Screen
+        name='index'
         options={{
-          title: 'Home'
+          title: 'Home',
         }}
       />
-      <Tabs.Screen 
-        name="map" 
+      <Tabs.Screen
+        name='map'
         options={{
-          title: 'Map'
+          title: 'Map',
         }}
       />
-      <Tabs.Screen 
-        name="information" 
+      <Tabs.Screen
+        name='information'
         options={{
-          title: 'Information'
+          title: 'Information',
         }}
       />
     </Tabs>
