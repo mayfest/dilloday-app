@@ -1,5 +1,6 @@
 import React from 'react';
 
+import DrawerContent from '@/components/map/drawer-content';
 import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
 import { Animated, AppState, Dimensions, StyleSheet, View } from 'react-native';
@@ -55,9 +56,9 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
 
   const scale = ONE;
 
-  const opacity = 1
+  const opacity = 1;
 
-  const markerOpacity = 1
+  const markerOpacity = 1;
 
   const markerScale = selected.interpolate({
     inputRange: [0, 1],
@@ -76,7 +77,6 @@ function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
 }
 
 class AnimatedViews extends React.Component<any, any> {
-
   private panXListener: string | undefined;
   private panYListener: string | undefined;
   private mounted: boolean;
@@ -86,12 +86,10 @@ class AnimatedViews extends React.Component<any, any> {
     super(props);
 
     this.mounted = false;
-    // 42.057024, -87.670867
-    // 42.053377, -87.670265
     const markers = [
       {
         id: 0,
-        type: 'main',
+        type: 'food',
         coordinate: {
           latitude: LATITUDE,
           longitude: LONGITUDE,
@@ -99,7 +97,7 @@ class AnimatedViews extends React.Component<any, any> {
       },
       {
         id: 1,
-        type: 'fmo',
+        type: 'main',
         coordinate: {
           latitude: 42.057024,
           longitude: -87.670867,
@@ -145,18 +143,20 @@ class AnimatedViews extends React.Component<any, any> {
     };
   }
 
-
   componentDidMount() {
     this.mounted = true;
     const { region, panX, panY } = this.state;
-  
+
     panX.setValue(0);
     panY.setValue(0);
-    
+
     this.panXListener = panX.addListener(this.onPanXChange);
     this.panYListener = panY.addListener(this.onPanYChange);
 
-    this.appStateSubscription = AppState.addEventListener('change', this.handleAppStateChange);
+    this.appStateSubscription = AppState.addEventListener(
+      'change',
+      this.handleAppStateChange
+    );
 
     this.resetMapRegion();
   }
@@ -164,12 +164,12 @@ class AnimatedViews extends React.Component<any, any> {
   componentWillUnmount() {
     this.mounted = false;
     const { panX, panY, region } = this.state;
-    
+
     if (this.panXListener) {
-        panX.removeListener(this.panXListener);
+      panX.removeListener(this.panXListener);
     }
     if (this.panYListener) {
-        panY.removeListener(this.panYListener);
+      panY.removeListener(this.panYListener);
     }
     if (this.appStateSubscription) {
       this.appStateSubscription.remove();
@@ -177,7 +177,7 @@ class AnimatedViews extends React.Component<any, any> {
 
     panX.setValue(0);
     panY.setValue(0);
-    
+
     region.stopAnimation();
   }
 
@@ -185,27 +185,27 @@ class AnimatedViews extends React.Component<any, any> {
     if (nextAppState === 'active') {
       const panX = new Animated.Value(0);
       const panY = new Animated.Value(0);
-      
+
       const scrollY = panY.interpolate({
         inputRange: [-DRAWER_EXPANDED_HEIGHT, 0],
         outputRange: [1, 0],
         extrapolate: 'clamp',
       });
-  
+
       const animations = this.state.markers.map((m, i) =>
         getMarkerState(panX, panY, scrollY, i)
       );
-  
+
       if (this.panXListener) {
         this.state.panX.removeListener(this.panXListener);
       }
       if (this.panYListener) {
         this.state.panY.removeListener(this.panYListener);
       }
-  
+
       this.panXListener = panX.addListener(this.onPanXChange);
       this.panYListener = panY.addListener(this.onPanYChange);
-  
+
       const newRegion = new AnimatedRegion({
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -214,24 +214,27 @@ class AnimatedViews extends React.Component<any, any> {
       });
 
       this.resetMapRegion = this.resetMapRegion.bind(this);
-    this.updateMapRegion = this.updateMapRegion.bind(this);
-    this.onPanXChange = this.onPanXChange.bind(this);
-    this.onPanYChange = this.onPanYChange.bind(this);
-    this.handleAppStateChange = this.handleAppStateChange.bind(this);
-  
-      this.setState(prevState => ({
-        mapKey: prevState.mapKey + 1,
-        region: newRegion,
-        panX,
-        panY,
-        animations,
-      }), () => {
-        setTimeout(() => {
-          if (this.mounted) {
-            this.updateMapRegion(this.state.index);
-          }
-        }, 100);
-      });
+      this.updateMapRegion = this.updateMapRegion.bind(this);
+      this.onPanXChange = this.onPanXChange.bind(this);
+      this.onPanYChange = this.onPanYChange.bind(this);
+      this.handleAppStateChange = this.handleAppStateChange.bind(this);
+
+      this.setState(
+        (prevState) => ({
+          mapKey: prevState.mapKey + 1,
+          region: newRegion,
+          panX,
+          panY,
+          animations,
+        }),
+        () => {
+          setTimeout(() => {
+            if (this.mounted) {
+              this.updateMapRegion(this.state.index);
+            }
+          }, 100);
+        }
+      );
     }
   };
 
@@ -251,7 +254,6 @@ class AnimatedViews extends React.Component<any, any> {
     });
   };
 
-
   updateMapRegion = (index: number) => {
     if (!this.mounted) return;
 
@@ -262,14 +264,16 @@ class AnimatedViews extends React.Component<any, any> {
       const marker = markers[index];
       if (marker && marker.coordinate) {
         region.stopAnimation();
-        
-        region.timing({
-          ...marker.coordinate,
-          latitudeDelta: LATITUDE_DELTA,
-          longitudeDelta: LONGITUDE_DELTA,
-          duration: 250,
-          useNativeDriver: false,
-        }).start();
+
+        region
+          .timing({
+            ...marker.coordinate,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+            duration: 250,
+            useNativeDriver: false,
+          })
+          .start();
       }
     }
   };
@@ -300,7 +304,7 @@ class AnimatedViews extends React.Component<any, any> {
   render() {
     const { panX, panY, animations, canMoveHorizontal, markers, region } =
       this.state;
-  
+
     return (
       <View style={styles.container}>
         <PanController
@@ -356,7 +360,7 @@ class AnimatedViews extends React.Component<any, any> {
                     },
                   ]}
                 >
-                  <View style={styles.drawerHandle} />
+                  <DrawerContent type={marker.type} />
                 </Animated.View>
               );
             })}
@@ -368,14 +372,6 @@ class AnimatedViews extends React.Component<any, any> {
 }
 
 const styles = StyleSheet.create({
-  drawerHandle: {
-    width: 48,
-    height: 4,
-    backgroundColor: '#173885',
-    borderRadius: 2,
-    alignSelf: 'center',
-    marginTop: 8,
-  },
   container: {
     ...StyleSheet.absoluteFillObject,
   },
@@ -397,9 +393,17 @@ const styles = StyleSheet.create({
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
     borderRadius: 12,
-    borderColor: '#000',
+    borderColor: '#FFB1CD',
+    borderWidth: 2,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });
-
 
 export default AnimatedViews;

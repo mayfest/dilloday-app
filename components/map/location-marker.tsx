@@ -1,7 +1,8 @@
+import React from 'react';
+
 import ParkAttraction from '@/assets/images/parkattraction.svg';
 import Popcorn from '@/assets/images/popcorn.svg';
 import Tent from '@/assets/images/tent.svg';
-import React from 'react';
 import { Animated, StyleSheet } from 'react-native';
 
 const LocationMarker = ({ type, selected, style }) => {
@@ -36,8 +37,8 @@ const LocationMarker = ({ type, selected, style }) => {
         style,
         {
           transform: [{ scale }],
-          opacity
-        }
+          opacity,
+        },
       ]}
     >
       <MarkerComponent width={40} height={40} />
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: 40,
     height: 40,
-  }
+  },
 });
 
 export default LocationMarker;

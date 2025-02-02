@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Animated, PanResponder, View } from 'react-native';
 
 class PanController extends React.Component<any, any> {
@@ -6,9 +7,9 @@ class PanController extends React.Component<any, any> {
   _listener: any = null;
   _direction: any = null;
   _animating: boolean = false;
-  _verticalAnimating: boolean = false; 
+  _verticalAnimating: boolean = false;
   _initialTouch: { x: number; y: number } | null = null;
-  _horizontalAnimating: boolean = false;  
+  _horizontalAnimating: boolean = false;
   _lastValue: { x: number; y: number } = { x: 0, y: 0 };
   _isMoving: boolean = false;
   deceleration: number;
@@ -36,7 +37,7 @@ class PanController extends React.Component<any, any> {
 
       onMoveShouldSetPanResponder: (e, gestureState) => {
         if (!this._initialTouch || this._verticalAnimating) return false;
-        
+
         const { dx, dy } = gestureState;
         const absX = Math.abs(dx);
         const absY = Math.abs(dy);
@@ -223,14 +224,14 @@ class PanController extends React.Component<any, any> {
     anim.flattenOffset();
     let value = anim._value;
     let targetValue = value;
-  
+
     if (direction === 'x') {
       if (mode === 'snap' && snapSpacing) {
         const velocityThreshold = Math.abs(velocity) > 1000 ? 100 : 200;
         const currentIndex = Math.round(value / snapSpacing);
         const maxIndex = Math.floor(max / snapSpacing);
         const minIndex = Math.ceil(min / snapSpacing);
-  
+
         if (Math.abs(velocity) > velocityThreshold) {
           const direction = Math.sign(velocity);
           let nextIndex = currentIndex + direction;
@@ -242,23 +243,23 @@ class PanController extends React.Component<any, any> {
         }
       }
     } else if (direction === 'y') {
-      const threshold = (max + min) / 2; 
-      const isOpening = velocity < 0; 
-  
+      const threshold = (max + min) / 2;
+      const isOpening = velocity < 0;
+
       if (Math.abs(velocity) > 500) {
         targetValue = isOpening ? min : max;
       } else {
         targetValue = value > threshold ? max : min;
       }
     }
-  
+
     targetValue = Math.max(min, Math.min(max, targetValue));
     // const adjustedVelocity = Math.sign(velocity) * Math.min(Math.abs(velocity), 1000);
-  
+
     this._animating = true;
     Animated.timing(anim, {
       toValue: targetValue,
-      duration: 200, 
+      duration: 200,
       useNativeDriver: false,
     }).start(() => {
       this._animating = false;
@@ -289,12 +290,12 @@ class PanController extends React.Component<any, any> {
 
   componentWillUnmount() {
     const { panX, panY } = this.props;
-    
+
     if (this._animating) {
-        if (panX) panX.stopAnimation();
-        if (panY) panY.stopAnimation();
-        this._animating = false;
-        this._verticalAnimating = false;
+      if (panX) panX.stopAnimation();
+      if (panY) panY.stopAnimation();
+      this._animating = false;
+      this._verticalAnimating = false;
     }
 
     this._direction = null;
@@ -303,8 +304,8 @@ class PanController extends React.Component<any, any> {
     this._lastValue = { x: 0, y: 0 };
 
     if (this._listener) {
-        if (panX) panX.removeListener(this._listener);
-        if (panY) panY.removeListener(this._listener);
+      if (panX) panX.removeListener(this._listener);
+      if (panY) panY.removeListener(this._listener);
     }
   }
 }

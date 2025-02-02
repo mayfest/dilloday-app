@@ -163,7 +163,7 @@ class AnimatedViews extends React.Component<any, any> {
     const markers = [
       {
         id: 0,
-        type: 'main', 
+        type: 'main',
         coordinate: {
           latitude: LATITUDE,
           longitude: LONGITUDE,
@@ -179,7 +179,7 @@ class AnimatedViews extends React.Component<any, any> {
       },
       {
         id: 2,
-        type: 'food', 
+        type: 'food',
         coordinate: {
           latitude: LATITUDE - 0.004,
           longitude: LONGITUDE - 0.004,
@@ -379,7 +379,7 @@ class AnimatedViews extends React.Component<any, any> {
             region={region}
             onRegionChange={this.onRegionChange}
           >
-           {markers.map((marker: any, i: any) => {
+            {markers.map((marker: any, i: any) => {
               const { selected, markerOpacity, markerScale } = animations[i];
               return (
                 <Marker key={marker.id} coordinate={marker.coordinate}>
@@ -394,7 +394,6 @@ class AnimatedViews extends React.Component<any, any> {
                 </Marker>
               );
             })}
-
           </AnimatedMap>
           <View style={styles.itemContainer}>
             {markers.map((marker: any, i: any) => {
