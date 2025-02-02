@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PriceMarker from '@/components/map/animated-price-marker';
+import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
 import { Animated, AppState, Dimensions, StyleSheet, View } from 'react-native';
 import {
@@ -86,11 +86,12 @@ class AnimatedViews extends React.Component<any, any> {
     super(props);
 
     this.mounted = false;
-
+    // 42.057024, -87.670867
+    // 42.053377, -87.670265
     const markers = [
       {
         id: 0,
-        amount: 99,
+        type: 'main',
         coordinate: {
           latitude: LATITUDE,
           longitude: LONGITUDE,
@@ -98,18 +99,18 @@ class AnimatedViews extends React.Component<any, any> {
       },
       {
         id: 1,
-        amount: 199,
+        type: 'fmo',
         coordinate: {
-          latitude: LATITUDE + 0.004,
-          longitude: LONGITUDE - 0.004,
+          latitude: 42.057024,
+          longitude: -87.670867,
         },
       },
       {
         id: 2,
-        amount: 285,
+        type: 'food',
         coordinate: {
-          latitude: LATITUDE - 0.004,
-          longitude: LONGITUDE - 0.004,
+          latitude: 42.053377,
+          longitude: -87.670265,
         },
       },
     ];
@@ -329,12 +330,12 @@ class AnimatedViews extends React.Component<any, any> {
               const { selected, markerOpacity, markerScale } = animations[i];
               return (
                 <Marker key={marker.id} coordinate={marker.coordinate}>
-                  <PriceMarker
+                  <LocationMarker
                     style={{
                       opacity: markerOpacity,
                       transform: [{ scale: markerScale }],
                     }}
-                    amount={marker.amount}
+                    type={marker.type}
                     selected={selected}
                   />
                 </Marker>
