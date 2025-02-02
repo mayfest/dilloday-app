@@ -1,4 +1,10 @@
-import { useCallback, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -11,35 +17,53 @@ interface Cart {
   id: string;
   items: CartItem[];
 }
+
+// Define the shape of everything you want to expose via context
+interface CartContextValue {
+  cartId: string | null;
+  cart: Cart | null;
+  isLoading: boolean;
+  createCart: () => Promise<string>;
+  addToCart: (variantId: string, quantity?: number) => Promise<Cart>;
+  updateQuantity: (
+    variantId: string,
+    quantity: number
+  ) => Promise<Cart | undefined>;
+  removeFromCart: (variantId: string) => Promise<Cart | undefined>;
+  getCart: () => Promise<Cart | null>;
+  setCart: React.Dispatch<React.SetStateAction<Cart | null>>;
+}
+
+// The actual context object
+const CartContext = createContext<CartContextValue | undefined>(undefined);
+
+// Where you’ll store your single source of truth
 const CART_ID_KEY = '@cart_id';
+const STOREFRONT_TOKEN = 'ptkn_25057bc8-f67f-41c7-95a8-39d6f16d54d1';
 
-export function useCart() {
+/**
+ * The provider that wraps your entire app,
+ * sharing the same cart state across all screens.
+ */
+export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cartId, setCartId] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [cart, setCart] = useState<Cart | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const STOREFRONT_TOKEN = 'ptkn_25057bc8-f67f-41c7-95a8-39d6f16d54d1';
-
+  // On mount, load any existing cart ID from storage & verify it
   useEffect(() => {
     const loadCartId = async () => {
       try {
         const savedCartId = await AsyncStorage.getItem(CART_ID_KEY);
-        console.log('Loaded cartId from storage:', savedCartId);
         if (savedCartId) {
           const cartResponse = await fetch(
-            `https://storefront-api.fourthwall.com/v1/carts/${savedCartId}?storefront_token=${STOREFRONT_TOKEN}`,
-            {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            }
+            `https://storefront-api.fourthwall.com/v1/carts/${savedCartId}?storefront_token=${STOREFRONT_TOKEN}`
           );
-
           if (cartResponse.ok) {
-            console.log('Cart verified, setting cartId:', savedCartId);
+            // Valid cart
             setCartId(savedCartId);
           } else {
-            console.log('Saved cart no longer valid, removing from storage');
+            // Cart ID invalid or expired; clear it
             await AsyncStorage.removeItem(CART_ID_KEY);
           }
         }
@@ -51,6 +75,9 @@ export function useCart() {
     loadCartId();
   }, []);
 
+  /**
+   * Create a new cart if none exists.
+   */
   const createCart = useCallback(async () => {
     try {
       setIsLoading(true);
@@ -59,12 +86,8 @@ export function useCart() {
         `https://storefront-api.fourthwall.com/v1/carts?storefront_token=${STOREFRONT_TOKEN}`,
         {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            items: [],
-          }),
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ items: [] }),
         }
       );
 
@@ -75,12 +98,9 @@ export function useCart() {
       }
 
       const data = await response.json();
-      console.log('Cart creation response:', JSON.stringify(data, null, 2));
-
-      // Save cartId to AsyncStorage
       await AsyncStorage.setItem(CART_ID_KEY, data.id);
-      console.log('Saved cartId to storage:', data.id);
       setCartId(data.id);
+      console.log('Cart created:', data.id);
       return data.id;
     } catch (error) {
       console.error('Detailed cart creation error:', error);
@@ -90,12 +110,16 @@ export function useCart() {
     }
   }, []);
 
+  /**
+   * Add an item to the cart.
+   */
   const addToCart = useCallback(
     async (variantId: string, quantity: number = 1) => {
       try {
         setIsLoading(true);
         let currentCartId = cartId;
         if (!currentCartId) {
+          // No cart yet, create one first
           currentCartId = await createCart();
         }
 
@@ -109,32 +133,21 @@ export function useCart() {
           `https://storefront-api.fourthwall.com/v1/carts/${currentCartId}/add?storefront_token=${STOREFRONT_TOKEN}`,
           {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              items: [
-                {
-                  variantId,
-                  quantity,
-                },
-              ],
+              items: [{ variantId, quantity }],
             }),
           }
         );
 
         const data = await response.json();
-
         if (!response.ok) {
-          console.log(
-            'Add to cart error response:',
-            JSON.stringify(data, null, 2)
-          );
+          console.log('Add to cart error response:', JSON.stringify(data));
           throw new Error(`Failed to add item to cart: ${response.status}`);
         }
 
-        console.log('Add to cart response:', JSON.stringify(data, null, 2));
-
+        console.log('Add to cart response:', JSON.stringify(data));
+        // This is the updated cart object
         setCart(data);
 
         return data;
@@ -148,6 +161,9 @@ export function useCart() {
     [cartId, createCart]
   );
 
+  /**
+   * Update the quantity of a given item in the cart.
+   */
   const updateQuantity = useCallback(
     async (variantId: string, quantity: number) => {
       if (!cartId) return;
@@ -157,20 +173,18 @@ export function useCart() {
           `https://storefront-api.fourthwall.com/v1/carts/${cartId}/update-quantities?storefront_token=${STOREFRONT_TOKEN}`,
           {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               items: [{ variantId, quantity }],
             }),
           }
         );
-
         if (!response.ok) {
           throw new Error('Failed to update quantity');
         }
-
         const updatedCart = await response.json();
+        // Optionally update local state
+        setCart(updatedCart);
         return updatedCart;
       } catch (error) {
         console.error('Error updating quantity:', error);
@@ -182,6 +196,9 @@ export function useCart() {
     [cartId]
   );
 
+  /**
+   * Remove an item from the cart.
+   */
   const removeFromCart = useCallback(
     async (variantId: string) => {
       if (!cartId) return;
@@ -191,20 +208,17 @@ export function useCart() {
           `https://storefront-api.fourthwall.com/v1/carts/${cartId}/remove?storefront_token=${STOREFRONT_TOKEN}`,
           {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               items: [{ variantId }],
             }),
           }
         );
-
         if (!response.ok) {
           throw new Error('Failed to remove item');
         }
-
         const updatedCart = await response.json();
+        setCart(updatedCart);
         return updatedCart;
       } catch (error) {
         console.error('Error removing item:', error);
@@ -216,15 +230,16 @@ export function useCart() {
     [cartId]
   );
 
+  /**
+   * Fetch the entire cart from the server (e.g. to refresh).
+   */
   const getCart = useCallback(async () => {
     if (!cartId) return null;
     try {
       const response = await fetch(
         `https://storefront-api.fourthwall.com/v1/carts/${cartId}?storefront_token=${STOREFRONT_TOKEN}`,
         {
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
         }
       );
 
@@ -233,6 +248,8 @@ export function useCart() {
       }
 
       const data = await response.json();
+      // Optionally update local state
+      setCart(data);
       return data;
     } catch (error) {
       console.error('Error fetching cart:', error);
@@ -240,15 +257,32 @@ export function useCart() {
     }
   }, [cartId]);
 
-  return {
-    cartId,
-    isLoading,
-    createCart,
-    addToCart,
-    updateQuantity,
-    removeFromCart,
-    getCart,
-    cart,
-    setCart,
-  };
+  return (
+    <CartContext.Provider
+      value={{
+        cartId,
+        cart,
+        isLoading,
+        createCart,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        getCart,
+        setCart,
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
+}
+
+/**
+ * A simple hook to consume the CartContext in any component/screen.
+ */
+export function useCartContext() {
+  const context = useContext(CartContext);
+  if (!context) {
+    throw new Error('useCartContext must be used within a <CartProvider>');
+  }
+  return context;
 }

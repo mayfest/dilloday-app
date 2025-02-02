@@ -1,6 +1,7 @@
-import { useCart } from '@/hooks/useCart';
-import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+
+// import { useCart } from '@/hooks/useCart';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   ActivityIndicator,
   Alert,
@@ -9,8 +10,10 @@ import {
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+
+import { useCartContext } from '@/app/contexts/cart-context';
 import { ThemedText } from '../../../components/ThemedText';
 import { ThemedView } from '../../../components/ThemedView';
 
@@ -58,7 +61,7 @@ export default function ProductDetail() {
   const [error, setError] = useState<string | null>(null);
   const [selectedVariant, setSelectedVariant] = useState<Variant | null>(null);
   const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const { addToCart, isLoading: isCartLoading } = useCart();
+  const { addToCart, isLoading: isCartLoading } = useCartContext();
 
   const STOREFRONT_TOKEN = 'ptkn_25057bc8-f67f-41c7-95a8-39d6f16d54d1';
 
@@ -143,7 +146,7 @@ export default function ProductDetail() {
   if (loading) {
     return (
       <ThemedView style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#fff" />
+        <ActivityIndicator size='large' color='#fff' />
       </ThemedView>
     );
   }
@@ -172,7 +175,7 @@ export default function ProductDetail() {
                   getDefaultImages(product.variants)[0].url,
               }}
               style={styles.productImage}
-              resizeMode="cover"
+              resizeMode='cover'
             />
           )}
 
@@ -192,8 +195,8 @@ export default function ProductDetail() {
           {product.variants && product.variants.length > 0 && (
             <>
               <ThemedText style={styles.sectionTitle}>Color</ThemedText>
-              <ScrollView 
-                horizontal 
+              <ScrollView
+                horizontal
                 showsHorizontalScrollIndicator={false}
                 contentContainerStyle={styles.colorContainer}
               >
@@ -209,20 +212,22 @@ export default function ProductDetail() {
                     <ThemedView
                       style={[
                         styles.colorOuterCircle,
-                        selectedColor === attributes.color.name && styles.selectedColorBorder
+                        selectedColor === attributes.color.name &&
+                          styles.selectedColorBorder,
                       ]}
                     >
                       <ThemedView
                         style={[
                           styles.colorInnerCircle,
-                          { backgroundColor: attributes.color.swatch }
+                          { backgroundColor: attributes.color.swatch },
                         ]}
                       />
                     </ThemedView>
                     <ThemedText
                       style={[
                         styles.colorName,
-                        selectedColor === attributes.color.name && styles.selectedColorText
+                        selectedColor === attributes.color.name &&
+                          styles.selectedColorText,
                       ]}
                     >
                       {attributes.color.name}
@@ -241,13 +246,15 @@ export default function ProductDetail() {
                         onPress={() => setSelectedVariant(variant)}
                         style={[
                           styles.sizeButton,
-                          selectedVariant?.id === variant.id && styles.selectedSizeButton
+                          selectedVariant?.id === variant.id &&
+                            styles.selectedSizeButton,
                         ]}
                       >
                         <ThemedText
                           style={[
                             styles.sizeText,
-                            selectedVariant?.id === variant.id && styles.selectedSizeText
+                            selectedVariant?.id === variant.id &&
+                              styles.selectedSizeText,
                           ]}
                         >
                           {variant.attributes.size.name}
@@ -258,14 +265,14 @@ export default function ProductDetail() {
               </View>
             </>
           )}
-          
+
           <View style={styles.addToCartContainer}>
             <TouchableOpacity
               onPress={handleAddToCart}
               disabled={isCartLoading || !selectedVariant}
               style={[
                 styles.addToCartButton,
-                (isCartLoading || !selectedVariant) && styles.disabledButton
+                (isCartLoading || !selectedVariant) && styles.disabledButton,
               ]}
             >
               <ThemedText style={styles.addToCartText}>

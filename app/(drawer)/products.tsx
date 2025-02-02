@@ -1,5 +1,6 @@
-import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+
+import { useRouter } from 'expo-router';
 import {
   ActivityIndicator,
   Dimensions,
@@ -8,8 +9,9 @@ import {
   RefreshControl,
   StyleSheet,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
+
 import { ThemedText } from '../../components/ThemedText';
 import { ThemedView } from '../../components/ThemedView';
 
@@ -46,7 +48,7 @@ export default function ProductsScreen() {
     try {
       const response = await fetch(
         'https://storefront-api.fourthwall.com/v1/collections/camp-collectionnnn/products?storefront_token=' +
-        STOREFRONT_TOKEN,
+          STOREFRONT_TOKEN,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -82,8 +84,10 @@ export default function ProductsScreen() {
   }, []);
 
   const renderProductItem = ({ item }: { item: Product }) => {
-    const hasDiscount = item.variants?.[0]?.price?.amount && item.variants[0].price.amount < 10000;
-    
+    const hasDiscount =
+      item.variants?.[0]?.price?.amount &&
+      item.variants[0].price.amount < 10000;
+
     return (
       <TouchableOpacity
         style={styles.productCard}
@@ -94,7 +98,7 @@ export default function ProductsScreen() {
             <Image
               source={{ uri: item.images[0].url }}
               style={styles.productImage}
-              resizeMode="cover"
+              resizeMode='cover'
             />
           )}
           {hasDiscount && (
@@ -108,7 +112,7 @@ export default function ProductsScreen() {
           <ThemedText style={styles.productName} numberOfLines={1}>
             {item.name}
           </ThemedText>
-          
+
           <ThemedText style={styles.productDescription} numberOfLines={2}>
             {item.description}
           </ThemedText>
@@ -131,7 +135,7 @@ export default function ProductsScreen() {
   if (loading) {
     return (
       <ThemedView style={styles.centerContainer}>
-        <ActivityIndicator size="large" color="#173885" />
+        <ActivityIndicator size='large' color='#173885' />
       </ThemedView>
     );
   }
@@ -140,10 +144,7 @@ export default function ProductsScreen() {
     return (
       <ThemedView style={styles.centerContainer}>
         <ThemedText style={styles.errorText}>{error}</ThemedText>
-        <TouchableOpacity
-          onPress={fetchProducts}
-          style={styles.retryButton}
-        >
+        <TouchableOpacity onPress={fetchProducts} style={styles.retryButton}>
           <ThemedText style={styles.retryButtonText}>Retry</ThemedText>
         </TouchableOpacity>
       </ThemedView>
@@ -175,7 +176,7 @@ export default function ProductsScreen() {
 
 const { width } = Dimensions.get('window');
 const CARD_MARGIN = 8;
-const CARD_WIDTH = (width - (CARD_MARGIN * 6)) / 2;
+const CARD_WIDTH = (width - CARD_MARGIN * 6) / 2;
 
 const styles = StyleSheet.create({
   container: {

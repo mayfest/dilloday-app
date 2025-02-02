@@ -27,6 +27,9 @@ export default function DrawerLayout() {
       case 'products':
         router.push('/(drawer)/products');
         break;
+      case 'cart':
+        router.push('/(drawer)/cart');
+        break;
       default:
         router.push(`/(tabs)/${name}`);
     }
@@ -94,6 +97,7 @@ export default function DrawerLayout() {
             title: 'Products',
           }}
         />
+
         <Drawer.Screen
           name='settings'
           options={{

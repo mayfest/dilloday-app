@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { CartProvider } from '@/app/contexts/cart-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import {
@@ -36,46 +37,50 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Drawer
-          screenOptions={{
-            headerShown: false,
-            drawerType: 'front',
-            drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-            drawerInactiveTintColor:
-              Colors[colorScheme ?? 'light'].tabIconDefault,
-            drawerItemStyle: { paddingLeft: 16 },
-            drawerStyle: {
-              paddingTop: 40,
-              width: '70%',
-              backgroundColor: Colors[colorScheme ?? 'light'].background,
-            },
-          }}
+      <CartProvider>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <Drawer.Screen
-            name='(drawer)'
-            options={{
-              drawerLabel: 'Settings',
-              title: 'Settings',
-              drawerIcon: () => null,
+          <Drawer
+            screenOptions={{
+              headerShown: false,
+              drawerType: 'front',
+              drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+              drawerInactiveTintColor:
+                Colors[colorScheme ?? 'light'].tabIconDefault,
+              drawerItemStyle: { paddingLeft: 16 },
+              drawerStyle: {
+                paddingTop: 40,
+                width: '70%',
+                backgroundColor: Colors[colorScheme ?? 'light'].background,
+              },
             }}
-          />
-          <Drawer.Screen
-            name='(tabs)'
-            options={{
-              drawerItemStyle: { display: 'none' },
-            }}
-          />
-          <Drawer.Screen
-            name='+not-found'
-            options={{
-              drawerItemStyle: { display: 'none' },
-              title: '404',
-            }}
-          />
-        </Drawer>
-        <StatusBar style='auto' />
-      </ThemeProvider>
+          >
+            <Drawer.Screen
+              name='(drawer)'
+              options={{
+                drawerLabel: 'Settings',
+                title: 'Settings',
+                drawerIcon: () => null,
+              }}
+            />
+            <Drawer.Screen
+              name='(tabs)'
+              options={{
+                drawerItemStyle: { display: 'none' },
+              }}
+            />
+            <Drawer.Screen
+              name='+not-found'
+              options={{
+                drawerItemStyle: { display: 'none' },
+                title: '404',
+              }}
+            />
+          </Drawer>
+          <StatusBar style='auto' />
+        </ThemeProvider>
+      </CartProvider>
     </GestureHandlerRootView>
   );
 }
