@@ -1,4 +1,3 @@
-import React from 'react';
 import { Image, Text, View } from 'react-native';
 // @ts-ignore  
 import { Colors } from '../../constants/Colors.ts';
@@ -96,7 +95,8 @@ function colorBox({ color, size, message, imageSrc, split }: ColorBoxProps) {
 
 export default function HomeScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: Colors.light.background, padding: 80 }}>
+    <ScrollView style={{flex: 1, backgroundColor: Colors.light.background}}>
+    <View style={{alignItems: 'center', padding: 80 }}>
       {/* <Text style={{ color: '#000', marginBottom: 16 }}>Screen Content</Text> */}      
       {colorBox({ color: Colors.light.cardAlt, size: 70, message: "DILLO 52" })}
       {/* {<img src="assets/images/adaptive-icon.png" alt="logo" />} */}
@@ -107,6 +107,36 @@ export default function HomeScreen() {
         imageSrc: "https://i.scdn.co/image/ab67616d0000b273fd8d7a8d96871e791cb1f626",
         split: true,
         })}
+        <View style = {{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingBottom: 40}}>
+          <View
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            >
+              <Text 
+              style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
+              >
+                Playlists
+              </Text>
+            </View>
+            <View
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            >
+              <Text 
+              style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
+              >
+                Get Merch
+              </Text>
+            </View>
+            <View
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            >
+              <Text 
+              style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
+              >
+                Interactive Part 
+              </Text>
+            </View>
+        </View>
     </View>
+    </ScrollView>
   );
 }
