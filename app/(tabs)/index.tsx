@@ -1,4 +1,4 @@
-import { Image, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 // @ts-ignore  
 import { Colors } from '../../constants/Colors.ts';
 import '../../global.css';
@@ -109,7 +109,7 @@ export default function HomeScreen() {
         })}
         <View style = {{flexDirection: 'row', justifyContent: 'space-between', width: '100%', paddingBottom: 40}}>
           <View
-            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
             >
               <Text 
               style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
@@ -118,7 +118,7 @@ export default function HomeScreen() {
               </Text>
             </View>
             <View
-            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
             >
               <Text 
               style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
@@ -127,7 +127,7 @@ export default function HomeScreen() {
               </Text>
             </View>
             <View
-            style = {{backgroundColor: '#FFFB94', width: 100, height: 100. borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
+            style = {{backgroundColor: '#FFFB94', width: 100, height: 100, borderRadius: 15, justifyContent: 'center', alignItems: 'center', marginHorizontal:10,}}
             >
               <Text 
               style = {{color: '#1F3C88', fontSize: 16, textAlign: 'center', fontFamily: 'SpaceMono-Regular',}}
