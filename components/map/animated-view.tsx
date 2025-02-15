@@ -1,6 +1,6 @@
 import React from 'react';
 
-import PriceMarker from '@/components/map/animated-price-marker';
+import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
 import { Animated, Dimensions, StyleSheet, View } from 'react-native';
 import {
@@ -163,7 +163,7 @@ class AnimatedViews extends React.Component<any, any> {
     const markers = [
       {
         id: 0,
-        amount: 99,
+        type: 'main',
         coordinate: {
           latitude: LATITUDE,
           longitude: LONGITUDE,
@@ -171,7 +171,7 @@ class AnimatedViews extends React.Component<any, any> {
       },
       {
         id: 1,
-        amount: 199,
+        type: 'fmo',
         coordinate: {
           latitude: LATITUDE + 0.004,
           longitude: LONGITUDE - 0.004,
@@ -179,7 +179,7 @@ class AnimatedViews extends React.Component<any, any> {
       },
       {
         id: 2,
-        amount: 285,
+        type: 'food',
         coordinate: {
           latitude: LATITUDE - 0.004,
           longitude: LONGITUDE - 0.004,
@@ -381,15 +381,14 @@ class AnimatedViews extends React.Component<any, any> {
           >
             {markers.map((marker: any, i: any) => {
               const { selected, markerOpacity, markerScale } = animations[i];
-
               return (
                 <Marker key={marker.id} coordinate={marker.coordinate}>
-                  <PriceMarker
+                  <LocationMarker
                     style={{
                       opacity: markerOpacity,
                       transform: [{ scale: markerScale }],
                     }}
-                    amount={marker.amount}
+                    type={marker.type}
                     selected={selected}
                   />
                 </Marker>
