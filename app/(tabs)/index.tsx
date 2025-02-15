@@ -1,112 +1,118 @@
 import React from 'react';
 import { Image, Text, View } from 'react-native';
-// @ts-ignore  
-import { Colors } from '../../constants/Colors.ts';
-import '../../global.css';
+import Horse from '../../assets/images/horsescarousel.svg';
+import { Colors } from '../../constants/Colors';
 
-interface ColorBoxProps {
+
+
+interface SplitBoxProps {
   color: string;
   // padding: number;
   size: number;
-  message?: string;
+  title?: string;
+  time?: string;
+  location?: string;
   imageSrc?: string;
-  split?: boolean;
 }
 
-function colorBox({ color, size, message, imageSrc, split }: ColorBoxProps) {
+function SplitBox({ color, size, title, time, location, imageSrc }: SplitBoxProps) {
   return (
     <View
       style={{
         backgroundColor: color,
         width: 350,
         height: size,
-        borderRadius: 10,
+        borderRadius: 6,
         marginVertical: 10,
         overflow: 'hidden',
-        padding: !imageSrc && !split ? 20 : 0, // Remove padding for image or split mode
-        flexDirection: split ? 'row' : 'column', // Split into two columns if `split` is true
+        flexDirection: 'row', 
       }}
     >
-      {split && imageSrc ? (
-        // Two-column layout: Image on the left, text on the right
+      {
         <>
           <Image
             source={{ uri: imageSrc }}
             style={{
-              width: '50%', // Left side (50%)
+              width: '40%',
               height: '100%',
             }}
-            resizeMode="cover"
+            resizeMode='cover'
           />
           <View
             style={{
-              width: '50%', // Right side (50%)
+              width: '60%', // start from left side of box
               justifyContent: 'center',
-              alignItems: 'center',
-              padding: 10,
+              alignItems: 'flex-start',
+              padding: 15,
             }}
           >
+            {/* FOR THE TITLE */}
             <Text
               style={{
-                color: '#fff',
-                textAlign: 'center',
-                fontFamily: 'SpaceMono-Regular',
-                fontSize: 20,
+                color: Colors.light.text,
+                textAlign: 'left',
+                // fontFamily: 'SpaceMono-Bold',
+                fontSize: 18,
+                fontWeight: 'bold',
               }}
             >
-              {message}
+              {title}
+            </Text>
+              {/* FOR THE LOCATION AND TIME */}
+            <Text
+              style={{
+                color: Colors.light.text,
+                textAlign: 'left',
+                // fontFamily: 'SpaceMono-Regular',
+                fontSize: 14,
+              }}
+            >
+              {time + '\n'}
+              {location}
             </Text>
           </View>
         </>
-      ) : imageSrc ? (
-        // Full image mode
-        <Image
-          source={{ uri: imageSrc }}
-          style={{
-            width: '100%',
-            height: '100%',
-          }}
-          resizeMode="cover"
-        />
-      ) : (
-        // Normal text box
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <Text
-            style={{
-              color: '#fff',
-              textAlign: 'center',
-              fontFamily: 'SpaceMono-Regular',
-              fontSize: 24,
-            }}
-          >
-            {message}
-          </Text>
-        </View>
-      )}
+      }
     </View>
   );
 }
 
-
 export default function HomeScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: Colors.light.background, padding: 80 }}>
-      {/* <Text style={{ color: '#000', marginBottom: 16 }}>Screen Content</Text> */}      
-      {colorBox({ color: Colors.light.cardAlt, size: 70, message: "DILLO 52" })}
-      {/* {<img src="assets/images/adaptive-icon.png" alt="logo" />} */}
-      {colorBox({ color: 'pink', size: 300, imageSrc: "https://ja-roy.com/wp-content/uploads/armadillo-on-white.jpg"})}
-      {colorBox({ color: Colors.light.cardAlt, 
-        size: 200, 
-        message: "Artist Up Next\n 3:30pm - 4:30pm" ,
-        imageSrc: "https://i.scdn.co/image/ab67616d0000b273fd8d7a8d96871e791cb1f626",
-        split: true,
+    <View style={{ flex: 1, alignItems: 'center', backgroundColor: Colors.light.background, padding: 60 }}>
+      {/* DILLO DAY TITLE*/}
+      <Horse width={150} height={90}/>
+
+      <Text style={{ 
+        // position: 'absolute',
+        color: '#ffff', 
+        marginTop: -10,
+        marginBottom: 10,
+        // fontFamily: 'SpaceMono-Bold',
+        // left: -80,
+        textAlign: 'center',
+        fontSize: 30
+        }}>CARNIVAL DILLO</Text>
+        
+      
+      {/* CURRENT ARTIST INFORMATION
+          CURRENT MAIN STAGE AND CURRENT SECOND STAGE
+      */}
+      {SplitBox({ color: Colors.light.cardAlt, 
+        size: 115, 
+        title:'THE DARE',
+        time: '2:00pm',
+        location: 'Main Stage',
+        imageSrc: 'https://b3142227.smushcdn.com/3142227/wp-content/uploads/2023/03/the-dare.jpeg?lossy=2&strip=1&webp=1',
         })}
+      {SplitBox({ color: Colors.light.actionText, 
+        size: 115, 
+        title: 'TCHAIKOVSKY',
+        time: '3:00pm',
+        location: 'Second Stage',
+        imageSrc: 'https://i.scdn.co/image/9a7c31f43e22a95f6d3c57baf4f87a3a9d2b93e0',
+        })}
+      
     </View>
   );
 }
