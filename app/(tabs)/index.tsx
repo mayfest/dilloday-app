@@ -3,8 +3,6 @@ import { Image, Text, View } from 'react-native';
 import Horse from '../../assets/images/horsescarousel.svg';
 import { Colors } from '../../constants/Colors';
 
-
-
 interface SplitBoxProps {
   color: string;
   // padding: number;
@@ -77,6 +75,27 @@ function SplitBox({ color, size, title, time, location, imageSrc }: SplitBoxProp
   );
 }
 
+interface colorButtonProps {
+  color: string;
+  size: number;
+  title: string;
+  icon?: string;
+}
+
+function colorButton({ color, size, title, icon }: colorButtonProps) {
+  return (
+    <View style={{ 
+      backgroundColor: color, 
+      borderRadius: 6, 
+      padding: 10, 
+      alignItems: 'center', 
+      width: 150,
+      height: size }}>
+      <Text style={{ color: '#ffff', fontSize: 16 }}>{title}</Text>
+    </View>
+  );
+}
+
 export default function HomeScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', backgroundColor: Colors.light.background, padding: 60 }}>
@@ -94,7 +113,6 @@ export default function HomeScreen() {
         fontSize: 30
         }}>CARNIVAL DILLO</Text>
         
-      
       {/* CURRENT ARTIST INFORMATION
           CURRENT MAIN STAGE AND CURRENT SECOND STAGE
       */}
@@ -112,7 +130,17 @@ export default function HomeScreen() {
         location: 'Second Stage',
         imageSrc: 'https://i.scdn.co/image/9a7c31f43e22a95f6d3c57baf4f87a3a9d2b93e0',
         })}
-      
+        
+        {/* BUTTONS */}
+        <View style={{ flexDirection: 'row', marginTop: 10 , marginHorizontal: 10}}>
+          {colorButton({
+            color: Colors.light.action, size: 70, title: 'Evil Button'
+            })}
+          {colorButton({
+            color: Colors.light.action, size: 70, title: 'Playlist Button'
+          })}
+      </View>
+
     </View>
   );
 }
