@@ -1,7 +1,12 @@
-import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import Ticket from '../../assets/images/blueticket.svg';
+import Structure from '../../assets/images/bowling.svg';
 import Horse from '../../assets/images/horsescarousel.svg';
+import PopCorn from '../../assets/images/popcorn.svg';
 import { Colors } from '../../constants/Colors';
+
+
+import React from 'react';
 
 interface SplitBoxProps {
   color: string;
@@ -12,6 +17,39 @@ interface SplitBoxProps {
   location?: string;
   imageSrc?: string;
 }
+const { width, height } = Dimensions.get('window'); // Get screen dimensions
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#FFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  ticket: {
+    position: 'absolute',
+    width: 100, // Adjust the size of the tickets to fit more on screen
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    opacity: 0.8, // Slight transparency to make them blend in better
+  },
+});
+
+const ticketPositions = [
+  { x: width * 0.4, y: height * 0.45, angle: -20 },
+  { x: width * 0.3, y: height * 0.4, angle: -120 },
+  { x: width * 0.8, y: height * 0.7, angle: -10 },
+  { x: width * 0.7, y: height * 0.95, angle: -90 },
+  { x: width * 0.3, y: height * 0.8, angle: -90 },
+  { x: width * 0.8, y: height * 0.26, angle: 40 },
+  { x: width * 0.00009, y: height * 0.18, angle: -120 },
+  { x: width * 0.0001, y: height * 0.6, angle: -130 },
+  { x: width * 0.09, y: height * 0.3, angle: 150 },
+];
+
+
 
 function SplitBox({ color, size, title, time, location, imageSrc }: SplitBoxProps) {
   return (
@@ -97,10 +135,39 @@ function colorButton({ color, size, title, icon }: colorButtonProps) {
 }
 
 export default function HomeScreen() {
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', backgroundColor: Colors.light.background, padding: 60 }}>
+    <ScrollView 
+      style={{ flex: 1, backgroundColor: Colors.light.background, padding: 60 }}
+      contentContainerStyle={{ flexGrow: 1, alignItems: 'center' }} // Apply alignItems here
+    >
+      
       {/* DILLO DAY TITLE*/}
       <Horse width={150} height={90}/>
+
+
+      {ticketPositions.map((position, index) => (
+        <View
+          key={index}
+          style={[
+            styles.ticket,
+            {
+              left: position.x - 50, // Adjust X position to center the ticket
+              top: position.y - 50,  // Adjust Y position to center the ticket
+              transform: [{ rotate: `${position.angle}deg` }],
+            },
+          ]}
+        >
+          <Ticket width={100} height={100} />
+        </View>
+      ))}
+
+
+
+
+
+
+
 
       <Text style={{ 
         // position: 'absolute',
@@ -130,17 +197,98 @@ export default function HomeScreen() {
         location: 'Second Stage',
         imageSrc: 'https://i.scdn.co/image/9a7c31f43e22a95f6d3c57baf4f87a3a9d2b93e0',
         })}
-        
-        {/* BUTTONS */}
-        <View style={{ flexDirection: 'row', marginTop: 10 , marginHorizontal: 10}}>
-          {colorButton({
-            color: Colors.light.action, size: 70, title: 'Evil Button'
-            })}
-          {colorButton({
-            color: Colors.light.action, size: 70, title: 'Playlist Button'
-          })}
+
+      <ScrollView
+      horizontal={true}
+      style={{ flexDirection: 'row', paddingBottom: 10, marginTop: 50, marginLeft: 0,  marginRight: 0}}
+      contentContainerStyle={{ paddingHorizontal: 0 }}
+      >
+      <View
+        style={{
+          backgroundColor: Colors.light.actionText,
+          width: 150,
+          height: 150,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginHorizontal: 10,
+          position: 'relative',
+        }}
+      >
+
+        <Image
+          source={{
+            uri: 'https://cdn-icons-png.flaticon.com/512/9959/9959072.png',
+          }}
+          style={{
+            width: 70,
+            height: 70,
+            tintColor: '#D61919',
+            top: 5,
+            marginBottom: 30,
+          }}
+        />
+
+        <Text
+          style={{
+            color: Colors.light.cardText,
+            fontSize: 16,
+            textAlign: 'center',
+            top: 110,
+            position: 'absolute',
+          }}
+        >
+          Playlists
+        </Text>
       </View>
 
-    </View>
+      <View
+        style={{
+          backgroundColor: Colors.light.actionText,
+          width: 150,
+          height: 150,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginHorizontal: 10,
+        }}
+      >
+        <PopCorn width={150} height={90}/>
+        <Text
+          style={{
+            color: Colors.light.cardText,
+            fontSize: 16,
+            textAlign: 'center',
+          }}
+        >
+          Get Merch
+        </Text>
+      </View>
+
+      <View
+        style={{
+          backgroundColor: Colors.light.actionText,
+          width: 150,
+          height: 150,
+          borderRadius: 15,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginHorizontal: 10,
+        }}
+      >
+       <Structure width={150} height={90}/>
+        <Text
+          style={{
+            color: Colors.light.cardText,
+            fontSize: 16,
+            textAlign: 'center',
+          }}
+        >
+          Interactive Part
+        </Text>
+      </View>
+      </ScrollView>
+    </ScrollView>
+
   );
 }
