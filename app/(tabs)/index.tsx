@@ -1,8 +1,9 @@
-import { Dimensions, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Image, ScrollView, StyleSheet, Text, View, Linking, Pressable } from 'react-native';
 import Ticket from '../../assets/images/blueticket.svg';
 import Structure from '../../assets/images/bowling.svg';
 import Horse from '../../assets/images/horsescarousel.svg';
 import PopCorn from '../../assets/images/popcorn.svg';
+import Ferris from '../../assets/images/ferriswheel.svg';
 import { Colors } from '../../constants/Colors';
 
 
@@ -163,12 +164,6 @@ export default function HomeScreen() {
       ))}
 
 
-
-
-
-
-
-
       <Text style={{ 
         // position: 'absolute',
         color: '#ffff', 
@@ -185,10 +180,10 @@ export default function HomeScreen() {
       */}
       {SplitBox({ color: Colors.light.cardAlt, 
         size: 115, 
-        title:'THE DARE',
+        title:'Mozart',
         time: '2:00pm',
         location: 'Main Stage',
-        imageSrc: 'https://b3142227.smushcdn.com/3142227/wp-content/uploads/2023/03/the-dare.jpeg?lossy=2&strip=1&webp=1',
+        imageSrc: 'https://i.redd.it/13udxbn8ewec1.jpeg',
         })}
       {SplitBox({ color: Colors.light.actionText, 
         size: 115, 
@@ -198,97 +193,123 @@ export default function HomeScreen() {
         imageSrc: 'https://i.scdn.co/image/9a7c31f43e22a95f6d3c57baf4f87a3a9d2b93e0',
         })}
 
-      <ScrollView
-      horizontal={true}
-      style={{ flexDirection: 'row', paddingBottom: 10, marginTop: 50, marginLeft: 0,  marginRight: 0}}
-      contentContainerStyle={{ paddingHorizontal: 0 }}
-      >
-      <View
+
+  <View style={{ flexDirection: "row", marginBottom: 10 , marginTop: 32}}>
+    {/* First row: Two squares side by side */}
+    <View
+      style={{
+        backgroundColor: Colors.light.actionText,
+        width: 130,
+        height: 120,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 15,
+        position: "relative",
+      }}
+    >
+      <Image
+        source={{
+          uri: "https://cdn-icons-png.flaticon.com/512/9959/9959072.png",
+        }}
         style={{
-          backgroundColor: Colors.light.actionText,
-          width: 150,
-          height: 150,
-          borderRadius: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginHorizontal: 10,
-          position: 'relative',
+          width: 50,
+          height: 50,
+          tintColor: "#D61919",
+          marginTop: 12,
+        }}
+      />
+      <Text
+        style={{
+          color: Colors.light.cardText,
+          fontSize: 15,
+          textAlign: "center",
         }}
       >
+        Playlists
+      </Text>
+    </View>
 
-        <Image
-          source={{
-            uri: 'https://cdn-icons-png.flaticon.com/512/9959/9959072.png',
-          }}
-          style={{
-            width: 70,
-            height: 70,
-            tintColor: '#D61919',
-            top: 5,
-            marginBottom: 30,
-          }}
-        />
-
-        <Text
-          style={{
-            color: Colors.light.cardText,
-            fontSize: 16,
-            textAlign: 'center',
-            top: 110,
-            position: 'absolute',
-          }}
-        >
-          Playlists
-        </Text>
-      </View>
-
-      <View
+    <Pressable
+      style={{
+        backgroundColor: Colors.light.actionText,
+        width: 130,
+        height: 120,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 15,
+      }}
+      onPress={() => {
+        Linking.openURL('https://store.dilloday.com/en-usd');
+      }}
+    >
+      <PopCorn width={60} height={60} />
+      <Text
         style={{
-          backgroundColor: Colors.light.actionText,
-          width: 150,
-          height: 150,
-          borderRadius: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginHorizontal: 10,
+          color: Colors.light.cardText,
+          fontSize: 16,
+          textAlign: "center",
         }}
       >
-        <PopCorn width={150} height={90}/>
-        <Text
-          style={{
-            color: Colors.light.cardText,
-            fontSize: 16,
-            textAlign: 'center',
-          }}
-        >
-          Get Merch
-        </Text>
-      </View>
+        Get Merch
+      </Text>
+    </Pressable>
+  </View>
 
-      <View
+  <View style={{ flexDirection: "row" }}>
+    {/* Second row: Two squares side by side */}
+    <View
+      style={{
+        backgroundColor: Colors.light.actionText,
+        width: 130,
+        height: 120,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 15,
+         marginTop: 12,
+      }}
+    >
+    <Ferris width={50} height={50} />
+      <Text
         style={{
-          backgroundColor: Colors.light.actionText,
-          width: 150,
-          height: 150,
-          borderRadius: 15,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginHorizontal: 10,
+          color: Colors.light.cardText,
+          fontSize: 17,
+          textAlign: "center",
         }}
       >
-       <Structure width={150} height={90}/>
-        <Text
-          style={{
-            color: Colors.light.cardText,
-            fontSize: 16,
-            textAlign: 'center',
-          }}
-        >
-          Interactive Part
-        </Text>
-      </View>
-      </ScrollView>
-    </ScrollView>
+        Extra
+      </Text>
+    </View>
+
+    <View
+      style={{
+        backgroundColor: Colors.light.actionText,
+        width: 130,
+        height: 120,
+        borderRadius: 20,
+        justifyContent: "center",
+        alignItems: "center",
+        marginHorizontal: 15,
+        marginTop: 12,
+      }}
+    >
+      <Structure width={60} height={60} />
+      <Text
+        style={{
+          color: Colors.light.cardText,
+          fontSize: 13,
+          textAlign: "center",
+        }}
+      >
+        Interactive Part
+      </Text>
+    </View>
+  </View>
+
+
+ </ScrollView>
 
   );
 }
