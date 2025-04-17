@@ -1,17 +1,9 @@
 import { useEffect } from 'react';
 
-import { CartProvider } from '@/app/contexts/cart-context';
-import { Colors } from '@/constants/Colors';
+import Layout from '@/components/root-layout';
 import { useColorScheme } from '@/hooks/useColorScheme';
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
@@ -37,7 +29,7 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <CartProvider>
+      {/* <CartProvider>
         <ThemeProvider
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
@@ -80,7 +72,8 @@ export default function RootLayout() {
           </Drawer>
           <StatusBar style='auto' />
         </ThemeProvider>
-      </CartProvider>
+      </CartProvider> */}
+      <Layout />
     </GestureHandlerRootView>
   );
 }

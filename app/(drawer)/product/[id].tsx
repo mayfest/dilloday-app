@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import { useCartContext } from '@/app/contexts/cart-context';
 // import { useCart } from '@/hooks/useCart';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
@@ -13,7 +14,6 @@ import {
   View,
 } from 'react-native';
 
-import { useCartContext } from '@/app/contexts/cart-context';
 import { ThemedText } from '../../../components/ThemedText';
 import { ThemedView } from '../../../components/ThemedView';
 

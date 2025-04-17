@@ -1,5 +1,5 @@
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 interface ScreenProps {
@@ -9,8 +9,25 @@ interface ScreenProps {
 export default function TabScreen({ children }: ScreenProps) {
   const tabBarHeight = useBottomTabBarHeight();
   return (
-    <SafeAreaView className='flex-1 bg-background'>
-      <View className={`flex-1 pb-[${tabBarHeight + 32}px]`}>{children}</View>
+    <SafeAreaView style={[styles.screen, { paddingBottom: tabBarHeight + 32 }]}>
+      {children}
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: '#faefde',
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.8,
+    width: '100%',
+    height: '100%',
+  },
+});

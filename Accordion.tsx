@@ -19,11 +19,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
         <span>{title}</span>
         <span>{isOpen ? '▲' : '▼'}</span>
       </button>
-      {isOpen && (
-        <div style={styles.accordionContent}>
-          {children}
-        </div>
-      )}
+      {isOpen && <div style={styles.accordionContent}>{children}</div>}
     </div>
   );
 };

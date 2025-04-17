@@ -1,24 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import ScheduleBackground from '@/components/schedule/schedule-background';
+import ScheduleCarousel from '@/components/schedule/schedule-carousel';
+import TabScreen from '@/components/tab-screen';
 
-export default function TabTwoScreen() {
+export default function ScheduleScreen() {
   return (
-    <View className='flex-1 items-center justify-center bg-white'>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style='auto' />
-    </View>
+    <TabScreen>
+      <ScheduleBackground />
+      <ScheduleCarousel />
+    </TabScreen>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
-  },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
-  },
-});
