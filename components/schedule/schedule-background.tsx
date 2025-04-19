@@ -9,7 +9,7 @@ export default function ScheduleBackground() {
 
       {/* SMALL YELLOW STAR - TOP LEFT */}
       <FontAwesome6
-        name="star"
+        name='star'
         solid
         style={[
           styles.star,
@@ -25,7 +25,7 @@ export default function ScheduleBackground() {
 
       {/* BIG GREEN STAR - BOTTOM LEFT */}
       <FontAwesome6
-        name="star"
+        name='star'
         solid
         style={[
           styles.star,
@@ -34,13 +34,14 @@ export default function ScheduleBackground() {
             left: -20,
             bottom: -60,
             transform: [{ rotate: '40deg' }],
-            color: Colors.light.cardAlt,          },
+            color: Colors.light.cardAlt,
+          },
         ]}
       />
 
       {/* BIG BLUE STAR - TOP RIGHT */}
       <FontAwesome6
-        name="star"
+        name='star'
         solid
         style={[
           styles.star,
@@ -56,7 +57,7 @@ export default function ScheduleBackground() {
 
       {/* SMALL YELLOW STAR - TOP RIGHT */}
       <FontAwesome6
-        name="star"
+        name='star'
         solid
         style={[
           styles.star,
@@ -65,7 +66,8 @@ export default function ScheduleBackground() {
             right: -24,
             top: 320,
             transform: [{ rotate: '-60deg' }],
-            color: Colors.light.cardAlt,          },
+            color: Colors.light.cardAlt,
+          },
         ]}
       />
     </>

@@ -38,7 +38,7 @@ export default function ScheduleCarousel() {
             mode='parallax'
             modeConfig={{
               parallaxScrollingScale: 1,
-              parallaxAdjacentItemScale: 0.80,
+              parallaxAdjacentItemScale: 0.8,
               parallaxScrollingOffset: 90,
             }}
             renderItem={({ item }) => (

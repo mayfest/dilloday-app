@@ -13,7 +13,6 @@ import {
   View,
 } from 'react-native';
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -75,9 +74,6 @@ export default function HomeScreen() {
     return () => subscription.remove();
   }, []);
 
-  const svgWidth = screenWidth - 32;
-  const svgHeight = svgWidth;
-
   return (
     <TabScreen>
       <View style={styles.container}>
@@ -98,7 +94,7 @@ export default function HomeScreen() {
           <View style={styles.contentWrapper}>
             <AnnouncementPanel value='CARNIVAL DILLO IS FINALLY HERE!!!' />
             <ArtistPanel />
-            </View>
+          </View>
         </ScrollView>
       </View>
     </TabScreen>
