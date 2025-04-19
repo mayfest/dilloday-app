@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import AnnouncementPanel from '@/components/home/announcement-panel';
+import ArtistPanel from '@/components/home/artist-panel';
 import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import {
@@ -12,7 +13,6 @@ import {
   View,
 } from 'react-native';
 
-import TicketSvg from '../../assets/images/rauw_sample.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -97,11 +97,8 @@ export default function HomeScreen() {
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
           <View style={styles.contentWrapper}>
             <AnnouncementPanel value='CARNIVAL DILLO IS FINALLY HERE!!!' />
-
-            <View style={styles.ticketContainer}>
-              <TicketSvg width={svgWidth} height={svgHeight} />
+            <ArtistPanel />
             </View>
-          </View>
         </ScrollView>
       </View>
     </TabScreen>
