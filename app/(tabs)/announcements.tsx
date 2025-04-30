@@ -1,17 +1,11 @@
 import { useEffect, useState } from 'react';
 
-import AnnouncementItem from '@/components/announcements/announcement-item';
 // import LoadingIndicator from '@/components/LoadingIndicator';
+import AnnouncementFrame from '@/components/announcements/announcement-frame';
+import AnnouncementItem from '@/components/announcements/announcement-item';
 import TabScreen from '@/components/tab-screen';
 import { Announcement, getAnnouncements } from '@/lib/announcement';
-import { FontAwesome6 } from '@expo/vector-icons';
-import {
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export default function AnnouncementScreen() {
@@ -44,7 +38,7 @@ export default function AnnouncementScreen() {
   }, []);
   return (
     <TabScreen>
-      <View style={styles.title}>
+      {/* <View style={styles.title}>
         <FontAwesome6
           name='bullhorn'
           solid
@@ -62,7 +56,8 @@ export default function AnnouncementScreen() {
           color='#faefde'
           style={styles.titleStar}
         />
-      </View>
+      </View> */}
+      <AnnouncementFrame />
       {announcements && (
         <ScrollView
           style={styles.content}

@@ -1,8 +1,14 @@
 import BalloonLogo from '@/assets/images/balloonlogopink.svg';
 import { StatusBar } from 'expo-status-bar';
-import { Dimensions, Image, Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
+import {
+  Dimensions,
+  Image,
+  Linking,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedGestureHandler,
@@ -10,6 +16,7 @@ import Animated, {
   useSharedValue,
   withDecay,
 } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const { width } = Dimensions.get('window');
 const REEL_SIZE = 480;
@@ -52,8 +59,11 @@ export default function TabTwoScreen() {
   }));
 
   return (
-    <View className="flex-1 bg-[#ffffff] items-center" style={{ paddingTop: insets.top }}>
-      <View className="mt-10 w-[480px] h-[480px] items-center justify-center relative">
+    <View
+      className='flex-1 bg-[#ffffff] items-center'
+      style={{ paddingTop: insets.top }}
+    >
+      <View className='mt-10 w-[480px] h-[480px] items-center justify-center relative'>
         {/* Reel Rotation Layer */}
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[StyleSheet.absoluteFill, rotatingStyle]}>
@@ -82,11 +92,11 @@ export default function TabTwoScreen() {
         </PanGestureHandler>
 
         {/* Background Red Circle */}
-        <View className="absolute w-[480px] h-[480px] rounded-full bg-red-800" />
+        <View className='absolute w-[480px] h-[480px] rounded-full bg-red-800' />
 
         {/* Inner Circle with Balloon */}
-        <View className="w-[216px] h-[216px] rounded-full bg-red-900 items-center justify-center z-10 absolute">
-          <View className="w-[200px] h-[200px] rounded-full bg-white items-center justify-center">
+        <View className='w-[216px] h-[216px] rounded-full bg-red-900 items-center justify-center z-10 absolute'>
+          <View className='w-[200px] h-[200px] rounded-full bg-white items-center justify-center'>
             <BalloonLogo width={168} height={168} />
           </View>
         </View>
@@ -94,13 +104,17 @@ export default function TabTwoScreen() {
 
       {/* Upload Button */}
       <TouchableOpacity
-        className="mt-10 bg-yellow-300 px-6 py-3 rounded-xl"
-        onPress={() => Linking.openURL('https://www.joinswsh.com/album/pg5rftklzxfb')}
+        className='mt-10 bg-yellow-300 px-6 py-3 rounded-xl'
+        onPress={() =>
+          Linking.openURL('https://www.joinswsh.com/album/pg5rftklzxfb')
+        }
       >
-        <Text className="text-black font-bold">Add your Dillo Day pics to Swsh!</Text>
+        <Text className='text-black font-bold'>
+          Add your Dillo Day pics to Swsh!
+        </Text>
       </TouchableOpacity>
 
-      <StatusBar style="dark" />
+      <StatusBar style='dark' />
     </View>
   );
 }
