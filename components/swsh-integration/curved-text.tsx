@@ -1,7 +1,13 @@
 import React from 'react';
 
 import { View } from 'react-native';
-import Svg, { Defs, Path, Text as SvgText, TextPath } from 'react-native-svg';
+import Svg, {
+  Defs,
+  Path,
+  Text as SvgText,
+  TSpan,
+  TextPath,
+} from 'react-native-svg';
 
 interface CurvedTextProps {
   text: string;
@@ -32,7 +38,6 @@ const CurvedText: React.FC<CurvedTextProps> = ({
     <View>
       <Svg width={width} height={svgHeight}>
         <Defs>
-          ƒ
           <Path id={pathId} d={pathD} fill='none' />
         </Defs>
         <SvgText
@@ -42,9 +47,8 @@ const CurvedText: React.FC<CurvedTextProps> = ({
           textAnchor='middle'
         >
           <TextPath href={`#${pathId}`} startOffset='50%'>
-            {text}
+            <TSpan>{text}</TSpan>
           </TextPath>
-          ¢
         </SvgText>
       </Svg>
     </View>

@@ -83,7 +83,7 @@ export default function TabTwoScreen() {
           style={{
             width: REEL_SIZE,
             alignItems: 'center',
-            marginBottom: -140,
+            marginBottom: -150,
             zIndex: 5,
           }}
         >
@@ -165,7 +165,7 @@ export default function TabTwoScreen() {
                 width: REEL_SIZE * 0.4167,
                 height: REEL_SIZE * 0.4167,
                 borderRadius: (REEL_SIZE * 0.4167) / 2,
-                backgroundColor: '#fff',
+                backgroundColor: '#faefde',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
