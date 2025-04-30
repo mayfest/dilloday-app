@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Accordion from './Accordion';
+import Accordion from '../Accordion';
 
 interface FAQItem {
   title: string;

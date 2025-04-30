@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
+import StackScreen from '@/components/stack-screen';
 import { CircularReel } from '@/components/swsh-integration/circle-reel';
 import { CurvedHeader } from '@/components/swsh-integration/curved-text-view';
 import { SwshRedirectButton } from '@/components/swsh-integration/swsh-redirect-button';
-import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import { REEL_SIZE } from '@/constants/circle-reel';
 import { fetchSwshPhotos } from '@/lib/swsh';
@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-export default function Information() {
+export default function SwshPage() {
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
   const [defaultImages, setDefaultImages] = useState<string[]>([]);
@@ -45,7 +45,7 @@ export default function Information() {
   }, []);
 
   return (
-    <TabScreen>
+    <StackScreen>
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
         <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
@@ -91,7 +91,7 @@ export default function Information() {
           </View>
         </Modal>
       </View>
-    </TabScreen>
+    </StackScreen>
   );
 }
 
