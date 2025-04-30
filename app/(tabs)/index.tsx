@@ -24,7 +24,6 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     padding: 16,
-    // marginTop: 65,
     marginHorizontal: 16,
     alignItems: 'flex-start',
   },

@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
+
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { Asset } from 'expo-asset';
 import { Image, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -8,6 +11,23 @@ interface ScreenProps {
 
 export default function TabScreen({ children }: ScreenProps) {
   const tabBarHeight = useBottomTabBarHeight();
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  useEffect(() => {
+    const preloadImage = async () => {
+      try {
+        await Asset.fromModule(
+          require('../assets/images/off-white.png')
+        ).downloadAsync();
+        setIsImageLoaded(true);
+      } catch (error) {
+        console.error('Error preloading image:', error);
+        setIsImageLoaded(true);
+      }
+    };
+
+    preloadImage();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -16,9 +36,17 @@ export default function TabScreen({ children }: ScreenProps) {
           source={require('../assets/images/off-white.png')}
           style={styles.image}
           resizeMode='cover'
+          defaultSource={require('../assets/images/off-white.png')}
+          onLoad={() => setIsImageLoaded(true)}
         />
       </View>
-      <SafeAreaView style={[styles.content, { marginBottom: tabBarHeight }]}>
+      <SafeAreaView
+        style={[
+          styles.content,
+          { marginBottom: tabBarHeight },
+          !isImageLoaded && styles.contentHidden,
+        ]}
+      >
         {children}
       </SafeAreaView>
     </View>
@@ -37,6 +65,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     opacity: 0.8,
+    backgroundColor: '#faefde',
   },
   image: {
     width: '100%',
@@ -44,5 +73,8 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+  },
+  contentHidden: {
+    opacity: 0,
   },
 });
