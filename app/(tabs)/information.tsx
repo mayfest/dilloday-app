@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
@@ -23,6 +23,8 @@ import Animated, {
   withTiming
 } from 'react-native-reanimated';
 
+import { fetchSwshPhotos } from '@/lib/swsh';
+
 const { width } = Dimensions.get('window');
 const REEL_SIZE = 480;
 const CENTER = REEL_SIZE / 2;
@@ -30,18 +32,20 @@ const IMAGE_WIDTH = 75;
 const IMAGE_HEIGHT = 100;
 const RADIUS = CENTER - 66;
 
-const images = [
-  'https://picsum.photos/200?1',
-  'https://picsum.photos/200?2',
-  'https://picsum.photos/200?3',
-  'https://picsum.photos/200?4',
-  'https://picsum.photos/200?5',
-  'https://picsum.photos/200?6',
-  'https://picsum.photos/200?7',
-  'https://picsum.photos/200?8',
-  'https://picsum.photos/200?9',
-  'https://picsum.photos/200?10',
-];
+// const images = [
+//   'https://picsum.photos/200?1',
+//   'https://picsum.photos/200?2',
+//   'https://picsum.photos/200?3',
+//   'https://picsum.photos/200?4',
+//   'https://picsum.photos/200?5',
+//   'https://picsum.photos/200?6',
+//   'https://picsum.photos/200?7',
+//   'https://picsum.photos/200?8',
+//   'https://picsum.photos/200?9',
+//   'https://picsum.photos/200?10',
+// ];
+
+
 
 export default function TabTwoScreen() {
   const insets = useSafeAreaInsets();
@@ -59,6 +63,18 @@ export default function TabTwoScreen() {
       });
     },
   });
+
+  //fetching images from firebase
+  const [images, setImages] = useState<string[]>([]);
+
+    useEffect(() => {
+      const loadImages = async () => {
+        const urls = await fetchSwshPhotos();
+        const selected = urls.sort(() => 0.5 - Math.random()).slice(0, 10);
+        setImages(selected);
+      };
+      loadImages();
+    }, []);
 
   // run a looping animation (360 degrees every 30 seconds)
     useEffect(() => {
