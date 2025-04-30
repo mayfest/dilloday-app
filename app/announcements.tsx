@@ -3,9 +3,8 @@ import { useEffect, useState } from 'react';
 import AnnouncementFrame from '@/components/announcements/announcement-frame';
 import AnnouncementItem from '@/components/announcements/announcement-item';
 import StackScreen from '@/components/stack-screen';
-import { Colors } from '@/constants/Colors';
 import { Announcement, getAnnouncements } from '@/lib/announcement';
-import { RefreshControl, ScrollView, StyleSheet } from 'react-native';
+import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export default function AnnouncementScreen() {
@@ -39,7 +38,9 @@ export default function AnnouncementScreen() {
 
   return (
     <StackScreen>
-      <AnnouncementFrame />
+      <View style={styles.frameContainer}>
+        <AnnouncementFrame />
+      </View>
       {announcements && (
         <ScrollView
           style={styles.content}
@@ -65,20 +66,14 @@ export default function AnnouncementScreen() {
 }
 
 const styles = StyleSheet.create({
-  headerContainer: {
-    padding: 16,
-    backgroundColor: Colors.light.background,
+  frameContainer: {
     alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    color: 'green', // Match the artist page style
+    justifyContent: 'center',
+    width: '100%',
+    paddingVertical: 5,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 16,
+    paddingHorizontal: 5,
   },
 });

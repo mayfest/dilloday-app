@@ -4,7 +4,7 @@ import Svg, { Circle, Ellipse, Path } from 'react-native-svg';
 
 export default function AnnouncementFrame() {
   return (
-    <Svg width='350' height='200' viewBox='0 0 314 114' fill='none'>
+    <Svg width='350' height='150' viewBox='0 0 314 114' fill='none'>
       <Ellipse
         cx='21.9188'
         cy='8.90625'
