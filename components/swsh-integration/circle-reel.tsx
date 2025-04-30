@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import BalloonLogo from '@/assets/images/balloonlogopink.svg';
 import {
@@ -7,6 +7,7 @@ import {
   IMAGE_WIDTH,
   RADIUS,
 } from '@/constants/circle-reel';
+import { fetchSwshPhotos } from '@/lib/swsh';
 import { Image, StyleSheet, View } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
@@ -20,17 +21,39 @@ import Animated, {
 } from 'react-native-reanimated';
 
 interface CircularReelProps {
-  images: string[];
   size: number;
+  defaultImages?: string[];
 }
 
 interface CenterLogoProps {
   size: number;
 }
 
-export function CircularReel({ images, size }: CircularReelProps) {
+export function CircularReel({ size, defaultImages = [] }: CircularReelProps) {
+  const [images, setImages] = useState<string[]>(defaultImages);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const rotation = useSharedValue(0);
   const autoRotation = useSharedValue(0);
+  useEffect(() => {
+    const loadImages = async () => {
+      try {
+        setIsLoading(true);
+        const urls = await fetchSwshPhotos();
+        const selected =
+          urls.length > 10
+            ? urls.sort(() => 0.5 - Math.random()).slice(0, 10)
+            : urls;
+        setImages(selected);
+      } catch (error) {
+        console.error('Error loading images:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadImages();
+  }, []);
 
   const gestureHandler = useAnimatedGestureHandler({
     onActive: (event) => {
@@ -44,19 +67,35 @@ export function CircularReel({ images, size }: CircularReelProps) {
     },
   });
 
+  // Auto-rotation animation
   useEffect(() => {
     autoRotation.value = withRepeat(
       withTiming(Math.PI * 2, {
-        duration: 30000,
+        duration: 30000, // 30 seconds for a complete rotation
         easing: Easing.linear,
       }),
-      -1
+      -1 // Infinite repeats
     );
-  }, [autoRotation]); // Added autoRotation to dependencies
+  }, [autoRotation]);
 
   const rotatingStyle = useAnimatedStyle(() => ({
     transform: [{ rotate: `${rotation.value + autoRotation.value}rad` }],
   }));
+
+  // If no images are available yet, show a loading state or placeholder
+  if (isLoading && images.length === 0) {
+    return (
+      <View style={[styles.reelContainer, { width: size, height: size }]}>
+        <View
+          style={[
+            styles.backgroundCircle,
+            { width: size, height: size, borderRadius: size / 2 },
+          ]}
+        />
+        <CenterLogo size={size} />
+      </View>
+    );
+  }
 
   return (
     <View style={[styles.reelContainer, { width: size, height: size }]}>

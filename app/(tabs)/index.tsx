@@ -4,19 +4,11 @@ import AnnouncementPanel from '@/components/home/announcement-panel';
 import ArtistPanel from '@/components/home/artist-panel';
 import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
     position: 'relative',
     width: '100%',
   },
@@ -77,14 +69,6 @@ export default function HomeScreen() {
   return (
     <TabScreen>
       <View style={styles.container}>
-        <View style={styles.backgroundImage}>
-          <Image
-            source={require('../../assets/images/off-white.png')}
-            style={{ width: '100%', height: '100%' }}
-            resizeMode='cover'
-          />
-        </View>
-
         <View style={styles.titleContainer}>
           <Text style={styles.titleSecondary}>Welcome to</Text>
           <Text style={styles.titlePrimary}>DILLO DAY 53</Text>
