@@ -1,7 +1,7 @@
 import * as React from 'react';
 
 import { Dimensions } from 'react-native';
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Path, Rect } from 'react-native-svg';
 
 export default function FMOStageBanner() {
   const windowWidth = Dimensions.get('window').width;
@@ -44,7 +44,7 @@ export default function FMOStageBanner() {
         stroke-width='5'
         stroke-linecap='round'
       />
-      <rect
+      <Rect
         x='42.3813'
         y='0.339355'
         width='251.237'

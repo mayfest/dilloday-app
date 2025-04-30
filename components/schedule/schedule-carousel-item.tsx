@@ -1,6 +1,8 @@
 import React from 'react';
 
 import ArtistItem from '@/components/artist/artist-item';
+import FMOStageBanner from '@/components/schedule/fmo-stage-banner';
+import MainStageBanner from '@/components/schedule/main-stage-banner';
 import { Stage } from '@/lib/schedule';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {
@@ -22,27 +24,54 @@ export default function ScheduleCarouselItem({
   state,
   refresh,
 }: CarouselItemProps) {
+  const renderStageBanner = () => {
+    if (stage.name?.toLowerCase().includes('main')) {
+      return (
+        <View style={styles.bannerContainer}>
+          <MainStageBanner />
+        </View>
+      );
+    } else if (stage.name?.toLowerCase().includes('fmo')) {
+      return (
+        <View style={styles.bannerContainer}>
+          <FMOStageBanner />
+        </View>
+      );
+    } else {
+      return (
+        <View style={[styles.stageTitle, { backgroundColor: stage.primary }]}>
+          <FontAwesome6
+            name={stage.icon}
+            solid
+            size={32}
+            color={stage.textPrimary}
+            style={[
+              styles.stageTitleStar,
+              { transform: [{ rotate: '20deg' }] },
+            ]}
+          />
+          <Text style={[styles.stageTitleText, { color: stage.textPrimary }]}>
+            {stage.name}
+          </Text>
+          <FontAwesome6
+            name={stage.icon}
+            solid
+            size={32}
+            color={stage.textPrimary}
+            style={[
+              styles.stageTitleStar,
+              { transform: [{ rotate: '-20deg' }] },
+            ]}
+          />
+        </View>
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <View style={[styles.stageTitle, { backgroundColor: stage.primary }]}>
-        <FontAwesome6
-          name={stage.icon}
-          solid
-          size={32}
-          color={stage.textPrimary}
-          style={[styles.stageTitleStar, { transform: [{ rotate: '20deg' }] }]}
-        />
-        <Text style={[styles.stageTitleText, { color: stage.textPrimary }]}>
-          {stage.name}
-        </Text>
-        <FontAwesome6
-          name={stage.icon}
-          solid
-          size={32}
-          color={stage.textPrimary}
-          style={[styles.stageTitleStar, { transform: [{ rotate: '-20deg' }] }]}
-        />
-      </View>
+      {renderStageBanner()}
+
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
@@ -72,6 +101,10 @@ const styles = StyleSheet.create({
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
+  },
+  bannerContainer: {
+    marginTop: 25,
+    marginBottom: 10,
   },
   stageTitle: {
     display: 'flex',
