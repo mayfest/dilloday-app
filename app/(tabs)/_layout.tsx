@@ -9,6 +9,7 @@ const icons = {
   information: 'circle-info',
   explore: 'compass',
   settings: 'gear',
+  more: 'ellipsis',
 };
 
 export default function TabLayout() {
@@ -19,12 +20,12 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      {/* <Tabs.Screen
-        name='announcements'
+      <Tabs.Screen
+        name='more'
         options={{
-          title: 'Announcements',
+          title: 'More',
         }}
-      /> */}
+      />
       <Tabs.Screen
         name='schedule'
         options={{

@@ -1,9 +1,17 @@
 import { useEffect } from 'react';
 
-import Layout from '@/components/root-layout';
+import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { FontAwesome6 } from '@expo/vector-icons';
+import {
+  DarkTheme,
+  DefaultTheme,
+  ThemeProvider,
+} from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
+import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
@@ -29,51 +37,72 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      {/* <CartProvider>
-        <ThemeProvider
-          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Drawer
+          screenOptions={{
+            headerShown: false,
+            drawerType: 'front',
+            drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+            drawerInactiveTintColor:
+              Colors[colorScheme ?? 'light'].tabIconDefault,
+            drawerItemStyle: { paddingLeft: 16 },
+            drawerStyle: {
+              paddingTop: 40,
+              width: '70%',
+              backgroundColor: Colors[colorScheme ?? 'light'].background,
+            },
+          }}
         >
-          <Drawer
-            screenOptions={{
-              headerShown: false,
-              drawerType: 'front',
-              drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-              drawerInactiveTintColor:
-                Colors[colorScheme ?? 'light'].tabIconDefault,
-              drawerItemStyle: { paddingLeft: 16 },
-              drawerStyle: {
-                paddingTop: 40,
-                width: '70%',
-                backgroundColor: Colors[colorScheme ?? 'light'].background,
-              },
+          <Drawer.Screen
+            name='(tabs)'
+            options={{
+              drawerLabel: 'Home',
+              title: 'Home',
+              drawerIcon: ({ color }) => (
+                <FontAwesome6 name='house-chimney' size={20} color={color} />
+              ),
             }}
-          >
-            <Drawer.Screen
-              name='(drawer)'
-              options={{
-                drawerLabel: 'Settings',
-                title: 'Settings',
-                drawerIcon: () => null,
-              }}
-            />
-            <Drawer.Screen
-              name='(tabs)'
-              options={{
-                drawerItemStyle: { display: 'none' },
-              }}
-            />
-            <Drawer.Screen
-              name='+not-found'
-              options={{
-                drawerItemStyle: { display: 'none' },
-                title: '404',
-              }}
-            />
-          </Drawer>
-          <StatusBar style='auto' />
-        </ThemeProvider>
-      </CartProvider> */}
-      <Layout />
+          />
+          <Drawer.Screen
+            name='faq'
+            options={{
+              drawerLabel: 'FAQ',
+              title: 'FAQ',
+              drawerIcon: ({ color }) => (
+                <FontAwesome6 name='question-circle' size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='(drawer)'
+            options={{
+              drawerLabel: 'Shop',
+              title: 'Shop',
+              drawerIcon: ({ color }) => (
+                <FontAwesome6 name='shopping-bag' size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='settings'
+            options={{
+              drawerLabel: 'Settings',
+              title: 'Settings',
+              drawerIcon: ({ color }) => (
+                <FontAwesome6 name='gear' size={20} color={color} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name='+not-found'
+            options={{
+              drawerItemStyle: { display: 'none' },
+              title: '404',
+            }}
+          />
+        </Drawer>
+        <StatusBar style='auto' />
+      </ThemeProvider>
     </GestureHandlerRootView>
   );
 }

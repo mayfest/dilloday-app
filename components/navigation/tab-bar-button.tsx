@@ -1,5 +1,6 @@
 import BalloonLogo from '@/assets/images/balloonlogopink.svg';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { DrawerActions } from '@react-navigation/native';
 import { TouchableOpacity } from 'react-native';
 
 interface TabBarButtonProps {
@@ -17,15 +18,24 @@ export default function TabBarButton({
   route,
   home,
 }: TabBarButtonProps) {
-  const onPress = () => {
-    const event = navigation.emit({
-      type: 'tabPress',
-      target: route.key,
-      canPreventDefault: true,
-    });
+  const isMoreButton = route.name === 'more';
 
-    if (!focused && !event.defaultPrevented) {
-      navigation.navigate(route.name, route.params);
+  const onPress = () => {
+    if (isMoreButton) {
+      const parentNavigation = navigation.getParent();
+      if (parentNavigation) {
+        parentNavigation.dispatch(DrawerActions.openDrawer());
+      }
+    } else {
+      const event = navigation.emit({
+        type: 'tabPress',
+        target: route.key,
+        canPreventDefault: true,
+      });
+
+      if (!focused && !event.defaultPrevented) {
+        navigation.navigate(route.name, route.params);
+      }
     }
   };
 
