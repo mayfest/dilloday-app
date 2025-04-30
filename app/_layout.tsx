@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 
+import { ConfigContextProvider } from '@/app/contexts/config-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -37,72 +38,80 @@ export default function RootLayout() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Drawer
-          screenOptions={{
-            headerShown: false,
-            drawerType: 'front',
-            drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-            drawerInactiveTintColor:
-              Colors[colorScheme ?? 'light'].tabIconDefault,
-            drawerItemStyle: { paddingLeft: 16 },
-            drawerStyle: {
-              paddingTop: 40,
-              width: '70%',
-              backgroundColor: Colors[colorScheme ?? 'light'].background,
-            },
-          }}
+      <ConfigContextProvider>
+        <ThemeProvider
+          value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
-          <Drawer.Screen
-            name='(tabs)'
-            options={{
-              drawerLabel: 'Home',
-              title: 'Home',
-              drawerIcon: ({ color }) => (
-                <FontAwesome6 name='house-chimney' size={20} color={color} />
-              ),
+          <Drawer
+            screenOptions={{
+              headerShown: false,
+              drawerType: 'front',
+              drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+              drawerInactiveTintColor:
+                Colors[colorScheme ?? 'light'].tabIconDefault,
+              drawerItemStyle: { paddingLeft: 16 },
+              drawerStyle: {
+                paddingTop: 40,
+                width: '70%',
+                backgroundColor: Colors[colorScheme ?? 'light'].background,
+              },
             }}
-          />
-          <Drawer.Screen
-            name='faq'
-            options={{
-              drawerLabel: 'FAQ',
-              title: 'FAQ',
-              drawerIcon: ({ color }) => (
-                <FontAwesome6 name='question-circle' size={20} color={color} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name='(drawer)'
-            options={{
-              drawerLabel: 'Shop',
-              title: 'Shop',
-              drawerIcon: ({ color }) => (
-                <FontAwesome6 name='shopping-bag' size={20} color={color} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name='settings'
-            options={{
-              drawerLabel: 'Settings',
-              title: 'Settings',
-              drawerIcon: ({ color }) => (
-                <FontAwesome6 name='gear' size={20} color={color} />
-              ),
-            }}
-          />
-          <Drawer.Screen
-            name='+not-found'
-            options={{
-              drawerItemStyle: { display: 'none' },
-              title: '404',
-            }}
-          />
-        </Drawer>
-        <StatusBar style='auto' />
-      </ThemeProvider>
+          >
+            <Drawer.Screen
+              name='(tabs)'
+              options={{
+                drawerLabel: 'Home',
+                title: 'Home',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6 name='house-chimney' size={20} color={color} />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='faq'
+              options={{
+                drawerLabel: 'FAQ',
+                title: 'FAQ',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6
+                    name='question-circle'
+                    size={20}
+                    color={color}
+                  />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='(drawer)'
+              options={{
+                drawerLabel: 'Shop',
+                title: 'Shop',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6 name='shopping-bag' size={20} color={color} />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='settings'
+              options={{
+                drawerLabel: 'Settings',
+                title: 'Settings',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6 name='gear' size={20} color={color} />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='+not-found'
+              options={{
+                drawerItemStyle: { display: 'none' },
+                title: '404',
+              }}
+            />
+          </Drawer>
+          <StatusBar style='auto' />
+        </ThemeProvider>
+      </ConfigContextProvider>
     </GestureHandlerRootView>
   );
 }

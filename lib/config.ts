@@ -1,5 +1,3 @@
-import { createContext, useContext } from 'react';
-
 import { User } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
 import { AppStateStatus } from 'react-native';
@@ -10,6 +8,8 @@ import { Home } from './home';
 import { Schedule } from './schedule';
 import { SocialConfig } from './social';
 import { UserState } from './user';
+
+export { useConfig } from '@/app/contexts/config-context';
 
 export interface Config {
   home: Home;
@@ -28,13 +28,31 @@ export interface AppState {
 }
 
 export async function getConfig(): Promise<ConfigInformation> {
-  const configDoc = await getDoc(doc(db, 'config', 'config'));
-  if (!configDoc.exists()) {
-    throw new Error('config does not exist');
-  }
+  try {
+    const configDoc = await getDoc(doc(db, 'config', 'config'));
 
-  const config = configDoc.data() as Config;
-  return { config };
+    if (!configDoc.exists()) {
+      console.error('Config document does not exist in Firestore');
+      throw new Error('config does not exist');
+    }
+
+    const configData = configDoc.data();
+
+    if (!configData) {
+      console.error('Config document exists but has no data');
+      throw new Error('config data is empty');
+    }
+
+    const config = configData as Config;
+    if (!config.home || !config.artists || !config.schedule || !config.social) {
+      console.warn('Config may be incomplete, missing required fields');
+    }
+
+    return { config };
+  } catch (error) {
+    console.error('Error fetching config:', error);
+    throw error;
+  }
 }
 
 export interface ConfigContextObject {
@@ -45,11 +63,3 @@ export interface ConfigContextObject {
   reload: () => Promise<void>;
   updateUserState: (state?: UserState) => Promise<void>;
 }
-
-export const ConfigContext = createContext<ConfigContextObject>(
-  {} as ConfigContextObject
-);
-
-export const ConfigProvider = ConfigContext.Provider;
-
-export const useConfig = () => useContext(ConfigContext);

@@ -22,9 +22,6 @@ export default function ScheduleCarouselItem({
   state,
   refresh,
 }: CarouselItemProps) {
-  console.log('Stage', stage);
-  console.log('State', state);
-
   return (
     <View style={styles.container}>
       <View style={[styles.stageTitle, { backgroundColor: stage.primary }]}>
