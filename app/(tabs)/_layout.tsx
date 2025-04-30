@@ -19,12 +19,12 @@ export default function TabLayout() {
         headerShown: false,
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name='announcements'
         options={{
           title: 'Announcements',
         }}
-      />
+      /> */}
       <Tabs.Screen
         name='schedule'
         options={{

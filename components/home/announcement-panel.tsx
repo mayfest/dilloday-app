@@ -1,6 +1,7 @@
 import { Colors } from '@/constants/Colors';
+import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface AnnouncementPanelProps {
   value: string;
@@ -8,17 +9,29 @@ interface AnnouncementPanelProps {
 
 export default function AnnouncementPanel({ value }: AnnouncementPanelProps) {
   const router = useRouter();
-
   return (
     <TouchableOpacity
       style={styles.container}
       activeOpacity={0.8}
       onPress={() => {
-        router.push('/(tabs)/announcements');
+        router.navigate({
+          pathname: '/announcements',
+        });
       }}
     >
-      <Text style={styles.text}>{value}</Text>
-      <Text style={styles.note}>Tap to view more</Text>
+      <View style={styles.contentContainer}>
+        <FontAwesome6
+          name='bullhorn'
+          solid
+          size={24}
+          color={Colors.light.cardAlt || '#faefde'}
+          style={styles.icon}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.text}>{value}</Text>
+          <Text style={styles.note}>Tap to view more</Text>
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -34,6 +47,16 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     marginVertical: 8,
     width: '100%',
+  },
+  contentContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    marginRight: 12,
+  },
+  textContainer: {
+    flex: 1,
   },
   text: {
     fontSize: 18,

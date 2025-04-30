@@ -113,6 +113,7 @@ export default function Layout() {
     >
       <Stack>
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen name='announcements' options={{ headerShown: false }} />
         <Stack.Screen name='artist' options={{ headerShown: false }} />
         <Stack.Screen
           name='contact'

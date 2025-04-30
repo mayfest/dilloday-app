@@ -13,7 +13,7 @@ export default function AnnouncementScreen() {
     null
   );
   const [state, setState] = useState<'loading' | 'error' | 'idle'>('loading');
-
+  console.log('inside of the old annoncements');
   const load = () => {
     setState('loading');
     getAnnouncements()
