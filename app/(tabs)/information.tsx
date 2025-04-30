@@ -1,3 +1,4 @@
+// Information.tsx
 import { useEffect, useState } from 'react';
 
 import { CircularReel } from '@/components/swsh-integration/circle-reel';
@@ -6,6 +7,7 @@ import { SwshRedirectButton } from '@/components/swsh-integration/swsh-redirect-
 import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import { REEL_SIZE } from '@/constants/circle-reel';
+import { fetchSwshPhotos } from '@/lib/swsh';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
@@ -18,24 +20,36 @@ import {
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const images = Array.from(
-  { length: 10 },
-  (_, i) => `https://picsum.photos/200?${i + 1}`
-);
-
 export default function Information() {
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
+  const [defaultImages, setDefaultImages] = useState<string[]>([]);
 
   useEffect(() => {
     setModalVisible(true);
+    const loadImages = async () => {
+      try {
+        const images = await fetchSwshPhotos();
+        setDefaultImages(images);
+      } catch (error) {
+        console.error('Error loading images:', error);
+        setDefaultImages(
+          Array.from(
+            { length: 10 },
+            (_, i) => `https://picsum.photos/200?${i + 1}`
+          )
+        );
+      }
+    };
+
+    loadImages();
   }, []);
 
   return (
     <TabScreen>
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
-        <CircularReel images={images} size={REEL_SIZE} />
+        <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
         <SwshRedirectButton
           text='Add your Dillo Day pics to Swsh!'
           url='https://www.joinswsh.com/album/pg5rftklzxfb'
