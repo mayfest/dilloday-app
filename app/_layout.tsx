@@ -128,11 +128,41 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
-                name='faq'
+                name='activities'
                 options={{
-                  title: 'FAQ',
+                  title: 'Activities',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='circle-info' size={20} color={color} />
+                    <FontAwesome6 name='compass' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='sponsors'
+                options={{
+                  title: 'Sponsors',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='handshake' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='games'
+                options={{
+                  title: 'Games',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='gamepad' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='settings'
+                options={{
+                  title: 'Settings',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='gear' size={20} color={color} />
                   ),
                 }}
               />
@@ -143,6 +173,16 @@ export default function RootLayout() {
                   title: 'Photo Album',
                   drawerIcon: ({ color }) => (
                     <FontAwesome6 name='camera' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='faq'
+                options={{
+                  title: 'FAQ',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='circle-info' size={20} color={color} />
                   ),
                 }}
               />
