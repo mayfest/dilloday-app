@@ -62,16 +62,15 @@ export const FAQ_DATA: FAQCategory[] = [
         ],
       },
       {
-        title: 'What does a student need to pick up for their non-Northwestern guest?',
+        title:
+          'What does a student need to pick up for their non-Northwestern guest?',
         content: [
-          'To pick up for their non-Northwestern guest, they need the reservation, their own Wildcard, and their guest\'s ID (or a picture of their ID).',
+          "To pick up for their non-Northwestern guest, they need the reservation, their own Wildcard, and their guest's ID (or a picture of their ID).",
         ],
       },
       {
         title: 'Can a student pick up for another student?',
-        content: [
-          'Absolutely not, every student needs to come in person.',
-        ],
+        content: ['Absolutely not, every student needs to come in person.'],
       },
       {
         title: 'Can a student pick up a wristband on the day of Dillo instead?',
@@ -93,18 +92,17 @@ export const FAQ_DATA: FAQCategory[] = [
       },
       {
         title: 'My guest cannot make it. Can they get a refund?',
-        content: [
-          'Please email NBO to request a refund.',
-        ],
+        content: ['Please email NBO to request a refund.'],
       },
       {
-        title: 'My original guest cannot make it. Can I transfer the wristband?',
+        title:
+          'My original guest cannot make it. Can I transfer the wristband?',
         content: [
           'No, guest wristbands can only be released for the registered guest.',
         ],
       },
       {
-        title: 'What should I do if I\'m struggling to log into NBO?',
+        title: "What should I do if I'm struggling to log into NBO?",
         content: [
           'We have heard of situations in which individuals are having trouble logging into the NBO site. We recommend trying the following:',
           '1. Use another browser to sign in',
@@ -115,7 +113,7 @@ export const FAQ_DATA: FAQCategory[] = [
         ],
       },
       {
-        title: 'I didn\'t get a confirmation email. What should I do?',
+        title: "I didn't get a confirmation email. What should I do?",
         content: [
           'First, check your spam folder. If it is not there, please go to the help desk.',
         ],
@@ -129,7 +127,7 @@ export const FAQ_DATA: FAQCategory[] = [
       {
         title: 'Additional Questions',
         content: [
-          'Have a question that isn\'t answered here? Reach out to operations@dilloday.com.',
+          "Have a question that isn't answered here? Reach out to operations@dilloday.com.",
         ],
       },
     ],

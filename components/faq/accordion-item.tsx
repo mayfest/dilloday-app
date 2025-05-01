@@ -1,7 +1,8 @@
+import React, { useRef, useState } from 'react';
+
 import { Colors } from '@/constants/Colors';
 import { highlightMatches } from '@/lib/faq-utils';
 import { FontAwesome6 } from '@expo/vector-icons';
-import React, { useRef, useState } from 'react';
 import {
   Animated,
   LayoutAnimation,
@@ -14,7 +15,10 @@ import {
 } from 'react-native';
 
 // Enable LayoutAnimation on Android
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
@@ -43,7 +47,7 @@ export default function AccordionItem({
       useNativeDriver: true,
     }).start();
 
-    setIsExpanded(prev => !prev);
+    setIsExpanded((prev) => !prev);
   };
 
   // Interpolate for 0 → 90deg
@@ -63,8 +67,10 @@ export default function AccordionItem({
         <Text style={styles.accordionTitle}>
           {highlightText ? highlightMatches(title, highlightText) : title}
         </Text>
-        <Animated.View style={[styles.chevron, { transform: [{ rotate: spin }] }]}>
-          <FontAwesome6 name="chevron-right" size={16} color="#FFFFFF" />
+        <Animated.View
+          style={[styles.chevron, { transform: [{ rotate: spin }] }]}
+        >
+          <FontAwesome6 name='chevron-right' size={16} color='#FFFFFF' />
         </Animated.View>
       </TouchableOpacity>
 
