@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 
 import StackScreen from '@/components/stack-screen';
-// import { theme } from '@/lib/theme';
 import { Colors } from '@/constants/Colors';
 import { ArtistParams } from '@/lib/artist';
 import { useConfig } from '@/lib/config';
@@ -51,7 +50,7 @@ export default function ArtistScreen() {
                   <FontAwesome6
                     name='spotify'
                     size={64}
-                    color={Colors.light.background}
+                    color={Colors.light.action}
                   />
                 </TouchableOpacity>
               )}
@@ -62,7 +61,7 @@ export default function ArtistScreen() {
                   <FontAwesome6
                     name='apple'
                     size={64}
-                    color={Colors.light.background}
+                    color={Colors.light.action}
                   />
                 </TouchableOpacity>
               )}
@@ -88,30 +87,25 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   name: {
-    fontSize: 32,
-    // fontFamily: theme.headingBold,
-    fontWeight: 'bold',
+    fontSize: 36,
+    fontWeight: '700',
     textAlign: 'center',
     textTransform: 'uppercase',
-    // color: theme.artistTitle,
-    color: 'green',
+    color: Colors.light.text,
   },
   time: {
     fontSize: 20,
-    // fontFamily: theme.headingBold,
-    fontWeight: 'bold',
+    fontWeight: '700',
     textAlign: 'center',
     textTransform: 'uppercase',
-    color: Colors.light.card,
-    // color:
+    color: Colors.light.action,
   },
   description: {
     fontSize: 18,
-    // fontFamily: theme.bodyRegular,
+    padding: 12,
     fontWeight: '400',
     textAlign: 'left',
-    // color: theme.artistDescription,
-    color: Colors.light.card,
+    color: Colors.light.text,
     marginVertical: 24,
   },
   buttonContainer: {

@@ -9,6 +9,7 @@
 - [ ] animation when going "back" to pages
 - [ ] IOS live activites integration
 - [ ] Dillosonas
-- [ ] socials page
+- [x] socials page
 - [ ] reintegration of store page
 - [ ] onboarding section / page
+- [x] fix css on artist page
