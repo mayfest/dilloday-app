@@ -3,6 +3,7 @@ import React from 'react';
 import DrawerContent from '@/components/map/drawer-content';
 import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
+import TabScreen from '@/components/tab-screen';
 import { Animated, AppState, Dimensions, StyleSheet, View } from 'react-native';
 import {
   Animated as AnimatedMap,
@@ -306,67 +307,70 @@ class AnimatedViews extends React.Component<any, any> {
       this.state;
 
     return (
-      <View style={styles.container}>
-        <PanController
-          style={styles.container}
-          vertical
-          horizontal={canMoveHorizontal}
-          xMode='snap'
-          yMode='decay'
-          snapSpacingX={SNAP_WIDTH}
-          yBounds={[-DRAWER_EXPANDED_HEIGHT, 0]}
-          xBounds={[-SNAP_WIDTH * (markers.length - 1), 0]}
-          panY={panY}
-          panX={panX}
-          key={`controller-${this.state.mapKey}`}
-        >
-          <AnimatedMap
-            key={`map-${this.state.mapKey}`}
-            provider={this.props.provider}
-            style={styles.map}
-            region={region}
-            scrollEnabled={false}
-            zoomEnabled={false}
-            rotateEnabled={false}
-            pitchEnabled={false}
+      <TabScreen>
+        <View style={styles.container}>
+          <PanController
+            style={styles.container}
+            vertical
+            horizontal={canMoveHorizontal}
+            xMode='snap'
+            yMode='decay'
+            snapSpacingX={SNAP_WIDTH}
+            yBounds={[-DRAWER_EXPANDED_HEIGHT, 0]}
+            xBounds={[-SNAP_WIDTH * (markers.length - 1), 0]}
+            panY={panY}
+            panX={panX}
+            key={`controller-${this.state.mapKey}`}
           >
-            {markers.map((marker: any, i: any) => {
-              const { selected, markerOpacity, markerScale } = animations[i];
-              return (
-                <Marker key={marker.id} coordinate={marker.coordinate}>
-                  <LocationMarker
-                    style={{
-                      opacity: markerOpacity,
-                      transform: [{ scale: markerScale }],
-                    }}
-                    type={marker.type}
-                    selected={selected}
-                  />
-                </Marker>
-              );
-            })}
-          </AnimatedMap>
-          <View style={styles.itemContainer}>
-            {markers.map((marker: any, i: any) => {
-              const { translateY, translateX, scale, opacity } = animations[i];
-              return (
-                <Animated.View
-                  key={marker.id}
-                  style={[
-                    styles.item,
-                    {
-                      opacity,
-                      transform: [{ translateY }, { translateX }, { scale }],
-                    },
-                  ]}
-                >
-                  <DrawerContent type={marker.type} />
-                </Animated.View>
-              );
-            })}
-          </View>
-        </PanController>
-      </View>
+            <AnimatedMap
+              key={`map-${this.state.mapKey}`}
+              provider={this.props.provider}
+              style={styles.map}
+              region={region}
+              scrollEnabled={false}
+              zoomEnabled={false}
+              rotateEnabled={false}
+              pitchEnabled={false}
+            >
+              {markers.map((marker: any, i: any) => {
+                const { selected, markerOpacity, markerScale } = animations[i];
+                return (
+                  <Marker key={marker.id} coordinate={marker.coordinate}>
+                    <LocationMarker
+                      style={{
+                        opacity: markerOpacity,
+                        transform: [{ scale: markerScale }],
+                      }}
+                      type={marker.type}
+                      selected={selected}
+                    />
+                  </Marker>
+                );
+              })}
+            </AnimatedMap>
+            <View style={styles.itemContainer}>
+              {markers.map((marker: any, i: any) => {
+                const { translateY, translateX, scale, opacity } =
+                  animations[i];
+                return (
+                  <Animated.View
+                    key={marker.id}
+                    style={[
+                      styles.item,
+                      {
+                        opacity,
+                        transform: [{ translateY }, { translateX }, { scale }],
+                      },
+                    ]}
+                  >
+                    <DrawerContent type={marker.type} />
+                  </Animated.View>
+                );
+              })}
+            </View>
+          </PanController>
+        </View>
+      </TabScreen>
     );
   }
 }

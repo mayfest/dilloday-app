@@ -51,10 +51,10 @@ export default function RootLayout() {
                 drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
                 drawerInactiveTintColor:
                   Colors[colorScheme ?? 'light'].tabIconDefault,
-                drawerItemStyle: { paddingLeft: 16 },
+                drawerItemStyle: { paddingLeft: 12 },
                 drawerStyle: {
                   paddingTop: 40,
-                  width: '70%',
+                  width: '80%',
                   backgroundColor: Colors[colorScheme ?? 'light'].background,
                 },
               }}

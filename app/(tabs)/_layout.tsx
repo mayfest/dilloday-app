@@ -1,4 +1,3 @@
-import TabBar from '@/components/navigation/tab-bar';
 import { Tabs } from 'expo-router';
 
 const icons = {
@@ -15,9 +14,9 @@ const icons = {
 export default function TabLayout() {
   return (
     <Tabs
-      tabBar={(props) => <TabBar {...props} icons={icons} />}
       screenOptions={{
         headerShown: false,
+        tabBarStyle: { display: 'none' },
       }}
     >
       <Tabs.Screen

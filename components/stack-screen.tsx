@@ -1,43 +1,48 @@
+// components/stack-screen.tsx
+import React from 'react';
+
+import GlobalNavWrapper from '@/components/navigation-bar';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 import ScreenBackground from './screen-background';
 
 interface ScreenProps {
   children?: React.ReactNode;
+  hideNavBar?: boolean;
 }
 
-export default function StackScreen({ children }: ScreenProps) {
+export default function StackScreen({
+  children,
+  hideNavBar = false,
+}: ScreenProps) {
   const router = useRouter();
 
   return (
-    <View style={styles.container}>
-      <ScreenBackground />
-      <SafeAreaView style={styles.screen}>
-        <View style={styles.navigationBar}>
-          <TouchableOpacity
-            style={styles.navigationButton}
-            onPress={() => router.back()}
-          >
-            <FontAwesome6
-              name='chevron-left'
-              size={16}
-              color={Colors.light.background}
-            />
-            <Text style={styles.navigationButtonText}>BACK</Text>
-          </TouchableOpacity>
-        </View>
-        {children}
-      </SafeAreaView>
-    </View>
+    <GlobalNavWrapper hideNavBar={hideNavBar}>
+      <View style={styles.container}>
+        <ScreenBackground />
+        <SafeAreaView style={styles.screen}>
+          <View style={styles.navigationBar}>
+            <TouchableOpacity
+              style={styles.navigationButton}
+              onPress={() => router.back()}
+            >
+              <FontAwesome6
+                name='chevron-left'
+                size={16}
+                color={Colors.light.background}
+              />
+              <Text style={styles.navigationButtonText}>BACK</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.content}>{children}</View>
+        </SafeAreaView>
+      </View>
+    </GlobalNavWrapper>
   );
 }
 
@@ -48,6 +53,10 @@ const styles = StyleSheet.create({
   },
   screen: {
     flex: 1,
+  },
+  content: {
+    flex: 1,
+    paddingBottom: 80, // Add padding for the floating tab bar
   },
   navigationBar: {
     flexDirection: 'row',
