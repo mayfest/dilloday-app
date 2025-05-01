@@ -1,7 +1,6 @@
-// components/stack-screen.tsx
 import React from 'react';
 
-import GlobalNavWrapper from '@/components/navigation-bar';
+import GlobalNavivationWrapper from '@/components/navigation/navigation-bar';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
@@ -22,7 +21,7 @@ export default function StackScreen({
   const router = useRouter();
 
   return (
-    <GlobalNavWrapper hideNavBar={hideNavBar}>
+    <GlobalNavivationWrapper hideNavBar={hideNavBar}>
       <View style={styles.container}>
         <ScreenBackground />
         <SafeAreaView style={styles.screen}>
@@ -42,7 +41,7 @@ export default function StackScreen({
           <View style={styles.content}>{children}</View>
         </SafeAreaView>
       </View>
-    </GlobalNavWrapper>
+    </GlobalNavivationWrapper>
   );
 }
 

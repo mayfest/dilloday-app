@@ -9,7 +9,7 @@ interface GlobalNavWrapperProps {
   hideNavBar?: boolean;
 }
 
-export default function GlobalNavWrapper({
+export default function GlobalNavivationWrapper({
   children,
   hideNavBar = false,
 }: GlobalNavWrapperProps) {

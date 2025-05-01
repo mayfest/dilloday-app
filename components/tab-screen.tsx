@@ -1,7 +1,6 @@
-// components/tab-screen.tsx
 import React from 'react';
 
-import GlobalNavWrapper from '@/components/navigation-bar';
+import GlobalNavivationWrapper from '@/components/navigation/navigation-bar';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -17,12 +16,12 @@ export default function TabScreen({
   hideNavBar = false,
 }: ScreenProps) {
   return (
-    <GlobalNavWrapper hideNavBar={hideNavBar}>
+    <GlobalNavivationWrapper hideNavBar={hideNavBar}>
       <View style={styles.container}>
         <ScreenBackground />
         <SafeAreaView style={styles.content}>{children}</SafeAreaView>
       </View>
-    </GlobalNavWrapper>
+    </GlobalNavivationWrapper>
   );
 }
 

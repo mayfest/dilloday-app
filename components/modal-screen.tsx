@@ -1,5 +1,4 @@
-// components/modal-screen.tsx
-import GlobalNavWrapper from '@/components/navigation-bar';
+import GlobalNavivationWrapper from '@/components/navigation/navigation-bar';
 import { Colors } from '@/constants/Colors';
 import { toastConfig } from '@/lib/toast';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -36,7 +35,7 @@ export default function ModalScreen({
   };
 
   return (
-    <GlobalNavWrapper hideNavBar={hideNavBar}>
+    <GlobalNavivationWrapper hideNavBar={hideNavBar}>
       <View style={styles.screen}>
         <View style={styles.navigationBar}>
           <TouchableOpacity
@@ -51,7 +50,7 @@ export default function ModalScreen({
         <View style={styles.content}>{children}</View>
         <Toast topOffset={32} config={toastConfig} />
       </View>
-    </GlobalNavWrapper>
+    </GlobalNavivationWrapper>
   );
 }
 
