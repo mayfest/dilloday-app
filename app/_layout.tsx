@@ -188,6 +188,16 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
+                name='socials'
+                options={{
+                  title: 'Socials',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='share-nodes' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
                 name='artist'
                 options={{
                   drawerItemStyle: { display: 'none' },

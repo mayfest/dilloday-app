@@ -1,10 +1,14 @@
-- [ ] faq page
+- [x] faq page
 - [ ] sponsors page
 - [ ] food trucks page
 - [ ] LineLeap page
 - [ ] add the two buttons to the home screen
   - [ ] Dillosonas
   - [ ] Other
+- [ ] animation when switching between pages
+- [ ] animation when going "back" to pages
 - [ ] IOS live activites integration
 - [ ] Dillosonas
-- [ ]
+- [ ] socials page
+- [ ] reintegration of store page
+- [ ] onboarding section / page
