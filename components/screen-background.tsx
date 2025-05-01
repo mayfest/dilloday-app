@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Asset } from 'expo-asset';
-import { Image, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 export default function ScreenBackground() {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -24,13 +24,13 @@ export default function ScreenBackground() {
 
   return (
     <View style={styles.backgroundImage}>
-      <Image
+      {/* <Image
         source={require('../assets/images/off-white.png')}
         style={styles.image}
         resizeMode='cover'
         defaultSource={require('../assets/images/off-white.png')}
         onLoad={() => setIsImageLoaded(true)}
-      />
+      /> */}
     </View>
   );
 }
