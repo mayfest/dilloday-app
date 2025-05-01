@@ -53,12 +53,83 @@ export const FAQ_DATA: FAQCategory[] = [
     ],
   },
   {
-    category: 'Event Information',
+    category: 'Wristbands',
     items: [
       {
-        title: 'Location',
+        title: 'What do students need to pick up their own wristband?',
         content: [
-          'The event will be held at the Northwestern Lakefill. Enter through the Arts Circle entrance.',
+          'A student needs to have made a reservation, which should be pulled up, and their Wildcard.',
+        ],
+      },
+      {
+        title: 'What does a student need to pick up for their non-Northwestern guest?',
+        content: [
+          'To pick up for their non-Northwestern guest, they need the reservation, their own Wildcard, and their guest\'s ID (or a picture of their ID).',
+        ],
+      },
+      {
+        title: 'Can a student pick up for another student?',
+        content: [
+          'Absolutely not, every student needs to come in person.',
+        ],
+      },
+      {
+        title: 'Can a student pick up a wristband on the day of Dillo instead?',
+        content: [
+          'Only Alumni can pick up the day of. Otherwise, to receive a wristband, you MUST come during the distribution hours BEFORE the day of. In addition, replacement wristbands will not be available after the 17th.',
+        ],
+      },
+      {
+        title: 'I just lost my wristband. Can I get another one?',
+        content: [
+          'Yes, but you must order a replacement one on NBO first. The option to purchase a replacement will close on May 15th.',
+        ],
+      },
+      {
+        title: 'I work full time. When can I pick up my wristband?',
+        content: [
+          'In order to accommodate those working full time, we have added distribution hours to both Saturday May 10th and Sunday May 12th. Additionally, on Tuesday May 13th and Thursday May 15th distribution will be open after working hours.',
+        ],
+      },
+      {
+        title: 'My guest cannot make it. Can they get a refund?',
+        content: [
+          'Please email NBO to request a refund.',
+        ],
+      },
+      {
+        title: 'My original guest cannot make it. Can I transfer the wristband?',
+        content: [
+          'No, guest wristbands can only be released for the registered guest.',
+        ],
+      },
+      {
+        title: 'What should I do if I\'m struggling to log into NBO?',
+        content: [
+          'We have heard of situations in which individuals are having trouble logging into the NBO site. We recommend trying the following:',
+          '1. Use another browser to sign in',
+          '2. Log in, refresh, log in again',
+          '3. Try signing in on a different device',
+          '4. Use incognito mode on your browser',
+          'If none of these solutions work, we ask that you email norrisboxoffice@northwestern.edu with your dilemma.',
+        ],
+      },
+      {
+        title: 'I didn\'t get a confirmation email. What should I do?',
+        content: [
+          'First, check your spam folder. If it is not there, please go to the help desk.',
+        ],
+      },
+      {
+        title: 'Can I be granted an exception to the rules?',
+        content: [
+          'Requests for exception must be sent to operations@dilloday.com and will only be approved with significant evidence and circumstances.',
+        ],
+      },
+      {
+        title: 'Additional Questions',
+        content: [
+          'Have a question that isn\'t answered here? Reach out to operations@dilloday.com.',
         ],
       },
     ],

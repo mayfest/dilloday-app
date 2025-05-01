@@ -1,9 +1,7 @@
-// AccordionItem.tsx
-import React, { useRef, useState } from 'react';
-
 import { Colors } from '@/constants/Colors';
 import { highlightMatches } from '@/lib/faq-utils';
 import { FontAwesome6 } from '@expo/vector-icons';
+import React, { useRef, useState } from 'react';
 import {
   Animated,
   LayoutAnimation,
@@ -15,10 +13,8 @@ import {
   View,
 } from 'react-native';
 
-if (
-  Platform.OS === 'android' &&
-  UIManager.setLayoutAnimationEnabledExperimental
-) {
+// Enable LayoutAnimation on Android
+if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
   UIManager.setLayoutAnimationEnabledExperimental(true);
 }
 
@@ -34,53 +30,24 @@ export default function AccordionItem({
   highlightText = '',
 }: AccordionItemProps) {
   const [isExpanded, setIsExpanded] = useState(false);
-
-  // One animated value for chevron rotation
   const rotateAnim = useRef(new Animated.Value(0)).current;
-  // One animated value for dropdown height
-  const heightAnim = useRef(new Animated.Value(0)).current;
-  const [contentHeight, setContentHeight] = useState(0);
-
-  const configureAnimation = () =>
-    LayoutAnimation.create(
-      300,
-      LayoutAnimation.Types.easeInEaseOut,
-      LayoutAnimation.Properties.opacity
-    );
 
   const toggleAccordion = () => {
-    LayoutAnimation.configureNext(configureAnimation());
+    // Animate layout (height auto → measured height)
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
 
-    // Animate chevron rotate from 0 → 1 or 1 → 0
+    // Rotate the chevron
     Animated.timing(rotateAnim, {
       toValue: isExpanded ? 0 : 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
 
-    if (!isExpanded) {
-      // Expand: animate height from 0 → contentHeight
-      heightAnim.setValue(0);
-      setIsExpanded(true);
-      Animated.timing(heightAnim, {
-        toValue: contentHeight,
-        duration: 300,
-        useNativeDriver: false, // height can't use native driver
-      }).start();
-    } else {
-      // Collapse: animate height from contentHeight → 0
-      Animated.timing(heightAnim, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: false,
-      }).start(() => {
-        setIsExpanded(false);
-      });
-    }
+    setIsExpanded(prev => !prev);
   };
 
-  // Interpolate rotateAnim for the chevron-right arrow (90° on expand)
-  const spinRight = rotateAnim.interpolate({
+  // Interpolate for 0 → 90deg
+  const spin = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '90deg'],
   });
@@ -96,37 +63,14 @@ export default function AccordionItem({
         <Text style={styles.accordionTitle}>
           {highlightText ? highlightMatches(title, highlightText) : title}
         </Text>
-        <Animated.View
-          style={[styles.chevron, { transform: [{ rotate: spinRight }] }]}
-        >
-          <FontAwesome6 name='chevron-right' size={16} color='#FFFFFF' />
+        <Animated.View style={[styles.chevron, { transform: [{ rotate: spin }] }]}>
+          <FontAwesome6 name="chevron-right" size={16} color="#FFFFFF" />
         </Animated.View>
       </TouchableOpacity>
 
-      {/* Hidden measurement view */}
-      <View
-        style={styles._measureContainer}
-        onLayout={(e) => {
-          const h = e.nativeEvent.layout.height;
-          if (h > 0 && h !== contentHeight) {
-            setContentHeight(h);
-          }
-        }}
-      >
-        <View style={styles.accordionContent}>
-          {content.map((para, idx) => (
-            <Text key={idx} style={styles.paragraph}>
-              {highlightText ? highlightMatches(para, highlightText) : para}
-            </Text>
-          ))}
-        </View>
-      </View>
-
-      {/* Animated dropdown: height only */}
-      {isExpanded && (
-        <Animated.View
-          style={[styles.accordionContentContainer, { height: heightAnim }]}
-        >
+      {/* Content: layout animation will animate its height */}
+      <View style={styles.accordionContentContainer}>
+        {isExpanded && (
           <View style={styles.accordionContent}>
             {content.map((para, idx) => (
               <Text key={idx} style={styles.paragraph}>
@@ -134,8 +78,8 @@ export default function AccordionItem({
               </Text>
             ))}
           </View>
-        </Animated.View>
-      )}
+        )}
+      </View>
     </View>
   );
 }
@@ -186,14 +130,5 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginBottom: 12,
     lineHeight: 22,
-  },
-  _measureContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    opacity: 0,
-    zIndex: -1,
-    pointerEvents: 'none',
   },
 });

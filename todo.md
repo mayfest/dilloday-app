@@ -1,0 +1,10 @@
+- [ ] faq page
+- [ ] sponsors page
+- [ ] food trucks page
+- [ ] LineLeap page
+- [ ] add the two buttons to the home screen
+  - [ ] Dillosonas
+  - [ ] Other
+- [ ] IOS live activites integration
+- [ ] Dillosonas
+- [ ]
