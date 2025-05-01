@@ -33,7 +33,7 @@ export default function AccordionItem({
     // Rotate the chevron
     Animated.timing(rotateAnim, {
       toValue: isExpanded ? 0 : 1,
-      duration: 300,
+      duration: 50,
       useNativeDriver: true,
     }).start();
 
