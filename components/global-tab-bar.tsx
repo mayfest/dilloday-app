@@ -6,11 +6,13 @@ import { DrawerActions, useNavigation } from '@react-navigation/native';
 import { usePathname, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 
+type ValidRoutePath = '/' | '/schedule' | '/map' | '/information';
+
 type TabRoute = {
   key: string;
   name: string;
   icon: string;
-  path: string | null;
+  path: ValidRoutePath | null;
 };
 
 export default function GlobalTabBar() {
@@ -31,7 +33,7 @@ export default function GlobalTabBar() {
     },
   ];
 
-  const getIsActive = (path: string | null): boolean => {
+  const getIsActive = (path: ValidRoutePath | null): boolean => {
     if (!path) return false;
     return pathname === path;
   };
@@ -62,10 +64,11 @@ export default function GlobalTabBar() {
         }
       }
 
-      // If all else fails, navigate to a drawer screen if you have one
-      // Replace '/drawer' with a valid route in your application
-      // Or implement another fallback strategy
-      router.push('/menu' as any); // Use a valid route in your app, casting as any for now
+      // If all drawer methods fail, navigate to a known route as fallback
+      // Using href object pattern which is safer with TypeScript
+      router.push({
+        pathname: '/information' as ValidRoutePath,
+      });
     } else if (route.path) {
       router.push(route.path);
     }
