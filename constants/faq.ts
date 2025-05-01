@@ -132,4 +132,60 @@ export const FAQ_DATA: FAQCategory[] = [
       },
     ],
   },
+  {
+    category: 'Accessibility',
+    items: [
+      {
+        title: 'Accessibility Policy',
+        content: [
+          'Individuals seeking reasonable accommodations related to accessibility and/or mobility needs on Dillo Day are encouraged to reach out to Mayfest in order to arrange appropriate festival accommodations. Mayfest cannot guarantee accommodations, and our Accessibility Team will review requests on a case-by-case basis. When ordering a wristband, fill out the accessibility requests with your needs. Any questions or concerns related to accessibility can be relayed to Mayfest with an Accessibility Request.',
+        ],
+      },
+      {
+        title: 'Medication Policy',
+        content: [
+          'Prescription medication is allowed within the festival grounds. To bring in prescription medication, the individual must bring with them the pharmacy-labeled container, which details the prescription, dosage, and patient name. Individuals are only allowed to bring enough supply of medication for that day. Medications needed to be inhaled or smoked are prohibited unless in a prescribed inhaler.',
+          'Over-the-counter medications such as Dayquil, acetaminophen, antacids, or antihistamines, can be brought into the festival with only a sufficient amount for the day.',
+        ],
+      },
+    ],
+  },
+  {
+    category: 'Dillo Day Mobile App',
+    items: [
+      {
+        title: 'Dillosonas',
+        content: [
+          'Dillo Cabin Mates is a feature that connects members to other members based on music taste. Only Northwestern-affiliated members are eligible to participate, including undergraduate students, graduate students, alumni, faculty, and staff. You will only be matched with another Northwestern-affiliated member of the same type, where types are as follows: Undergraduate, Graduate and Alumni, and Faculty and Staff. A Google account with a Northwestern domain primary email address is required to participate.',
+          'Registration can be done up until Friday, May 17, 2024 at 8:00 PM. Matches will be made and shared on the morning of Dillo Day, Saturday, May 18, 2024. Enable push notifications within the app for updates.',
+          'Both Spotify and Apple Music are supported.',
+        ],
+      },
+      {
+        title: 'App Data Privacy',
+        content: [
+          'All features that require user data are optional.',
+          'When using features that require user data, at least some of the following data may be associated with you: Google account name, Google email address, Spotify username, limited Spotify listening trends, limited Apple Music listening trends.',
+          'By connecting your Google account to the app, in addition to app features, your name and email address may be automatically subscribed to the Dillo Day mailing list for important safety information and exclusive offers. You can unsubscribe at any time.',
+          'We do not use your data for any purpose other than those outlined in terms and conditions. Your data is never shared with any other organization or individuals outside of only the necessary Mayfest Productions individuals.',
+          'You may request deletion of your data at any time by submitting a Security and Privacy Request.',
+        ],
+      },
+    ],
+  },
+  {
+    category: 'Acknowledgements',
+    items: [
+      {
+        title: 'Land Acknowledgement',
+        content: [
+          "The location of today's Dillo Day, the Northwestern Lakefill, is on the homelands of the people of the Council of Three Fires, the Ojibwe, Potawatomi, and Odawa as well as the Menominee, Miami and Ho-Chunk nations. Mayfest Productions believes providing more context is essential given this year's theme, Camp Dillo. The theme of summer camps often invokes racist Native American tropes and mascots, while also creating a colonial dichotomy between “nature” vs. “civilization” that stems from Native American genocide and white supremacy. Mayfest Productions acknowledges that summer camps often serve as a site of Indigenous appropriation, such as hosting powwows and appropriating Native cultures within their programming (cabins are “tribes,” camp directors are “Chiefs”) and commits to rejecting discriminatory tropes and imagery.",
+          'Northwestern is also in close proximity to an urban Indigenous community in Chicago and near several tribes in the Midwest. Pre-colonization, the Indigenous communities in the area had established a vast network of trails and portages, and had a robust trading network. By 1833, most Indigenous communities were displaced from the region after signing coercive treaties. The 1833 Treaty of Chicago was signed before the creation of Northwestern’s lakefill in 1962-1964. The Pokagon Band of Potawatomi laid claim to this land east of Michigan Avenue created by landfill in the 1980s and thereafter. For the Ojibwe, Potawatomi, and Odawa—the Council of Three Fires—Lake Michigan is not just a body of water but a vital cultural, spiritual, and economic resource. The creation of the lakefill altered these traditional and sacred spaces, changing the natural shoreline and disrupting the ecological balance of the area.',
+          "The ongoing and current oppression of Indigenous peoples persists today globally. Generations of government policies of forced removal, land seizures and violence have been inflicted on Native peoples. Food insecurity and poverty are high among Native communities today, at roughly double the rate of white Americans. On the Northwestern campus alone, the John Evans Center is named after one of Northwestern's founders John Evans, who had direct involvement in the Sand Creek Massacre, the mass murder of Cheyenne and Arapaho people. According to a report by the University of Denver, Evans’s actions as territorial governor set the conditions for a massacre to occur. Northwestern continues to develop on stolen land; The Pokagon Band of the Potawatomi Indians Tribal Historic Preservation Office wrote to the City of Evanston and Northwestern over concerns of the new Ryan Field construction disturbing ancestral burials and archaeologically sensitive sites.",
+          'We urge non-Native attendees to educate themselves about the ongoing struggles Indigenous communities face today as a result of past and contemporary colonial projects, including those perpetrated by the Northwestern University Board of Trustees. We have included a list of resources and links to learn more about the current issues Native communities are facing. We encourage you to learn about and support Indigenous-led movements meant to combat colonial oppression, such as the Land Back Movement.',
+          "Finally, to expand our action beyond statements, Mayfest Productions is encouraging Mayfest members and all Northwestern community members to attend the NAISA Spring Pow Wow on April 27th, and the Center for Native American and Indigenous Research and Office of Institutional Diversity and Inclusion's Lunch & Learn and Q&A hosted by Dave Spencer from Oka Homma Singers on April 25th. Your participation will help contribute directly to the knowledge of this land's history.",
+        ],
+      },
+    ],
+  },
 ];
