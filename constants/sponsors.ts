@@ -1,6 +1,6 @@
 export const SPONSORS: {
   name: string;
-  logo: any;
+  logo: string;
   url?: string;
 }[] = [
   {

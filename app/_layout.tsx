@@ -168,6 +168,23 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
+                name='food-trucks'
+                options={{
+                  title: 'Food Trucks',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='utensils' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='food-trucks/[id]'
+                options={{
+                  drawerItemStyle: { display: 'none' },
+                }}
+              />
+
+              <Drawer.Screen
                 name='faq'
                 options={{
                   title: 'FAQ',
