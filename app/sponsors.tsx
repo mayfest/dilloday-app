@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 32,
-    fontWeight: '700',
+    fontWeight: '800',
     textAlign: 'center',
     color: Colors.light.text,
   },
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     marginLeft: 16,
     fontSize: 18,
-    fontWeight: '700',
+    fontWeight: '800',
     color: Colors.light.text,
   },
 });
