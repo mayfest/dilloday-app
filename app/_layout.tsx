@@ -138,16 +138,6 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
-                name='sponsors'
-                options={{
-                  title: 'Sponsors',
-                  drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='handshake' size={20} color={color} />
-                  ),
-                }}
-              />
-
-              <Drawer.Screen
                 name='games'
                 options={{
                   title: 'Games',
@@ -193,6 +183,16 @@ export default function RootLayout() {
                   title: 'Socials',
                   drawerIcon: ({ color }) => (
                     <FontAwesome6 name='share-nodes' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='sponsors'
+                options={{
+                  title: 'Sponsors',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='handshake' size={20} color={color} />
                   ),
                 }}
               />

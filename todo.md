@@ -1,5 +1,5 @@
 - [x] faq page
-- [ ] sponsors page
+- [x] sponsors page
 - [ ] food trucks page
 - [ ] LineLeap page
 - [ ] add the two buttons to the home screen
