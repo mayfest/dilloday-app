@@ -7,7 +7,7 @@ export const FOOD_TRUCKS: {
 }[] = [
   {
     id: '5411',
-    name: '5411',
+    name: '5411 Empanadas',
     logo: require('@/assets/images/food-truck-logos/5411.png'),
     menu: [
       { item: 'Chicagoland Beef Hot Dog', price: '$7.50' },
@@ -43,7 +43,7 @@ export const FOOD_TRUCKS: {
   },
   {
     id: 'dAndD',
-    name: 'D and D',
+    name: 'D&Ds',
     logo: require('@/assets/images/food-truck-logos/d-and-d.png'),
     menu: [
       { item: 'Taco Trio', price: '$9.00' },
