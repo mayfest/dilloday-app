@@ -1,6 +1,7 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
-import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -12,12 +13,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { smartDilloImages } from '../constants/smart-dillo-links';
 
 const { width } = Dimensions.get('window');
-// Each image is 90% of screen width
-const ITEM_WIDTH = width * 0.90;
-// Padding on each side so the first/last image can sit centered
+const ITEM_WIDTH = width * 0.9;
 const SIDE_PADDING = (width - ITEM_WIDTH) / 2;
 
 export default function SmartDilloScreen() {
@@ -27,7 +27,6 @@ export default function SmartDilloScreen() {
   const scrollX = useRef(new Animated.Value(0)).current;
   const dotPosition = Animated.divide(scrollX, ITEM_WIDTH);
 
-  // autoplay
   useEffect(() => {
     if (!autoplay) return;
     const iv = setInterval(() => {
@@ -43,13 +42,14 @@ export default function SmartDilloScreen() {
     { useNativeDriver: false }
   );
 
-  const handleMomentumScrollEnd = e => {
+  const handleMomentumScrollEnd = (e) => {
     const newIndex = Math.round(e.nativeEvent.contentOffset.x / ITEM_WIDTH);
     setCurrentIndex(newIndex);
   };
 
   const openLink = async () => {
-    const url = 'https://www.northwestern.edu/wellness/hpaw/campaigns/smart-dillo/index.html';
+    const url =
+      'https://www.northwestern.edu/wellness/hpaw/campaigns/smart-dillo/index.html';
     if (await Linking.canOpenURL(url)) await Linking.openURL(url);
   };
 
@@ -58,7 +58,7 @@ export default function SmartDilloScreen() {
       <Image
         source={{ uri: item.src }}
         style={styles.slideImage}
-        resizeMode="contain"
+        resizeMode='contain'
       />
     </View>
   );
@@ -67,7 +67,9 @@ export default function SmartDilloScreen() {
     <StackScreen>
       <View style={styles.container}>
         <Text style={styles.sectionTitle}>Smart Dillo</Text>
-
+        <Text style={styles.sectionTitleText}>
+          Be Smart. Be Safe. Be Responsible.
+        </Text>
         <FlatList
           ref={flatListRef}
           data={smartDilloImages}
@@ -76,9 +78,9 @@ export default function SmartDilloScreen() {
           horizontal
           showsHorizontalScrollIndicator={false}
           bounces={false}
-          decelerationRate="fast"
+          decelerationRate='fast'
           snapToInterval={ITEM_WIDTH}
-          snapToAlignment="start"
+          snapToAlignment='start'
           onScroll={handleScroll}
           onScrollBeginDrag={() => setAutoplay(false)}
           onMomentumScrollEnd={handleMomentumScrollEnd}
@@ -110,15 +112,15 @@ export default function SmartDilloScreen() {
                 onPress={() => {
                   setAutoplay(false);
                   setCurrentIndex(i);
-                  flatListRef.current?.scrollToIndex({ index: i, animated: true });
+                  flatListRef.current?.scrollToIndex({
+                    index: i,
+                    animated: true,
+                  });
                 }}
                 style={styles.dotButton}
               >
                 <Animated.View
-                  style={[
-                    styles.dot,
-                    { opacity, width: size, height: size },
-                  ]}
+                  style={[styles.dot, { opacity, width: size, height: size }]}
                 />
               </TouchableOpacity>
             );
@@ -126,7 +128,10 @@ export default function SmartDilloScreen() {
         </View>
 
         <Text style={styles.description}>
-          In conjunction with Northwestern's student-run end of year music festival, Dillo Day, the Smart Dillo campaign provides guidance on creating a safe community and enjoyable experience for everyone throughout the day.
+          In conjunction with Northwestern's student-run end of year music
+          festival, Dillo Day, the Smart Dillo campaign provides guidance on
+          creating a safe community and enjoyable experience for everyone
+          throughout the day.
         </Text>
 
         <TouchableOpacity onPress={openLink}>
@@ -147,8 +152,17 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: Colors.light.text,
+    fontWeight: '800',
+    color: Colors.light.action,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 16,
+  },
+
+  sectionTitleText: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: Colors.light.action,
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 16,
@@ -164,7 +178,7 @@ const styles = StyleSheet.create({
   },
   slideImage: {
     width: '100%',
-    height: width * 1.1,  // or whatever fixed height you need
+    height: width * 1.1,
     borderRadius: 8,
   },
 
