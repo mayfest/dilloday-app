@@ -74,46 +74,34 @@ export default function RootLayout() {
                 }}
               />
               <Drawer.Screen
-                name='(drawer)/products'
+                name='products'
                 options={{
                   drawerLabel: 'Products',
                   title: 'Products',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='shopping-bag' size={20} color={color} />
+                    <FontAwesome6 name='bag-shopping' size={20} color={color} />
                   ),
                 }}
               />
 
               <Drawer.Screen
-                name='(drawer)/cart'
+                name='product/[id]'
                 options={{
-                  drawerLabel: 'Cart',
-                  title: 'Cart',
-                  drawerIcon: ({ color }) => (
-                    <FontAwesome6
-                      name='shopping-cart'
-                      size={20}
-                      color={color}
-                    />
-                  ),
+                  drawerItemStyle: { display: 'none' },
                 }}
               />
 
               <Drawer.Screen
-                name='(drawer)/settings'
+                name='product/cart'
                 options={{
-                  drawerLabel: 'Settings',
-                  title: 'Settings',
-                  drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='gear' size={20} color={color} />
-                  ),
+                  drawerItemStyle: { display: 'none' },
                 }}
               />
 
               <Drawer.Screen
-                name='(drawer)'
+                name='(drawer)/product/[id]'
                 options={{
-                  drawerItemStyle: { height: 0, display: 'none' },
+                  drawerItemStyle: { display: 'none' },
                 }}
               />
 
@@ -128,11 +116,11 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
-                name='activities'
+                name='activites'
                 options={{
                   title: 'Activities',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='compass' size={20} color={color} />
+                    <FontAwesome6 name='street-view' size={20} color={color} />
                   ),
                 }}
               />
@@ -200,6 +188,16 @@ export default function RootLayout() {
                   title: 'Socials',
                   drawerIcon: ({ color }) => (
                     <FontAwesome6 name='share-nodes' size={20} color={color} />
+                  ),
+                }}
+              />
+
+              <Drawer.Screen
+                name='smart-dillo'
+                options={{
+                  title: 'Smart Dillo',
+                  drawerIcon: ({ color }) => (
+                    <FontAwesome6 name='shield' size={20} color={color} />
                   ),
                 }}
               />

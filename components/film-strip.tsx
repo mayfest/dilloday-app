@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Colors } from '@/constants/Colors';
 import { StyleSheet, View } from 'react-native';
+
 const S = 7;
 const C = Colors.light.cardAlt;
 const HOLE_COUNT = 6;
