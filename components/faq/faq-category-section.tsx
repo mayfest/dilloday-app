@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
   categoryTitle: {
     fontSize: 22,
     fontWeight: '800',
+    fontFamily: 'Poppins_700Bold',
     marginBottom: 16,
     color: Colors.light.text,
     paddingBottom: 8,

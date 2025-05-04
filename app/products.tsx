@@ -33,12 +33,12 @@ interface Product {
 }
 
 const { width } = Dimensions.get('window');
-const H_GUTTER = 16;
+const H_GUTTER = 12;
 const V_GUTTER = 12;
 const CARD_GAP = 8;
 const CARD_WIDTH = (width - H_GUTTER * 2 - CARD_GAP) / 2;
 const IMAGE_HEIGHT = CARD_WIDTH;
-const INFO_BAR_HEIGHT = 80;
+const INFO_BAR_HEIGHT = 110;
 
 export default function ProductsScreen() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -101,7 +101,7 @@ export default function ProductsScreen() {
           </ThemedText>
         </View>
         <TouchableOpacity style={styles.favoriteIcon}>
-          <FontAwesome6 name='heart' size={18} color={Colors.light.action} />
+          <FontAwesome6 name='heart' size={18} color={Colors.light.text} />
         </TouchableOpacity>
       </TouchableOpacity>
     );
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
   },
   infoBar: {
     height: INFO_BAR_HEIGHT,
-    backgroundColor: Colors.light.action,
+    backgroundColor: Colors.light.text,
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 8,
@@ -182,14 +182,16 @@ const styles = StyleSheet.create({
   infoName: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#fff',
+    color: Colors.light.card,
     textAlign: 'center',
+    fontFamily: 'Poppins_600SemiBold',
   },
   infoPrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#fff',
+    color: Colors.light.card,
     paddingTop: 4,
+    fontFamily: 'Poppins_600SemiBold',
   },
   favoriteIcon: {
     position: 'absolute',

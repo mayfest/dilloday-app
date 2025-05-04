@@ -63,7 +63,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: '800',
     textAlign: 'center',
-    color: Colors.light.text,
+    color: Colors.light.action,
+    fontFamily: 'Rye_400Regular',
   },
   underline: {
     height: 1,
@@ -103,5 +104,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     color: Colors.light.text,
+    fontFamily: 'Poppins_600SemiBold',
   },
 });

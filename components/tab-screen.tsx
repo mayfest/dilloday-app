@@ -28,7 +28,7 @@ export default function TabScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#faefde',
+    backgroundColor: '#faf6f0',
   },
   content: {
     flex: 1,

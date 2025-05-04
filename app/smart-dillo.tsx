@@ -151,8 +151,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sectionTitle: {
-    fontSize: 32,
+    fontSize: 48,
     fontWeight: '800',
+    fontFamily: 'Rye_400Regular',
     color: Colors.light.action,
     textTransform: 'uppercase',
     letterSpacing: 1,
@@ -166,6 +167,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 16,
+    fontFamily: 'Rye_400Regular',
   },
 
   carouselContentContainer: {
@@ -196,16 +198,18 @@ const styles = StyleSheet.create({
   },
 
   description: {
-    fontSize: 16,
+    fontSize: 14,
     textAlign: 'center',
     color: Colors.light.text,
     marginVertical: 16,
     paddingHorizontal: 20,
+    fontFamily: 'Poppins_400Regular',
   },
   link: {
     fontSize: 16,
     color: '#4e2a84',
     fontWeight: '600',
     textDecorationLine: 'underline',
+    fontFamily: 'Rye_400Regular',
   },
 });

@@ -6,54 +6,6 @@ import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-    width: '100%',
-  },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    opacity: 0.8,
-    width: '100%',
-    height: '100%',
-  },
-  titleContainer: {
-    padding: 16,
-    marginHorizontal: 16,
-    alignItems: 'flex-start',
-  },
-  titleSecondary: {
-    fontSize: 14,
-    textTransform: 'uppercase',
-    fontWeight: '700',
-    marginBottom: 4,
-    color: Colors.light.background,
-  },
-  titlePrimary: {
-    fontSize: 40,
-    fontWeight: '600',
-    color: Colors.light.background,
-  },
-  ticketContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    width: '100%',
-    paddingHorizontal: 16,
-  },
-  contentWrapper: {
-    width: '100%',
-  },
-});
-
 export default function HomeScreen() {
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
@@ -83,3 +35,53 @@ export default function HomeScreen() {
     </TabScreen>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    position: 'relative',
+    width: '100%',
+  },
+  backgroundImage: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    opacity: 0.8,
+    width: '100%',
+    height: '100%',
+  },
+  titleContainer: {
+    padding: 16,
+    marginHorizontal: 16,
+    alignItems: 'flex-start',
+  },
+  titleSecondary: {
+    fontSize: 18,
+    textTransform: 'uppercase',
+    fontWeight: '700',
+    marginBottom: 4,
+    color: Colors.light.background,
+    fontFamily: 'Rye_400Regular',
+  },
+  titlePrimary: {
+    fontSize: 40,
+    fontWeight: '600',
+    color: Colors.light.background,
+    fontFamily: 'Rye_400Regular',
+  },
+  ticketContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+    width: '100%',
+    paddingHorizontal: 16,
+  },
+  contentWrapper: {
+    width: '100%',
+  },
+});

@@ -48,7 +48,7 @@ export default function StackScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#faefde',
+    backgroundColor: '#faf6f0',
   },
   screen: {
     flex: 1,

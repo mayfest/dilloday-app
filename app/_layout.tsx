@@ -4,6 +4,14 @@ import { CartProvider } from '@/app/contexts/cart-context';
 import { ConfigContextProvider } from '@/app/contexts/config-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { Cabin_400Regular } from '@expo-google-fonts/cabin';
+import {
+  Poppins_400Regular,
+  Poppins_500Medium,
+  Poppins_600SemiBold,
+  Poppins_700Bold,
+} from '@expo-google-fonts/poppins';
+import { Rye_400Regular } from '@expo-google-fonts/rye';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {
   DarkTheme,
@@ -25,6 +33,12 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Rye_400Regular,
+    Poppins_400Regular,
+    Cabin_400Regular,
+    Poppins_700Bold,
+    Poppins_500Medium,
+    Poppins_600SemiBold,
   });
 
   useEffect(() => {
@@ -47,15 +61,25 @@ export default function RootLayout() {
             <Drawer
               screenOptions={{
                 headerShown: false,
-                drawerType: 'front',
+                drawerType: 'slide',
                 drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
                 drawerInactiveTintColor:
                   Colors[colorScheme ?? 'light'].tabIconDefault,
-                drawerItemStyle: { paddingLeft: 12 },
+                drawerItemStyle: {
+                  paddingLeft: 12,
+                  paddingVertical: 8,
+                  borderBlockColor: Colors[colorScheme ?? 'light'].action,
+                  borderBottomWidth: 1,
+                },
                 drawerStyle: {
                   paddingTop: 40,
                   width: '80%',
                   backgroundColor: Colors[colorScheme ?? 'light'].background,
+                },
+                drawerLabelStyle: {
+                  color: '#ffffff',
+                  fontSize: 20,
+                  fontFamily: 'Poppins_500Medium',
                 },
               }}
             >
@@ -76,7 +100,7 @@ export default function RootLayout() {
               <Drawer.Screen
                 name='products'
                 options={{
-                  drawerLabel: 'Products',
+                  drawerLabel: 'Dillo Store',
                   title: 'Products',
                   drawerIcon: ({ color }) => (
                     <FontAwesome6 name='bag-shopping' size={20} color={color} />

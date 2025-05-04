@@ -42,12 +42,13 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 8,
     padding: 16,
+    fontFamily: 'Rye_400Regular',
   },
   backgroundLevel0: {
     backgroundColor: '#faefde',
   },
   backgroundLevel1: {
-    backgroundColor: '#365cb5',
+    backgroundColor: Colors.light.action,
   },
   backgroundLevel2: {
     backgroundColor: Colors.light.alert,
@@ -56,12 +57,15 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.alert,
   },
   title: {
-    fontSize: 20,
-    fontWeight: '700',
+    fontSize: 18,
+    fontFamily: 'Poppins_700Bold',
   },
   message: {
-    fontSize: 12,
+    marginTop: 8,
+    fontSize: 14,
     fontWeight: '400',
+    fontFamily: 'Poppins_400Regular',
+    marginBottom: 8,
   },
   time: {
     fontSize: 12,
@@ -69,15 +73,16 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textAlign: 'right',
     opacity: 0.5,
+    fontFamily: 'Poppins_600SemiBold',
   },
   textLevel0: {
     color: Colors.light.background,
   },
   textLevel1: {
-    color: '#faefde',
+    color: '#fff',
   },
   textLevel2: {
-    color: '#ffffff',
+    color: '#fff',
   },
   textLevel3: {
     color: '#ffffff',

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#faf6f0',
     borderRadius: 8,
     marginBottom: 20,
     paddingHorizontal: 12,
@@ -51,5 +51,6 @@ const styles = StyleSheet.create({
     height: '100%',
     fontSize: 16,
     color: '#000',
+    fontFamily: 'Rye_400Regular',
   },
 });

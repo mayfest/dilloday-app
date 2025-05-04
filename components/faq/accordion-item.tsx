@@ -27,10 +27,7 @@ export default function AccordionItem({
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   const toggleAccordion = () => {
-    // Animate layout (height auto → measured height)
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-
-    // Rotate the chevron
     Animated.timing(rotateAnim, {
       toValue: isExpanded ? 0 : 1,
       duration: 50,
@@ -48,7 +45,6 @@ export default function AccordionItem({
 
   return (
     <View style={styles.accordionContainer}>
-      {/* Header */}
       <TouchableOpacity
         style={styles.accordionHeader}
         activeOpacity={0.7}
@@ -63,8 +59,6 @@ export default function AccordionItem({
           <FontAwesome6 name='chevron-right' size={16} color='#FFFFFF' />
         </Animated.View>
       </TouchableOpacity>
-
-      {/* Content: layout animation will animate its height */}
       <View style={styles.accordionContentContainer}>
         {isExpanded && (
           <View style={styles.accordionContent}>
@@ -105,6 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#FFFFFF',
+    fontFamily: 'Poppins_600SemiBold',
   },
   chevron: {
     width: 24,
@@ -120,6 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
     borderTopWidth: 1,
     borderTopColor: '#CCCCCC',
+    fontFamily: 'Poppins_400Regular',
   },
   paragraph: {
     fontSize: 15,
