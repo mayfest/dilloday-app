@@ -68,8 +68,6 @@ export default function RootLayout() {
                 drawerItemStyle: {
                   paddingLeft: 12,
                   paddingVertical: 8,
-                  borderBlockColor: Colors[colorScheme ?? 'light'].action,
-                  borderBottomWidth: 1,
                 },
                 drawerStyle: {
                   paddingTop: 40,
@@ -92,7 +90,7 @@ export default function RootLayout() {
                     <FontAwesome6
                       name='house-chimney'
                       size={20}
-                      color={color}
+                      color={Colors.light.tint}
                     />
                   ),
                 }}
@@ -103,7 +101,11 @@ export default function RootLayout() {
                   drawerLabel: 'Dillo Store',
                   title: 'Products',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='bag-shopping' size={20} color={color} />
+                    <FontAwesome6
+                      name='bag-shopping'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -134,7 +136,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Announcements',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='bullhorn' size={20} color={color} />
+                    <FontAwesome6
+                      name='bullhorn'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -144,7 +150,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Activities',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='street-view' size={20} color={color} />
+                    <FontAwesome6
+                      name='street-view'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -154,7 +164,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Games',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='gamepad' size={20} color={color} />
+                    <FontAwesome6
+                      name='gamepad'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -164,7 +178,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Settings',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='gear' size={20} color={color} />
+                    <FontAwesome6
+                      name='gear'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -174,7 +192,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Photo Album',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='camera' size={20} color={color} />
+                    <FontAwesome6
+                      name='camera'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -184,7 +206,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Food Trucks',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='utensils' size={20} color={color} />
+                    <FontAwesome6
+                      name='utensils'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -201,7 +227,11 @@ export default function RootLayout() {
                 options={{
                   title: 'FAQ',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='circle-info' size={20} color={color} />
+                    <FontAwesome6
+                      name='circle-info'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -211,7 +241,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Socials',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='share-nodes' size={20} color={color} />
+                    <FontAwesome6
+                      name='share-nodes'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -221,7 +255,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Smart Dillo',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='shield' size={20} color={color} />
+                    <FontAwesome6
+                      name='shield'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
@@ -231,7 +269,11 @@ export default function RootLayout() {
                 options={{
                   title: 'Sponsors',
                   drawerIcon: ({ color }) => (
-                    <FontAwesome6 name='handshake' size={20} color={color} />
+                    <FontAwesome6
+                      name='handshake'
+                      size={20}
+                      color={Colors.light.tint}
+                    />
                   ),
                 }}
               />
