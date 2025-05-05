@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import SwshPageBanner from '@/components/banners/swsh-banner';
 import StackScreen from '@/components/stack-screen';
 import { CircularReel } from '@/components/swsh-integration/circle-reel';
 import { CurvedHeader } from '@/components/swsh-integration/curved-text-view';
@@ -45,7 +46,10 @@ export default function SwshPage() {
   }, []);
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                                    <View style={styles.bannerWrapper}>
+                                      <SwshPageBanner />
+                                    </View>}>
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
         <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
@@ -96,6 +100,10 @@ export default function SwshPage() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    // paddingTop: 20,
+    paddingLeft: 15,
+  },
   container: {
     flex: 1,
     alignItems: 'center',
