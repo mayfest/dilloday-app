@@ -393,7 +393,7 @@ const styles = StyleSheet.create({
   item: {
     width: ITEM_WIDTH,
     height: DRAWER_EXPANDED_HEIGHT,
-    backgroundColor: '#FFB1CD',
+    backgroundColor: '#fff',
     marginHorizontal: ITEM_SPACING / 2,
     overflow: 'hidden',
     borderRadius: 12,

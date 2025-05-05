@@ -182,14 +182,14 @@ const styles = StyleSheet.create({
   infoName: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.light.card,
+    color: '#fff',
     textAlign: 'center',
     fontFamily: 'Poppins_600SemiBold',
   },
   infoPrice: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.light.card,
+    color: '#fff',
     paddingTop: 4,
     fontFamily: 'Poppins_600SemiBold',
   },

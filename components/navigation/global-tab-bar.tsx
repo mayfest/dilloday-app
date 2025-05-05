@@ -40,35 +40,16 @@ export default function GlobalTabBar() {
 
   const handlePress = (route: TabRoute): void => {
     if (route.name === 'more') {
-      // Try different approaches to open the drawer
-      const parent = navigation.getParent();
-      if (parent?.dispatch) {
-        parent.dispatch(DrawerActions.openDrawer());
-        return;
-      }
-
-      // Use DrawerActions instead of directly accessing openDrawer
       try {
+        // Using the DrawerActions from @react-navigation/native
         navigation.dispatch(DrawerActions.openDrawer());
-        return;
       } catch (e) {
-        console.log('Failed to open drawer with dispatch', e);
-      }
-
-      let current = navigation;
-      while (current?.getParent) {
-        current = current.getParent();
-        if (current?.dispatch) {
-          current.dispatch(DrawerActions.openDrawer());
-          return;
+        console.log('Failed to open drawer:', e);
+        // As fallback navigate to information page
+        if (route.path) {
+          router.push('/information');
         }
       }
-
-      // If all drawer methods fail, navigate to a known route as fallback
-      // Using href object pattern which is safer with TypeScript
-      router.push({
-        pathname: '/information' as ValidRoutePath,
-      });
     } else if (route.path) {
       router.push(route.path);
     }
@@ -103,6 +84,8 @@ export default function GlobalTabBar() {
     </View>
   );
 }
+
+// Styles remain the same...
 
 const styles = StyleSheet.create({
   container: {

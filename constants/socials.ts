@@ -1,11 +1,5 @@
 export const SOCIALS = [
   {
-    label: 'Facebook',
-    handle: 'fb.com/Dillo_Day',
-    url: 'https://x.com/Dillo_Day',
-    icon: 'facebook',
-  },
-  {
     label: 'Instagram',
     handle: '@dillo_day',
     url: 'https://www.instagram.com/dillo_day/',
