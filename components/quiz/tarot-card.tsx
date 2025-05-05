@@ -4,18 +4,13 @@
 // import ReactNative from 'react-native';
 import TarotSun from '@/components/quiz/card-sun';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, Pressable, StyleSheet, Text } from 'react-native';
 import RawCardFlip from 'react-native-card-flip';
 const CardFlip: any = RawCardFlip;
 
 // IMPORT THIS!
 // https://www.npmjs.com/package/react-native-card-flip
 
-// import React from 'react';
-
-
-
-/* */
 
 interface TarotCardProps {
   svg: React.FC<React.SVGProps<SVGSVGElement>>,
@@ -34,19 +29,35 @@ class TarotCard extends React.Component<TarotCardProps> {
 
   render() {
     const { svg, desc } = this.props;
+    const windowWidth = Dimensions.get('window').width;
+    const scale = windowWidth / 250;
+    const scaledHeight = 193 * scale;
+    const scaledWidth = 113 * scale;
+
+    const dynamicStyle = {
+      width: scaledWidth,
+      height: scaledHeight,
+    };
 
     return (
       <CardFlip
-        style={styles.cardContainer}
+        style={[{ width: scaledWidth, height: scaledHeight }, styles.cardContainer]}
         ref={(ref) => (this.card = ref)}
       >
-        <TouchableOpacity style={styles.card} onPress={this.flipCard}>
-          <TarotSun/>
-        </TouchableOpacity>
+        <Pressable 
+          // activeOpacity={1}
+          style={[{ width: scaledWidth, height: scaledHeight }, styles.card]} 
+          onPress={this.flipCard}>
+            {/* <Text>Front</Text> */}
+          <TarotSun scaledWidth={scaledWidth} scaledHeight={scaledHeight}/>
+        </Pressable>
 
-        <TouchableOpacity style={styles.card} onPress={this.flipCard}>
+        <Pressable 
+          // activeOpacity={1}
+          style={[{ width: scaledWidth, height: scaledHeight }, styles.card]} 
+          onPress={this.flipCard}>
           <Text>{desc}</Text>
-        </TouchableOpacity>
+        </Pressable>
       </CardFlip>
       
     );
@@ -73,20 +84,20 @@ export default function TarotCard ({image, desc, alt}: TarotCardProps) {
 
 const styles = StyleSheet.create({
   cardContainer: {
-    width: 200,
-    height: 300,
+    // width: 200,
+    // height: 300,
   },
   card: {
-    width: 200,
-    height: 300,
+    // width: 200,
+    // height: 300,
     borderRadius: 8,
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.3,
+    // shadowRadius: 2,
     elevation: 5,
   },
 });

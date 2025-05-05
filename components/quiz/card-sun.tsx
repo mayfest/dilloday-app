@@ -1,13 +1,17 @@
 import * as React from 'react';
 
-import { Dimensions } from 'react-native';
 import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
-export default function TarotSun() {
-  const windowWidth = Dimensions.get('window').width;
-  const scale = windowWidth / 250;
-  const scaledHeight = 193 * scale;
-  const scaledWidth = 113 * scale;
+interface TarotSunProps {
+  scaledWidth: number,
+  scaledHeight: number,
+} 
+
+export default function TarotSun({ scaledWidth, scaledHeight}:TarotSunProps) {
+  // const windowWidth = Dimensions.get('window').width;
+  // const scale = windowWidth / 250;
+  // const scaledHeight = 193 * scale;
+  // const scaledWidth = 113 * scale;
   // w = 113, h = 193
   return (
     <Svg width={scaledWidth} height={scaledHeight} viewBox="0 0 113 193" fill="none">
