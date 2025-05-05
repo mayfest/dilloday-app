@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 
+import HomeWelcomeBanner from '@/components/banners/home-banner';
 import AnnouncementPanel from '@/components/home/announcement-panel';
 import ArtistPanel from '@/components/home/artist-panel';
+import NavigationPanel from '@/components/home/navigation-panel';
 import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
 export default function HomeScreen() {
   const [screenWidth, setScreenWidth] = useState(
@@ -20,15 +22,14 @@ export default function HomeScreen() {
   return (
     <TabScreen>
       <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.titleSecondary}>Welcome to</Text>
-          <Text style={styles.titlePrimary}>DILLO DAY 53</Text>
-        </View>
-
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
+          <View style={styles.titleContainer}>
+            <HomeWelcomeBanner />
+          </View>
           <View style={styles.contentWrapper}>
             <AnnouncementPanel value='CARNIVAL DILLO IS FINALLY HERE!!!' />
             <ArtistPanel />
+            <NavigationPanel />
           </View>
         </ScrollView>
       </View>
@@ -53,9 +54,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   titleContainer: {
-    padding: 16,
-    marginHorizontal: 16,
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   titleSecondary: {
     fontSize: 18,

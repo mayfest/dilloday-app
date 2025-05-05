@@ -1,5 +1,4 @@
 import { Colors } from '@/constants/Colors';
-import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -20,13 +19,6 @@ export default function AnnouncementPanel({ value }: AnnouncementPanelProps) {
       }}
     >
       <View style={styles.contentContainer}>
-        <FontAwesome6
-          name='bullhorn'
-          solid
-          size={24}
-          color={Colors.light.cardAlt || '#faefde'}
-          style={styles.icon}
-        />
         <View style={styles.textContainer}>
           <Text style={styles.text}>{value}</Text>
           <Text style={styles.note}>Tap to view more</Text>
