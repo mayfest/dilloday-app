@@ -6,7 +6,7 @@ export default function ProductsLayout() {
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',
-        animationTypeForReplace: 'push'
+        animationTypeForReplace: 'push',
       }}
     >
       <Stack.Screen
