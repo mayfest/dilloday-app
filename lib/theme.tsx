@@ -39,7 +39,7 @@ export const theme = {
   headingRegular: 'Poppins-Regular',
   headingBold: 'Poppins-Bold',
   bodyRegular: 'Cabin-Regular',
-  bodyBold: 'Cabin-Bold',
+  bodyBold: 'Poppins_600SemiBold',
 
   homeHeading: '#13381f',
 

@@ -6,7 +6,7 @@ import ScreenBackground from '@/components/screen-background';
 import TabScreen from '@/components/tab-screen';
 import { VERSION } from '@/lib/app';
 import { call, link } from '@/lib/link';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const BUTTON_SIZE = 175;
@@ -40,15 +40,13 @@ export default function InfoScreenTwo() {
           </View>
 
           <View style={styles.buttonRow}>
-            <TouchableOpacity
-              onPress={() => router.push('/information/contact')}
-            >
+            <Link href='/information/contact'>
               <ContactMayfestIcon
                 width={BUTTON_SIZE}
                 height={BUTTON_SIZE}
                 style={styles.svg}
               />
-            </TouchableOpacity>
+            </Link>
 
             <TouchableOpacity onPress={() => call('18474913456')}>
               <NUPDIcon
