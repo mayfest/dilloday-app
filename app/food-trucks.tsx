@@ -1,5 +1,6 @@
 import React from 'react';
 
+import FoodPageBanner from '@/components/banners/food-banner copy';
 import { FilmStrip } from '@/components/film-strip';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
@@ -23,7 +24,10 @@ export default function FoodTrucksScreen() {
   const router = useRouter();
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                          <View style={styles.bannerWrapper}>
+                            <FoodPageBanner />
+                          </View>}>
       <FlatList
         data={FOOD_TRUCKS}
         keyExtractor={(t) => t.id}
@@ -66,6 +70,10 @@ export default function FoodTrucksScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+    paddingBottom: 15,
+  },
   container: {
     padding: CARD_MARGIN,
     paddingBottom: CARD_MARGIN * 2,
@@ -75,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: CARD_MARGIN + 12,
   },
   logoWrapper: {
-    borderRadius: 6,
+    borderRadius: 6, 
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 12,

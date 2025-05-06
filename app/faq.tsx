@@ -41,7 +41,10 @@ export default function FAQScreen() {
   };
 
   return (
-    <StackScreen banner={<FAQPageBanner />}>
+    <StackScreen banner={
+                          <View style={styles.bannerWrapper}>
+                            <FAQPageBanner />
+                          </View>}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
@@ -70,6 +73,9 @@ export default function FAQScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+  },
   container: {
     flex: 1,
   },

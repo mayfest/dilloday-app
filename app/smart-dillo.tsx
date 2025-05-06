@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import SMARTPageBanner from '@/components/banners/SMART-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
 import {
@@ -64,12 +65,12 @@ export default function SmartDilloScreen() {
   );
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                          <View style={styles.bannerWrapper}>
+                            <SMARTPageBanner />
+                          </View>}>
       <View style={styles.container}>
-        <Text style={styles.sectionTitle}>Smart Dillo</Text>
-        <Text style={styles.sectionTitleText}>
-          Be Smart. Be Safe. Be Responsible.
-        </Text>
+        {/* <Text style={styles.sectionTitle}>Smart Dillo</Text> */}
         <FlatList
           ref={flatListRef}
           data={smartDilloImages}
@@ -127,6 +128,10 @@ export default function SmartDilloScreen() {
           })}
         </View>
 
+        <Text style={styles.sectionTitleText}>
+          Be Smart. Be Safe. Be Responsible.
+        </Text>
+
         <Text style={styles.description}>
           In conjunction with Northwestern's student-run end of year music
           festival, Dillo Day, the Smart Dillo campaign provides guidance on
@@ -145,12 +150,17 @@ export default function SmartDilloScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+  },
   container: {
     flex: 1,
     paddingVertical: 20,
     alignItems: 'center',
   },
   sectionTitle: {
+    // marginLeft: 10,
+    // margingRight: 10,
     fontSize: 48,
     fontWeight: '800',
     fontFamily: 'Rye_400Regular',
@@ -161,12 +171,16 @@ const styles = StyleSheet.create({
   },
 
   sectionTitleText: {
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 15,
     fontSize: 18,
     fontWeight: '700',
+    textAlign: 'center',
     color: Colors.light.action,
     textTransform: 'uppercase',
     letterSpacing: 1,
-    marginBottom: 16,
+    // marginBottom: 16,
     fontFamily: 'Rye_400Regular',
   },
 
@@ -199,14 +213,19 @@ const styles = StyleSheet.create({
 
   description: {
     fontSize: 14,
-    textAlign: 'center',
+    // textAlign: 'center',
+    textAlign: 'left',
     color: Colors.light.text,
-    marginVertical: 16,
+    // marginVertical: 16,
+    marginTop: 10,
+    marginBottom:10,
     paddingHorizontal: 20,
     fontFamily: 'Poppins_400Regular',
   },
   link: {
     fontSize: 16,
+    textAlign: 'center',
+    paddingHorizontal: 20,
     color: '#4e2a84',
     fontWeight: '600',
     textDecorationLine: 'underline',

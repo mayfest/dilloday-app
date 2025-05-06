@@ -1,5 +1,6 @@
 import React from 'react';
 
+import SponsorsPageBanner from '@/components/banners/sponsors-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
 import { SPONSORS } from '@/constants/sponsors';
@@ -21,9 +22,12 @@ export default function SponsorsScreen() {
   };
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                          <View style={styles.bannerWrapper}>
+                            <SponsorsPageBanner />
+                          </View>}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>DILLO 53 SPONSORS</Text>
+        {/* <Text style={styles.header}>Check out our amazing sponsors</Text> */}
         <View style={styles.underline} />
 
         {SPONSORS.map(({ name, logo, url }, i) => (
@@ -54,6 +58,9 @@ export default function SponsorsScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+  },
   container: {
     paddingHorizontal: 24,
     paddingTop: 24,
