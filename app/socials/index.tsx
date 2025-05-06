@@ -1,5 +1,6 @@
 import React from 'react';
 
+import SocialsPageBanner from '@/components/banners/socials-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
 import { SOCIALS } from '@/constants/socials';
@@ -21,10 +22,13 @@ export default function SocialsScreen() {
   };
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                              <View style={styles.bannerWrapper}>
+                                <SocialsPageBanner />
+                              </View>}>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.header}>DILLO DAY SOCIALS</Text>
-        <View style={styles.underline} />
+        {/* <Text style={styles.header}>DILLO DAY SOCIALS</Text> */}
+        {/* <View style={styles.underline} /> */}
         {SOCIALS.map(({ label, handle, url, icon }, i) => (
           <TouchableOpacity
             key={i}
@@ -52,6 +56,9 @@ export default function SocialsScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+  },
   container: {
     paddingHorizontal: 24,
     paddingTop: 24,

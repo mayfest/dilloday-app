@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 
+import StorePageBanner from '@/components/banners/store-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
@@ -108,7 +109,10 @@ export default function ProductsScreen() {
   };
 
   return (
-    <StackScreen>
+    <StackScreen banner={
+                          <View style={styles.bannerWrapper}>
+                            <StorePageBanner />
+                          </View>}>
       {loading ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size='large' color='#173885' />
@@ -142,6 +146,10 @@ export default function ProductsScreen() {
 }
 
 const styles = StyleSheet.create({
+  bannerWrapper: {
+    paddingLeft: 15,
+    paddingBottom: 15,
+  },
   centerContainer: {
     flex: 1,
     justifyContent: 'center',
