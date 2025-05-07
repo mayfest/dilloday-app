@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from 'react';
+
 import DrawerScreen from '@/components/drawer-screen';
 import LineupComingSoonModal from '@/components/schedule/lineup-coming-soon';
 import ScheduleCarousel from '@/components/schedule/schedule-carousel';
 import { useConfig } from '@/lib/config';
 import { useFocusEffect } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
 
 export default function ScheduleScreen() {
   const { config } = useConfig();

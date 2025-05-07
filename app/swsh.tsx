@@ -103,8 +103,7 @@ export default function SwshPage() {
 }
 
 const styles = StyleSheet.create({
-  bannerWrapper: {
-  },
+  bannerWrapper: {},
   container: {
     flex: 1,
     alignItems: 'center',

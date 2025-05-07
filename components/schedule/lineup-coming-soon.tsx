@@ -1,8 +1,9 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import MyDynamicSvg from '@/components/schedule/fmo-stage-ticket';
 import MainStageTicket from '@/components/schedule/main-stage-ticket';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   BackHandler,
@@ -12,7 +13,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 export default function LineupComingSoonModal({ visible, onClose }) {
@@ -82,13 +83,16 @@ export default function LineupComingSoonModal({ visible, onClose }) {
     });
 
     // Handle hardware back button on Android
-    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
-      if (visible) {
-        handleBackNavigation();
-        return true; // Prevent default behavior
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        if (visible) {
+          handleBackNavigation();
+          return true; // Prevent default behavior
+        }
+        return false;
       }
-      return false;
-    });
+    );
 
     return () => {
       subscription?.remove();
@@ -101,7 +105,7 @@ export default function LineupComingSoonModal({ visible, onClose }) {
     onClose();
 
     // Navigate to the home tab
-    router.push("/(tabs)");
+    router.push('/(tabs)');
   };
 
   const { width, height } = dimensions;
@@ -133,10 +137,7 @@ export default function LineupComingSoonModal({ visible, onClose }) {
     >
       <View style={styles.modalContainer}>
         <Animated.View
-          style={[
-            styles.modalContent,
-            { transform: [{ translateY }] }
-          ]}
+          style={[styles.modalContent, { transform: [{ translateY }] }]}
           {...panResponder.panHandlers}
         >
           {/* Swipe indicator */}
