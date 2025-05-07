@@ -1,9 +1,10 @@
+import React, { useState } from 'react';
+
 import ArtistItem from '@/components/artist/artist-item';
 import FMOStageBanner from '@/components/schedule/fmo-stage-banner';
 import MainStageBanner from '@/components/schedule/main-stage-banner';
 import { useConfig } from '@/lib/config';
 import { FontAwesome6 } from '@expo/vector-icons';
-import React, { useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 
 export default function ScheduleScrollView() {
@@ -79,15 +80,19 @@ export default function ScheduleScrollView() {
               styles.stageSelector,
               selectedStageIndex === index && {
                 backgroundColor: stage.primary || '#ddd',
-                borderColor: stage.secondary || '#bbb'
-              }
+                borderColor: stage.secondary || '#bbb',
+              },
             ]}
             onPress={() => setSelectedStageIndex(index)}
           >
-            <Text style={[
-              styles.stageSelectorText,
-              selectedStageIndex === index && { color: stage.textPrimary || '#fff' }
-            ]}>
+            <Text
+              style={[
+                styles.stageSelectorText,
+                selectedStageIndex === index && {
+                  color: stage.textPrimary || '#fff',
+                },
+              ]}
+            >
               {stage.name}
             </Text>
           </TouchableOpacity>

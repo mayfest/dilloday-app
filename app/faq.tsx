@@ -1,10 +1,11 @@
+import React, { useState } from 'react';
+
 import FAQPageBanner from '@/components/banners/faq-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import FAQCategorySection from '@/components/faq/faq-category-section';
 import SearchBar from '@/components/faq/faq-search-bar';
 import { Colors } from '@/constants/Colors';
 import { FAQ_DATA } from '@/constants/faq';
-import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function FAQScreen() {

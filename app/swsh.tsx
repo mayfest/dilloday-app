@@ -53,18 +53,7 @@ export default function SwshPage() {
         </View>
       }
     >
-      <View style={[styles.container, { paddingTop: insets.top }]}>        
-        {/* Lift these components up by 20px */}
-        <View style={styles.liftedGroup}>
-          <CurvedHeader text="DILLO DAY x SWSH" size={REEL_SIZE} />
-          <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
-          <SwshRedirectButton
-            text="Add your Dillo Day pics to Swsh!"
-            url="https://www.joinswsh.com/album/pg5rftklzxfb"
-          />
-        </View>
-
-        <StatusBar style="dark" />
+      <StatusBar style='dark' />
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
         <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
@@ -74,7 +63,7 @@ export default function SwshPage() {
         />
         <StatusBar style='dark' />
         <Modal
-          animationType="slide"
+          animationType='slide'
           transparent={true}
           visible={modalVisible}
           onRequestClose={() => setModalVisible(false)}
@@ -87,7 +76,7 @@ export default function SwshPage() {
                   onPress={() => setModalVisible(false)}
                 >
                   <Text style={styles.navigationButtonText}>CLOSE</Text>
-                  <FontAwesome6 name="xmark" size={16} color="#FFFFFF" />
+                  <FontAwesome6 name='xmark' size={16} color='#FFFFFF' />
                 </TouchableOpacity>
               </View>
 

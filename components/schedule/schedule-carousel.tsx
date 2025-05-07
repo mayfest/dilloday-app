@@ -27,43 +27,43 @@ export default function ScheduleCarousel() {
     <View style={styles.container}>
       {config && (
         <>
-<GestureHandlerRootView style={{ flex: 1 }}>
-<Carousel
-            ref={ref}
-            width={PAGE_WIDTH}
-            data={Object.values(config.schedule || {}).sort(
-              (a, b) => (a.position || 99) - (b.position || 100)
-            )}
-            loop={false}
-            onSnapToItem={(index) => setCurrentIndex(index)}
-            pagingEnabled
-            overscrollEnabled={true}
-            mode='parallax'
-            panGestureHandlerProps={{
-              activeOffsetX: [-10, 10],
-          }}
-            modeConfig={{
-              parallaxScrollingScale: 1,
-              parallaxAdjacentItemScale: 0.8,
-              parallaxScrollingOffset: 90,
-            }}
-            renderItem={({ item }) => (
-              <ScheduleCarouselItem
-                stage={item}
-                state={state}
-                refresh={() => load()}
-              />
-            )}
-          />
-          <PageIndicator
-            page={currentIndex}
-            total={2}
-            onChange={(page) => {
-              setCurrentIndex(page);
-              ref.current?.scrollTo({ index: page, animated: true });
-            }}
-          />
-</GestureHandlerRootView>
+          <GestureHandlerRootView style={{ flex: 1 }}>
+            <Carousel
+              ref={ref}
+              width={PAGE_WIDTH}
+              data={Object.values(config.schedule || {}).sort(
+                (a, b) => (a.position || 99) - (b.position || 100)
+              )}
+              loop={false}
+              onSnapToItem={(index) => setCurrentIndex(index)}
+              pagingEnabled
+              overscrollEnabled={true}
+              mode='parallax'
+              panGestureHandlerProps={{
+                activeOffsetX: [-10, 10],
+              }}
+              modeConfig={{
+                parallaxScrollingScale: 1,
+                parallaxAdjacentItemScale: 0.8,
+                parallaxScrollingOffset: 90,
+              }}
+              renderItem={({ item }) => (
+                <ScheduleCarouselItem
+                  stage={item}
+                  state={state}
+                  refresh={() => load()}
+                />
+              )}
+            />
+            <PageIndicator
+              page={currentIndex}
+              total={2}
+              onChange={(page) => {
+                setCurrentIndex(page);
+                ref.current?.scrollTo({ index: page, animated: true });
+              }}
+            />
+          </GestureHandlerRootView>
         </>
       )}
       {/* {state === 'loading' && !config && <LoadingIndicator />} */}

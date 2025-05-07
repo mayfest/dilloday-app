@@ -8,7 +8,6 @@ import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
 
-
 export default function HomeScreen() {
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
@@ -32,11 +31,9 @@ export default function HomeScreen() {
             <ArtistPanel />
             <View style={styles.tarotWrapper}>
               {/* <GrassLBanner/> */}
-              <COMINGSOONBanner/>
+              <COMINGSOONBanner />
               {/* <GrassRBanner/> */}
-
             </View>
-            
           </View>
         </ScrollView>
       </View>

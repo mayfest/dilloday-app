@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import StorePageBanner from '@/components/banners/store-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -14,6 +15,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { ThemedText } from '../../components/ThemedText';
 
 interface Product {

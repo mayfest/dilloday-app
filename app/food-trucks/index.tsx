@@ -1,10 +1,11 @@
+import React from 'react';
+
+import { ThemedText } from '@/components/ThemedText';
 import FoodPageBanner from '@/components/banners/food-banner copy';
 import DrawerScreen from '@/components/drawer-screen';
-import { ThemedText } from '@/components/ThemedText';
 import { Colors } from '@/constants/Colors';
 import { FOOD_TRUCKS } from '@/constants/food-trucks';
 import { useRouter } from 'expo-router';
-import React from 'react';
 import {
   Dimensions,
   FlatList,
@@ -56,9 +57,7 @@ export default function FoodTrucksScreen() {
           <ThemedText style={styles.infoName} numberOfLines={2}>
             {item.name}
           </ThemedText>
-          <ThemedText style={styles.infoType}>
-            {item.type}
-          </ThemedText>
+          <ThemedText style={styles.infoType}>{item.type}</ThemedText>
         </View>
       </TouchableOpacity>
     );
@@ -161,5 +160,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     borderRadius: 12,
     padding: 8,
-  }
+  },
 });

@@ -1,7 +1,8 @@
+import React, { useEffect, useRef, useState } from 'react';
+
 import SMARTPageBanner from '@/components/banners/SMART-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
-import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -205,7 +206,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
   },
   dotButton: {
-    padding: 3
+    padding: 3,
   },
   dot: {
     borderRadius: 3,

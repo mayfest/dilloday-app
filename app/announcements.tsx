@@ -1,8 +1,9 @@
+import { useEffect, useState } from 'react';
+
 import AnnouncementFrame from '@/components/announcements/announcement-frame';
 import AnnouncementItem from '@/components/announcements/announcement-item';
 import DrawerScreen from '@/components/drawer-screen';
 import { Announcement, getAnnouncements } from '@/lib/announcement';
-import { useEffect, useState } from 'react';
 import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
@@ -42,10 +43,7 @@ export default function AnnouncementScreen() {
   );
 
   const renderAnnouncementItem = ({ item }: { item: Announcement }) => (
-    <AnnouncementItem
-      data={item}
-      key={`announcement-${item.id}`}
-    />
+    <AnnouncementItem data={item} key={`announcement-${item.id}`} />
   );
 
   return (

@@ -1,19 +1,29 @@
 import React from 'react';
 
+import MapImage from '@/assets/images/dillo-53-map-graphic.png';
 import DrawerContent from '@/components/map/drawer-content';
 import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
 import TabScreen from '@/components/tab-screen';
-import { Animated, AppState, Dimensions, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import {
+  Animated,
+  AppState,
+  Dimensions,
+  Platform,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import ImageZoomViewer from 'react-native-image-zoom-viewer';
 import {
   Animated as AnimatedMap,
   AnimatedRegion,
   Marker,
 } from 'react-native-maps';
-
-import MapImage from '@/assets/images/dillo-53-map-graphic.png';
-import { Colors } from '@/constants/Colors';
 
 const screen = Dimensions.get('window');
 
@@ -30,7 +40,8 @@ const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
 const DRAWER_EXPANDED_HEIGHT = screen.height * 0.6;
 const DRAWER_PREVIEW_HEIGHT = 300;
 const ONE = new Animated.Value(1);
-const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 44 : StatusBar.currentHeight || 0;
+const STATUSBAR_HEIGHT =
+  Platform.OS === 'ios' ? 44 : StatusBar.currentHeight || 0;
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const xLeft = -SNAP_WIDTH * i + SNAP_WIDTH / 2;
@@ -326,13 +337,17 @@ class AnimatedViews extends React.Component<any, any> {
               onPress={() => this.setActiveTab('interactive')}
               activeOpacity={0.7}
             >
-              <Text style={[
-                styles.tabText,
-                activeTab === 'interactive' && styles.activeTabText,
-              ]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === 'interactive' && styles.activeTabText,
+                ]}
+              >
                 Interactive
               </Text>
-              {activeTab === 'interactive' && <View style={styles.activeTabIndicator} />}
+              {activeTab === 'interactive' && (
+                <View style={styles.activeTabIndicator} />
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -343,13 +358,17 @@ class AnimatedViews extends React.Component<any, any> {
               onPress={() => this.setActiveTab('static')}
               activeOpacity={0.7}
             >
-              <Text style={[
-                styles.tabText,
-                activeTab === 'static' && styles.activeTabText,
-              ]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === 'static' && styles.activeTabText,
+                ]}
+              >
                 Static
               </Text>
-              {activeTab === 'static' && <View style={styles.activeTabIndicator} />}
+              {activeTab === 'static' && (
+                <View style={styles.activeTabIndicator} />
+              )}
             </TouchableOpacity>
           </View>
         </SafeAreaView>
@@ -367,13 +386,17 @@ class AnimatedViews extends React.Component<any, any> {
               onPress={() => this.setActiveTab('interactive')}
               activeOpacity={0.7}
             >
-              <Text style={[
-                styles.tabText,
-                activeTab === 'interactive' && styles.activeTabText,
-              ]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === 'interactive' && styles.activeTabText,
+                ]}
+              >
                 Interactive
               </Text>
-              {activeTab === 'interactive' && <View style={styles.activeTabIndicator} />}
+              {activeTab === 'interactive' && (
+                <View style={styles.activeTabIndicator} />
+              )}
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -384,13 +407,17 @@ class AnimatedViews extends React.Component<any, any> {
               onPress={() => this.setActiveTab('static')}
               activeOpacity={0.7}
             >
-              <Text style={[
-                styles.tabText,
-                activeTab === 'static' && styles.activeTabText,
-              ]}>
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === 'static' && styles.activeTabText,
+                ]}
+              >
                 Static
               </Text>
-              {activeTab === 'static' && <View style={styles.activeTabIndicator} />}
+              {activeTab === 'static' && (
+                <View style={styles.activeTabIndicator} />
+              )}
             </TouchableOpacity>
           </View>
         </View>
@@ -399,7 +426,8 @@ class AnimatedViews extends React.Component<any, any> {
   };
 
   renderInteractiveView = () => {
-    const { panX, panY, animations, canMoveHorizontal, markers, region } = this.state;
+    const { panX, panY, animations, canMoveHorizontal, markers, region } =
+      this.state;
 
     return (
       <PanController
@@ -469,16 +497,16 @@ class AnimatedViews extends React.Component<any, any> {
       {
         url: '',
         props: {
-          source: MapImage
-        }
-      }
+          source: MapImage,
+        },
+      },
     ];
 
     return (
       <View style={styles.staticContainer}>
         <ImageZoomViewer
           imageUrls={images}
-          backgroundColor="#000000"
+          backgroundColor='#000000'
           renderIndicator={() => <View />}
           enableSwipeDown={true}
           onSwipeDown={() => this.setActiveTab('interactive')}
@@ -495,18 +523,18 @@ class AnimatedViews extends React.Component<any, any> {
 
   render() {
     const { activeTab } = this.state;
-    const contentStyle = Platform.OS === 'ios'
-      ? styles.iosContentContainer
-      : styles.androidContentContainer;
+    const contentStyle =
+      Platform.OS === 'ios'
+        ? styles.iosContentContainer
+        : styles.androidContentContainer;
 
     return (
       <TabScreen>
         <View style={styles.container}>
           <View style={contentStyle}>
-            {activeTab === 'interactive' ?
-              this.renderInteractiveView() :
-              this.renderStaticView()
-            }
+            {activeTab === 'interactive'
+              ? this.renderInteractiveView()
+              : this.renderStaticView()}
           </View>
           {this.renderTabSelector()}
         </View>
@@ -603,8 +631,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'relative',
   },
-  activeTabButton: {
-  },
+  activeTabButton: {},
   tabText: {
     fontSize: Platform.OS === 'android' ? 16 : 18,
     fontWeight: '500',

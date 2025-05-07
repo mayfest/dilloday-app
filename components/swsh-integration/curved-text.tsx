@@ -24,7 +24,7 @@ const CurvedText: React.FC<CurvedTextProps> = ({
   radius = 100,
   textColor = '#991B1B',
   position = 'top',
-  fontFamily = 'Rye'
+  fontFamily = 'Rye',
 }) => {
   const pathId = `arc${Math.random().toString(36).substr(2, 9)}`;
   const width = radius * 2;
@@ -46,8 +46,8 @@ const CurvedText: React.FC<CurvedTextProps> = ({
           fill={textColor}
           fontSize={fontSize}
           fontWeight='bold'
-          textAnchor='middle' 
-          fontFamily={fontFamily} 
+          textAnchor='middle'
+          fontFamily={fontFamily}
         >
           <TextPath href={`#${pathId}`} startOffset='50%'>
             <TSpan>{text}</TSpan>
@@ -59,4 +59,3 @@ const CurvedText: React.FC<CurvedTextProps> = ({
 };
 
 export default CurvedText;
-

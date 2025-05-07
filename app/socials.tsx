@@ -1,9 +1,10 @@
+import React, { useEffect, useState } from 'react';
+
 import SocialsPageBanner from '@/components/banners/socials-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SOCIALS } from '@/constants/socials';
 import { FontAwesome6 } from '@expo/vector-icons';
-import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
   Linking,
@@ -15,7 +16,9 @@ import {
 } from 'react-native';
 
 export default function SocialsPage() {
-  const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  const [screenWidth, setScreenWidth] = useState(
+    Dimensions.get('window').width
+  );
   useEffect(() => {
     const updateLayout = () => {
       setScreenWidth(Dimensions.get('window').width);
@@ -61,22 +64,19 @@ export default function SocialsPage() {
             </View>
             <View style={styles.textContainer}>
               <Text
-                style={[
-                  styles.label,
-                  isSmallScreen && styles.smallScreenLabel
-                ]}
+                style={[styles.label, isSmallScreen && styles.smallScreenLabel]}
                 numberOfLines={1}
-                ellipsizeMode="tail"
+                ellipsizeMode='tail'
               >
                 {label.toUpperCase()}
               </Text>
               <Text
                 style={[
                   styles.handle,
-                  isSmallScreen && styles.smallScreenHandle
+                  isSmallScreen && styles.smallScreenHandle,
                 ]}
                 numberOfLines={1}
-                ellipsizeMode="tail"
+                ellipsizeMode='tail'
               >
                 {handle}
               </Text>

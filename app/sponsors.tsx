@@ -1,8 +1,9 @@
+import React from 'react';
+
 import SponsorsPageBanner from '@/components/banners/sponsors-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SPONSORS } from '@/constants/sponsors';
-import React from 'react';
 import {
   Image,
   Linking,
