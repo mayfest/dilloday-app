@@ -1,34 +1,57 @@
-import React, { useEffect, useState } from 'react';
-
 import MyDynamicSvg from '@/components/schedule/fmo-stage-ticket';
 import MainStageTicket from '@/components/schedule/main-stage-ticket';
 import { FontAwesome6 } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import {
+  BackHandler,
   Dimensions,
   Modal,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 export default function LineupComingSoonModal({ visible, onClose }) {
   // Get screen dimensions and track changes
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
+  const router = useRouter();
 
   useEffect(() => {
     // Update dimensions on screen rotation or size change
     const subscription = Dimensions.addEventListener('change', ({ window }) => {
       setDimensions(window);
     });
-    return () => subscription?.remove();
-  }, []);
+
+    // Handle hardware back button on Android
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (visible) {
+        handleBackNavigation();
+        return true; // Prevent default behavior
+      }
+      return false;
+    });
+
+    return () => {
+      subscription?.remove();
+      backHandler.remove();
+    };
+  }, [visible]);
+
+  const handleBackNavigation = () => {
+    // First close the modal
+    onClose();
+
+    // Navigate to the home tab
+    router.push("/(tabs)");
+  };
 
   const { width, height } = dimensions;
   const isLargeDevice = width >= 428; // iPhone Pro Max width threshold
 
   // Calculate responsive ticket positions based on screen size
-  // Now positioning from the bottom of the container
+  // Positioning from the bottom of the container
   const ticketPositions = [
     {
       x: isLargeDevice ? width * 0.1 : width * 0.05,
@@ -49,14 +72,17 @@ export default function LineupComingSoonModal({ visible, onClose }) {
       animationType='slide'
       transparent={true}
       visible={visible}
-      onRequestClose={onClose}
+      onRequestClose={handleBackNavigation} // Handle hardware back button press
     >
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <View style={styles.navigationBar}>
-            <TouchableOpacity style={styles.navigationButton} onPress={onClose}>
-              <Text style={styles.navigationButtonText}>CLOSE</Text>
-              <FontAwesome6 name='xmark' size={16} color='#FFFFFF' />
+            <TouchableOpacity
+              style={styles.navigationButton}
+              onPress={handleBackNavigation}
+            >
+              <Text style={styles.navigationButtonText}>GO BACK</Text>
+              <FontAwesome6 name='arrow-right' size={16} color='#FFFFFF' />
             </TouchableOpacity>
           </View>
 
