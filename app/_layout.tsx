@@ -144,11 +144,10 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
-                name='activites'
+                name='activities'
                 options={{
-                  title: 'Activities',
+                  title: 'Sponsor Booths',
                   drawerIcon: ({ color }) => (
                     <FontAwesome6
                       name='street-view'
@@ -158,7 +157,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='games'
                 options={{
@@ -172,7 +170,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='settings'
                 options={{
@@ -186,7 +183,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='swsh'
                 options={{
@@ -200,7 +196,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='food-trucks'
                 options={{
@@ -214,14 +209,12 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='food-trucks/[id]'
                 options={{
                   drawerItemStyle: { display: 'none' },
                 }}
               />
-
               <Drawer.Screen
                 name='faq'
                 options={{
@@ -235,7 +228,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='socials'
                 options={{
@@ -249,7 +241,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='smart-dillo'
                 options={{
@@ -263,7 +254,6 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='sponsors'
                 options={{
@@ -277,14 +267,12 @@ export default function RootLayout() {
                   ),
                 }}
               />
-
               <Drawer.Screen
                 name='artist'
                 options={{
                   drawerItemStyle: { display: 'none' },
                 }}
               />
-
               <Drawer.Screen
                 name='+not-found'
                 options={{

@@ -4,6 +4,7 @@ import ScheduleCarouselItem from '@/components/schedule/schedule-carousel-item';
 import PageIndicator from '@/components/schedule/schedule-page-indicator';
 import { useConfig } from '@/lib/config';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 
 // import LoadingIndicator from './LoadingIndicator';
@@ -26,7 +27,8 @@ export default function ScheduleCarousel() {
     <View style={styles.container}>
       {config && (
         <>
-          <Carousel
+<GestureHandlerRootView style={{ flex: 1 }}>
+<Carousel
             ref={ref}
             width={PAGE_WIDTH}
             data={Object.values(config.schedule || {}).sort(
@@ -35,7 +37,11 @@ export default function ScheduleCarousel() {
             loop={false}
             onSnapToItem={(index) => setCurrentIndex(index)}
             pagingEnabled
+            overscrollEnabled={true}
             mode='parallax'
+            panGestureHandlerProps={{
+              activeOffsetX: [-10, 10],
+          }}
             modeConfig={{
               parallaxScrollingScale: 1,
               parallaxAdjacentItemScale: 0.8,
@@ -57,6 +63,7 @@ export default function ScheduleCarousel() {
               ref.current?.scrollTo({ index: page, animated: true });
             }}
           />
+</GestureHandlerRootView>
         </>
       )}
       {/* {state === 'loading' && !config && <LoadingIndicator />} */}

@@ -21,7 +21,7 @@ export default function GlobalTabBar() {
   const pathname = usePathname();
 
   const tabRoutes: TabRoute[] = [
-    { key: 'more', name: 'more', icon: 'ellipsis', path: null },
+    { key: 'more', name: 'more', icon: 'bars', path: null },
     { key: 'schedule', name: 'schedule', icon: 'calendar', path: '/schedule' },
     { key: 'index', name: 'index', icon: 'house-chimney', path: '/' },
     { key: 'map', name: 'map', icon: 'map', path: '/map' },

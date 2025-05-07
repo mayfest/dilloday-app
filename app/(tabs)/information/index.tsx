@@ -17,55 +17,58 @@ export default function InfoScreenTwo() {
 
   return (
     // <TabScreen>
-      <StackScreen banner={
-                                <View style={styles.bannerWrapper}>
-                                  <InfoPageBanner />
-                                </View>}>
-        <ScreenBackground />
-        <View style={styles.container}>
-          <View>
-            <View style={styles.buttonRow}>
-              <TouchableOpacity onPress={() => call('911')}>
-                <NineOneOneButton style={styles.svg} />
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                onPress={() =>
-                  link(
-                    'https://www.northwestern.edu/wellness/hpaw/campaigns/smart-dillo/'
-                  )
-                }
-              >
-                <SmartDilloIcon
-                  width={BUTTON_SIZE}
-                  height={BUTTON_SIZE}
-                  style={styles.svg}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <View style={styles.buttonRow}>
-              <Link href='/information/contact'>
-                <ContactMayfestIcon
-                  width={BUTTON_SIZE}
-                  height={BUTTON_SIZE}
-                  style={styles.svg}
-                />
-              </Link>
-
-              <TouchableOpacity onPress={() => call('18474913456')}>
-                <NUPDIcon
-                  width={BUTTON_SIZE}
-                  height={BUTTON_SIZE}
-                  style={styles.svg}
-                />
-              </TouchableOpacity>
-            </View>
-
-            <Text style={styles.version}>v{VERSION}</Text>
-          </View>
+    <StackScreen
+      banner={
+        <View style={styles.bannerWrapper}>
+          <InfoPageBanner />
         </View>
-      </StackScreen>
+      }
+    >
+      <ScreenBackground />
+      <View style={styles.container}>
+        <View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity onPress={() => call('911')}>
+              <NineOneOneButton style={styles.svg} />
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() =>
+                link(
+                  'https://www.northwestern.edu/wellness/hpaw/campaigns/smart-dillo/'
+                )
+              }
+            >
+              <SmartDilloIcon
+                width={BUTTON_SIZE}
+                height={BUTTON_SIZE}
+                style={styles.svg}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.buttonRow}>
+            <Link href='/information/contact'>
+              <ContactMayfestIcon
+                width={BUTTON_SIZE}
+                height={BUTTON_SIZE}
+                style={styles.svg}
+              />
+            </Link>
+
+            <TouchableOpacity onPress={() => call('18474913456')}>
+              <NUPDIcon
+                width={BUTTON_SIZE}
+                height={BUTTON_SIZE}
+                style={styles.svg}
+              />
+            </TouchableOpacity>
+          </View>
+
+          <Text style={styles.version}>v{VERSION}</Text>
+        </View>
+      </View>
+    </StackScreen>
     // </TabScreen>
   );
 }

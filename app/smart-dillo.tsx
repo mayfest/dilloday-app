@@ -1,14 +1,14 @@
-import React, { useEffect, useRef, useState } from 'react';
-
 import SMARTPageBanner from '@/components/banners/SMART-banner';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
   FlatList,
   Image,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -65,93 +65,101 @@ export default function SmartDilloScreen() {
   );
 
   return (
-    <StackScreen banner={
-                          <View style={styles.bannerWrapper}>
-                            <SMARTPageBanner />
-                          </View>}>
-      <View style={styles.container}>
-        {/* <Text style={styles.sectionTitle}>Smart Dillo</Text> */}
-        <FlatList
-          ref={flatListRef}
-          data={smartDilloImages}
-          renderItem={renderItem}
-          keyExtractor={(_, i) => i.toString()}
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          bounces={false}
-          decelerationRate='fast'
-          snapToInterval={ITEM_WIDTH}
-          snapToAlignment='start'
-          onScroll={handleScroll}
-          onScrollBeginDrag={() => setAutoplay(false)}
-          onMomentumScrollEnd={handleMomentumScrollEnd}
-          scrollEventThrottle={16}
-          contentContainerStyle={styles.carouselContentContainer}
-          getItemLayout={(_, index) => ({
-            length: ITEM_WIDTH,
-            offset: ITEM_WIDTH * index,
-            index,
-          })}
-          initialScrollIndex={0}
-        />
-
-        <View style={styles.dotsContainer}>
-          {smartDilloImages.map((_, i) => {
-            const opacity = dotPosition.interpolate({
-              inputRange: [i - 1, i, i + 1],
-              outputRange: [0.3, 1, 0.3],
-              extrapolate: 'clamp',
-            });
-            const size = dotPosition.interpolate({
-              inputRange: [i - 1, i, i + 1],
-              outputRange: [4, 6, 4],
-              extrapolate: 'clamp',
-            });
-            return (
-              <TouchableOpacity
-                key={i}
-                onPress={() => {
-                  setAutoplay(false);
-                  setCurrentIndex(i);
-                  flatListRef.current?.scrollToIndex({
-                    index: i,
-                    animated: true,
-                  });
-                }}
-                style={styles.dotButton}
-              >
-                <Animated.View
-                  style={[styles.dot, { opacity, width: size, height: size }]}
-                />
-              </TouchableOpacity>
-            );
-          })}
+    <StackScreen>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <View style={styles.bannerWrapper}>
+          <SMARTPageBanner />
         </View>
 
-        <Text style={styles.sectionTitleText}>
-          Be Smart. Be Safe. Be Responsible.
-        </Text>
+        <View style={styles.container}>
+          <FlatList
+            ref={flatListRef}
+            data={smartDilloImages}
+            renderItem={renderItem}
+            keyExtractor={(_, i) => i.toString()}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            bounces={false}
+            decelerationRate='fast'
+            snapToInterval={ITEM_WIDTH}
+            snapToAlignment='start'
+            onScroll={handleScroll}
+            onScrollBeginDrag={() => setAutoplay(false)}
+            onMomentumScrollEnd={handleMomentumScrollEnd}
+            scrollEventThrottle={16}
+            contentContainerStyle={styles.carouselContentContainer}
+            getItemLayout={(_, index) => ({
+              length: ITEM_WIDTH,
+              offset: ITEM_WIDTH * index,
+              index,
+            })}
+            initialScrollIndex={0}
+          />
 
-        <Text style={styles.description}>
-          In conjunction with Northwestern's student-run end of year music
-          festival, Dillo Day, the Smart Dillo campaign provides guidance on
-          creating a safe community and enjoyable experience for everyone
-          throughout the day.
-        </Text>
+          <View style={styles.dotsContainer}>
+            {smartDilloImages.map((_, i) => {
+              const opacity = dotPosition.interpolate({
+                inputRange: [i - 1, i, i + 1],
+                outputRange: [0.3, 1, 0.3],
+                extrapolate: 'clamp',
+              });
+              const size = dotPosition.interpolate({
+                inputRange: [i - 1, i, i + 1],
+                outputRange: [4, 6, 4],
+                extrapolate: 'clamp',
+              });
+              return (
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => {
+                    setAutoplay(false);
+                    setCurrentIndex(i);
+                    flatListRef.current?.scrollToIndex({
+                      index: i,
+                      animated: true,
+                    });
+                  }}
+                  style={styles.dotButton}
+                >
+                  <Animated.View
+                    style={[styles.dot, { opacity, width: size, height: size }]}
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
 
-        <TouchableOpacity onPress={openLink}>
-          <Text style={styles.link}>
-            Learn more about the Smart Dillo campaign
+          <Text style={styles.sectionTitleText}>
+            Be Smart. Be Safe. Be Responsible.
           </Text>
-        </TouchableOpacity>
-      </View>
+
+          <Text style={styles.description}>
+            In conjunction with Northwestern's student-run end of year music
+            festival, Dillo Day, the Smart Dillo campaign provides guidance on
+            creating a safe community and enjoyable experience for everyone
+            throughout the day.
+          </Text>
+
+          <TouchableOpacity onPress={openLink}>
+            <Text style={styles.link}>
+              Learn more about the Smart Dillo campaign
+            </Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
     </StackScreen>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+  },
   bannerWrapper: {
-    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginVertical: 15,
   },
   container: {
     flex: 1,
@@ -159,8 +167,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   sectionTitle: {
-    // marginLeft: 10,
-    // margingRight: 10,
     fontSize: 48,
     fontWeight: '800',
     fontFamily: 'Rye_400Regular',
@@ -169,7 +175,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     marginBottom: 16,
   },
-
   sectionTitleText: {
     paddingLeft: 20,
     paddingRight: 20,
@@ -180,10 +185,8 @@ const styles = StyleSheet.create({
     color: Colors.light.action,
     textTransform: 'uppercase',
     letterSpacing: 1,
-    // marginBottom: 16,
     fontFamily: 'Rye_400Regular',
   },
-
   carouselContentContainer: {
     paddingHorizontal: SIDE_PADDING,
   },
@@ -197,12 +200,13 @@ const styles = StyleSheet.create({
     height: width * 1.1,
     borderRadius: 8,
   },
-
   dotsContainer: {
     flexDirection: 'row',
     marginTop: 12,
   },
-  dotButton: { padding: 3 },
+  dotButton: {
+    padding: 3
+  },
   dot: {
     borderRadius: 3,
     borderWidth: 0.5,
@@ -210,15 +214,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#4e2a84',
     marginHorizontal: 2,
   },
-
   description: {
     fontSize: 14,
-    // textAlign: 'center',
     textAlign: 'left',
     color: Colors.light.text,
-    // marginVertical: 16,
     marginTop: 10,
-    marginBottom:10,
+    marginBottom: 10,
     paddingHorizontal: 20,
     fontFamily: 'Poppins_400Regular',
   },
