@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { ThemedText } from '@/components/ThemedText';
-// import SponsorPageBanner from '@/components/banners/sponsor-banner';
+import SponsorBoothsBanner from '@/components/banners/sponsor-booths-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SPONSOR_BOOTHS } from '@/constants/sponsor-booths';
@@ -54,7 +54,7 @@ export default function SponsorBoothsScreen() {
   };
 
   const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}>{/* <SponsorPageBanner /> */}</View>
+    <View style={styles.bannerWrapper}><SponsorBoothsBanner /></View>
   );
 
   return (
@@ -75,7 +75,6 @@ export default function SponsorBoothsScreen() {
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
     paddingBottom: 15,
     width: '100%',
   },
