@@ -104,7 +104,6 @@ export default function SwshPage() {
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
   },
   container: {
     flex: 1,

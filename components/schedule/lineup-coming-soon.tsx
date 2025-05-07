@@ -2,11 +2,13 @@ import MyDynamicSvg from '@/components/schedule/fmo-stage-ticket';
 import MainStageTicket from '@/components/schedule/main-stage-ticket';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
+  Animated,
   BackHandler,
   Dimensions,
   Modal,
+  PanResponder,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -17,6 +19,61 @@ export default function LineupComingSoonModal({ visible, onClose }) {
   // Get screen dimensions and track changes
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const router = useRouter();
+
+  // Animation value for the modal's position
+  const panY = useRef(new Animated.Value(0)).current;
+  const translateY = panY.interpolate({
+    inputRange: [-1, 0, 1],
+    outputRange: [0, 0, 1],
+    extrapolate: 'clamp',
+  });
+
+  // Reset the position when the modal becomes visible
+  useEffect(() => {
+    if (visible) {
+      resetPosition();
+    }
+  }, [visible]);
+
+  const resetPosition = () => {
+    Animated.spring(panY, {
+      toValue: 0,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  // Setup pan responder for swipe gestures
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onPanResponderMove: (evt, gestureState) => {
+        // Only allow downward swipes
+        if (gestureState.dy > 0) {
+          panY.setValue(gestureState.dy);
+        }
+      },
+      onPanResponderRelease: (evt, gestureState) => {
+        // If swipe distance is greater than threshold, close the modal
+        if (gestureState.dy > 50) {
+          closeModal();
+        } else {
+          resetPosition();
+        }
+      },
+    })
+  ).current;
+
+  const closeModal = () => {
+    // Animate the modal off-screen
+    Animated.timing(panY, {
+      toValue: dimensions.height,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      panY.setValue(0);
+      handleBackNavigation(); // Use the navigation handler instead of just onClose
+    });
+  };
 
   useEffect(() => {
     // Update dimensions on screen rotation or size change
@@ -75,7 +132,18 @@ export default function LineupComingSoonModal({ visible, onClose }) {
       onRequestClose={handleBackNavigation} // Handle hardware back button press
     >
       <View style={styles.modalContainer}>
-        <View style={styles.modalContent}>
+        <Animated.View
+          style={[
+            styles.modalContent,
+            { transform: [{ translateY }] }
+          ]}
+          {...panResponder.panHandlers}
+        >
+          {/* Swipe indicator */}
+          <View style={styles.swipeIndicatorContainer}>
+            <View style={styles.swipeIndicator} />
+          </View>
+
           <View style={styles.navigationBar}>
             <TouchableOpacity
               style={styles.navigationButton}
@@ -121,7 +189,7 @@ export default function LineupComingSoonModal({ visible, onClose }) {
               ))}
             </View>
           </View>
-        </View>
+        </Animated.View>
       </View>
     </Modal>
   );
@@ -142,6 +210,18 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     position: 'absolute',
     bottom: 0,
+  },
+  swipeIndicatorContainer: {
+    width: '100%',
+    alignItems: 'center',
+    paddingTop: 10,
+  },
+  swipeIndicator: {
+    width: 40,
+    height: 5,
+    borderRadius: 2.5,
+    backgroundColor: 'rgba(255, 255, 255, 0.5)',
+    marginBottom: 5,
   },
   navigationBar: {
     flexDirection: 'row',
