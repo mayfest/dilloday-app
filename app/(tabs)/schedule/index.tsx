@@ -20,7 +20,7 @@ export default function ScheduleScreen() {
     }, [config])
   );
 
-  // Also check on initial load and config changes
+  // Also check on initial load and config changes`
   useEffect(() => {
     checkLineupAvailability();
   }, [config]);
