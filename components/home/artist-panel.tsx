@@ -224,7 +224,7 @@ const styles = StyleSheet.create<Styles>({
     textAlign: 'center',
   },
   divider: {
-    width: '95%',
+    width: '100%',
     height: 2,
     backgroundColor: '#2E4172',
     marginVertical: 12,

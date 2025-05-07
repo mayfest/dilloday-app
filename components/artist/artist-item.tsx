@@ -78,11 +78,11 @@ export default function ArtistItem({ artistId, stage }: ArtistItemProps) {
       }}
     >
       <View style={styles.artistContainer}>
-        <Text style={[styles.artistText, { color: stage.textSecondary }]}>
+        {/* <Text style={[styles.artistText, { color: stage.textSecondary }]}>
           {artist.available ? artist.name : 'Announcing Soon...'}
-        </Text>
+        </Text> */}
       </View>
-      <View style={styles.divider} />
+      {/* <View style={styles.divider} /> */}
       <View
         style={[
           styles.timeContainer,
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   timeText1: {
     fontWeight: '700',
     fontSize: 20,
+    display: 'none',
   },
   timeText2: {
     fontWeight: '400',
