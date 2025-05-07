@@ -26,3 +26,4 @@ export function CurvedHeader({ text, size }: CurvedHeaderProps) {
     </View>
   );
 }
+

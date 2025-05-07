@@ -59,3 +59,4 @@ const CurvedText: React.FC<CurvedTextProps> = ({
 };
 
 export default CurvedText;
+
