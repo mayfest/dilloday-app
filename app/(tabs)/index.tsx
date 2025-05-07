@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
+import COMINGSOONBanner from '@/components/banners/COMINGSOON-banner';
 import HomeWelcomeBanner from '@/components/banners/home-banner';
 import AnnouncementPanel from '@/components/home/announcement-panel';
 import ArtistPanel from '@/components/home/artist-panel';
-import NavigationPanel from '@/components/home/navigation-panel';
 import TabScreen from '@/components/tab-screen';
 import { Colors } from '@/constants/Colors';
 import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+
 
 export default function HomeScreen() {
   const [screenWidth, setScreenWidth] = useState(
@@ -29,7 +30,13 @@ export default function HomeScreen() {
           <View style={styles.contentWrapper}>
             <AnnouncementPanel value='CARNIVAL DILLO IS FINALLY HERE!!!' />
             <ArtistPanel />
-            <NavigationPanel />
+            <View style={styles.tarotWrapper}>
+              {/* <GrassLBanner/> */}
+              <COMINGSOONBanner/>
+              {/* <GrassRBanner/> */}
+
+            </View>
+            
           </View>
         </ScrollView>
       </View>
@@ -82,5 +89,10 @@ const styles = StyleSheet.create({
   },
   contentWrapper: {
     width: '100%',
+  },
+  tarotWrapper: {
+    paddingTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
   },
 });
