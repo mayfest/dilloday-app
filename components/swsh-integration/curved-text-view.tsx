@@ -12,7 +12,7 @@ export function CurvedHeader({ text, size }: CurvedHeaderProps) {
       style={{
         width: size,
         alignItems: 'center',
-        marginBottom: -150,
+        marginBottom: -176,
         zIndex: 5,
       }}
     >
@@ -20,9 +20,10 @@ export function CurvedHeader({ text, size }: CurvedHeaderProps) {
         text={text}
         fontSize={size * 0.10417}
         radius={size / 2 - size * 0.01}
-        textColor='#000000'
+        textColor='#991B1B'
         position='top'
       />
     </View>
   );
 }
+
