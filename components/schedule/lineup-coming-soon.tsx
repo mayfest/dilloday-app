@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   comingSoonText: {
-    fontSize: 18,
+    fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
     marginHorizontal: 20,

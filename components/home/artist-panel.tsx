@@ -32,9 +32,17 @@ export default function ArtistPanel(): React.ReactElement {
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [dots, setDots] = useState<DotPosition[]>([]);
   const [brightDots, setBrightDots] = useState<Set<number>>(new Set());
+  // Initialize countdown with 0s to prevent NaN issues
+  const [countdown, setCountdown] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
   const patternIndex = useRef(0);
   const intervalId = useRef<NodeJS.Timeout | null>(null);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
+  const countdownId = useRef<NodeJS.Timeout | null>(null);
 
   const DOT_SIZE = 20;
   const SPACING = DOT_SIZE + 15;
@@ -46,6 +54,54 @@ export default function ArtistPanel(): React.ReactElement {
 
   const handleLayout = (e: LayoutChangeEvent) =>
     setLayout(e.nativeEvent.layout);
+
+  // Calculate countdown to Dillo Day
+  useEffect(() => {
+    // Calculate countdown initially to avoid flashing NaN
+    const calculateCountdown = () => {
+      try {
+        // strict ISO-8601 string
+        const dilloDay = Date.parse('2025-05-17T00:00:00');
+
+        const now = new Date().getTime();
+        const difference = dilloDay - now;
+
+        // Check if difference is valid before calculation
+        if (isNaN(difference) || difference < 0) {
+          console.error('Invalid countdown difference:', difference);
+          return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+        }
+
+        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        );
+        const minutes = Math.floor(
+          (difference % (1000 * 60 * 60)) / (1000 * 60)
+        );
+        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+        return { days, hours, minutes, seconds };
+      } catch (error) {
+        console.error('Error calculating countdown:', error);
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+    };
+
+    const updateCountdown = () => {
+      setCountdown(calculateCountdown());
+    };
+
+    // Calculate immediately on mount
+    updateCountdown();
+
+    // Then set up interval
+    countdownId.current = setInterval(updateCountdown, 1000);
+
+    return () => {
+      if (countdownId.current) clearInterval(countdownId.current);
+    };
+  }, []);
 
   useEffect(() => {
     const { width: w, height: h } = layout;
@@ -140,6 +196,52 @@ export default function ArtistPanel(): React.ReactElement {
     };
   }, [dots, patterns]);
 
+  // Render content based on whether nowKey/nextKey are 'countdown' or artist keys
+  const renderNowContent = () => {
+    if (nowKey === 'countdown') {
+      return (
+        <>
+          <Text style={styles.header}>DILLO DAY COUNTDOWN</Text>
+          <Text style={styles.countdownText}>
+            {!isNaN(countdown.days) ? countdown.days : 0}d{' '}
+            {!isNaN(countdown.hours) ? countdown.hours : 0}h{' '}
+            {!isNaN(countdown.minutes) ? countdown.minutes : 0}m{' '}
+            {!isNaN(countdown.seconds) ? countdown.seconds : 0}s
+          </Text>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Text style={styles.header}>NOW SHOWING</Text>
+          <Text style={styles.artistName}>
+            {nowArtist?.name ?? 'Unknown Artist'}
+          </Text>
+          <Text style={styles.artistTime}>{nowArtist?.time ?? 'TBD'}</Text>
+        </>
+      );
+    }
+  };
+
+  const renderNextContent = () => {
+    if (nextKey === 'countdown') {
+      return (
+        <>
+          <Text style={styles.header}>DILLO DAY</Text>
+          <Text style={styles.artistName}>May 17, 2025</Text>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Text style={styles.header}>NEXT UP</Text>
+          <Text style={styles.artistName}>{nextArtist?.name ?? 'TBD'}</Text>
+          <Text style={styles.artistTime}>{nextArtist?.time ?? 'TBD'}</Text>
+        </>
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.marquee} onLayout={handleLayout}>
@@ -153,17 +255,16 @@ export default function ArtistPanel(): React.ReactElement {
             ]}
           />
         ))}
-
         <View style={styles.content}>
-          <Text style={styles.header}>NOW SHOWING</Text>
-          <Text style={styles.artistName}>
-            {nowArtist?.name ?? 'Unknown Artist'}
-          </Text>
+          {nowKey != null && nextKey != null && (
+            <>
+              {renderNowContent()}
 
-          <View style={styles.divider} />
+              <View style={styles.divider} />
 
-          <Text style={styles.header}>NEXT UP</Text>
-          <Text style={styles.artistName}>{nextArtist?.name ?? 'TBD'}</Text>
+              {renderNextContent()}
+            </>
+          )}
         </View>
       </View>
     </View>
@@ -176,6 +277,8 @@ interface Styles {
   content: ViewStyle;
   header: TextStyle;
   artistName: TextStyle;
+  artistTime: TextStyle;
+  countdownText: TextStyle;
   divider: ViewStyle;
   dot: ViewStyle;
   dotBright: ViewStyle;
@@ -218,6 +321,22 @@ const styles = StyleSheet.create<Styles>({
   artistName: {
     fontSize: 28,
     fontWeight: '900',
+    color: '#2E4172',
+    fontFamily: 'Poppins_700Bold',
+    marginBottom: 10,
+    textAlign: 'center',
+  },
+  artistTime: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#4A5D96',
+    fontFamily: 'Poppins_600SemiBold',
+    marginBottom: 16,
+    textAlign: 'center',
+  },
+  countdownText: {
+    fontSize: 24,
+    fontWeight: '700',
     color: '#2E4172',
     fontFamily: 'Poppins_700Bold',
     marginBottom: 16,

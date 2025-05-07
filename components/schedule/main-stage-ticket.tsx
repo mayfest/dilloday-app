@@ -188,8 +188,6 @@ const MainStageTicket = ({ artistName, time }: MainStageTicketProps) => {
   const svgWidth = windowWith - 64;
   const svgHeight = 170;
 
-  console.log('artistName', artistName);
-
   return renderArtistSvg(artistName, svgWidth, svgHeight);
 };
 

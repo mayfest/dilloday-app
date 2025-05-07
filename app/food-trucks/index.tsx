@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   infoName: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
