@@ -157,7 +157,7 @@ export default function LineupComingSoonModal({ visible, onClose }) {
 
           <View style={styles.contentContainer}>
             <View style={styles.textContentContainer}>
-              <Text style={styles.heading}>DILLO DAY LINEUP COMING SOON</Text>
+              <Text style={styles.heading}>DILLO DAY SCHEDULE COMING SOON</Text>
               <Text style={styles.comingSoonText}>
                 The Dillo Day lineup hasn't been fully announced yet and we're
                 working hard to finalize our schedule. For now, please make sure
@@ -264,7 +264,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   comingSoonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#FFFFFF',
     textAlign: 'center',
     marginHorizontal: 20,
