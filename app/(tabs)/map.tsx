@@ -40,6 +40,8 @@ const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
 const DRAWER_EXPANDED_HEIGHT = screen.height * 0.6;
 const DRAWER_PREVIEW_HEIGHT = 300;
 const ONE = new Animated.Value(1);
+
+// Get status bar height for proper positioning
 const STATUSBAR_HEIGHT =
   Platform.OS === 'ios' ? 44 : StatusBar.currentHeight || 0;
 
@@ -151,7 +153,7 @@ class AnimatedViews extends React.Component<any, any> {
       canMoveHorizontal: true,
       markers,
       mapKey: 0,
-      activeTab: 'interactive',
+      activeTab: 'interactive', // Default to interactive mode
       region: new AnimatedRegion({
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -319,10 +321,12 @@ class AnimatedViews extends React.Component<any, any> {
     }
   };
 
+  // Method to change tabs
   setActiveTab = (tabName: string) => {
     this.setState({ activeTab: tabName });
   };
 
+  // Cross-platform tab selector
   renderTabSelector = () => {
     const { activeTab } = this.state;
     if (Platform.OS === 'ios') {

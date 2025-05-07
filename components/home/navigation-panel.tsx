@@ -6,7 +6,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 export default function NavigationPanel() {
   const router = useRouter();
 
-  const onPress = (key: string) => {
+  const onPress = (
+    key: '/announcements' | '/schedule' | '/map' | '/information'
+  ) => {
     router.navigate({
       pathname: key,
     });

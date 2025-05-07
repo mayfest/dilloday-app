@@ -1,12 +1,12 @@
 // import ScheduleBackground from '@/components/schedule/schedule-background';
+import DrawerScreen from '@/components/drawer-screen';
 import ScheduleCarousel from '@/components/schedule/schedule-carousel';
-import TabScreen from '@/components/tab-screen';
 
 export default function ScheduleScreen() {
   return (
-    <TabScreen>
+    <DrawerScreen>
       {/* <ScheduleBackground /> */}
       <ScheduleCarousel />
-    </TabScreen>
+    </DrawerScreen>
   );
 }

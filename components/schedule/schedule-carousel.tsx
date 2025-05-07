@@ -39,9 +39,6 @@ export default function ScheduleCarousel() {
               pagingEnabled
               overscrollEnabled={true}
               mode='parallax'
-              panGestureHandlerProps={{
-                activeOffsetX: [-10, 10],
-              }}
               modeConfig={{
                 parallaxScrollingScale: 1,
                 parallaxAdjacentItemScale: 0.8,

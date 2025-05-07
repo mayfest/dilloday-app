@@ -27,7 +27,7 @@ export default function ArtistItem({ artistId, stage }: ArtistItemProps) {
         disabled={!artist.available}
         onPress={() => {
           router.navigate({
-            pathname: '/artist',
+            pathname: '/(tabs)/schedule/artist',
             params: {
               artist: artistId,
               stage: stage.name,
@@ -47,7 +47,7 @@ export default function ArtistItem({ artistId, stage }: ArtistItemProps) {
         disabled={!artist.available}
         onPress={() => {
           router.navigate({
-            pathname: '/artist',
+            pathname: '/(tabs)/schedule/artist',
             params: {
               artist: artistId,
               stage: stage.name,
@@ -69,7 +69,7 @@ export default function ArtistItem({ artistId, stage }: ArtistItemProps) {
       disabled={!artist.available}
       onPress={() => {
         router.navigate({
-          pathname: '/artist',
+          pathname: '/(tabs)/schedule/artist',
           params: {
             artist: artistId,
             stage: stage.name,

@@ -28,14 +28,12 @@ export default function ModalScreen({ children, closeRoute }: ScreenProps) {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
-    // Animate fade in of background
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 300,
       useNativeDriver: true,
     }).start();
 
-    // Animate slide up of content
     Animated.timing(slideAnim, {
       toValue: 0,
       duration: 300,
@@ -44,7 +42,6 @@ export default function ModalScreen({ children, closeRoute }: ScreenProps) {
   }, []);
 
   const handleClose = () => {
-    // Animate fade out and slide down before navigating
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 0,

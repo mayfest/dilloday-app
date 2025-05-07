@@ -41,11 +41,10 @@ export default function GlobalTabBar() {
   const handlePress = (route: TabRoute): void => {
     if (route.name === 'more') {
       try {
-        // Using the DrawerActions from @react-navigation/native
         navigation.dispatch(DrawerActions.openDrawer());
       } catch (e) {
         console.log('Failed to open drawer:', e);
-        // As fallback navigate to information page
+
         if (route.path) {
           router.push('/information');
         }

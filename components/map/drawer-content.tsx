@@ -2,8 +2,14 @@ import React from 'react';
 
 import { StyleSheet, Text, View } from 'react-native';
 
-const DrawerContent = ({ type }) => {
-  const getLocationInfo = (type) => {
+type LocationType = 'main' | 'fmo' | 'food';
+
+interface DrawerContentProps {
+  type: LocationType;
+}
+
+const DrawerContent = ({ type }: DrawerContentProps) => {
+  const getLocationInfo = (type: LocationType) => {
     switch (type) {
       case 'main':
         return {

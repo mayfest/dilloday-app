@@ -26,7 +26,7 @@ const INFO_BAR_HEIGHT = 90;
 export default function FoodTrucksScreen() {
   const router = useRouter();
 
-  const renderFoodTruckItem = ({ item }) => {
+  const renderFoodTruckItem = ({ item }: any) => {
     return (
       <TouchableOpacity
         style={styles.foodTruckCard}
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
   },
   infoName: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: '700',
     color: '#fff',
     textAlign: 'center',

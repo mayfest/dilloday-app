@@ -15,27 +15,26 @@ interface DotPosition {
   x: number;
   y: number;
 }
-type PatternFunction = (dots: DotPosition[]) => number;
+
+type PatternFunction = (dots: DotPosition[]) => NodeJS.Timeout;
 
 export default function ArtistPanel(): React.ReactElement {
   const { config } = useConfig();
-
-  // --- fetch “now” and “next” from config.home.panels ---
   const panels = config?.home?.panels ?? [];
   const nowKey = panels.find((p) => p.type === 'schedule-now')?.value;
   const nextKey = panels.find((p) => p.type === 'schedule-next')?.value;
 
-  // lookup artist info (fall back gracefully)
-  const nowArtist = nowKey ? config.artists[nowKey] : undefined;
-  const nextArtist = nextKey ? config.artists[nextKey] : undefined;
+  const nowArtist =
+    nowKey && config?.artists ? config.artists[nowKey] : undefined;
+  const nextArtist =
+    nextKey && config?.artists ? config.artists[nextKey] : undefined;
 
-  // --- rest of your marquee + lights boilerplate ---
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [dots, setDots] = useState<DotPosition[]>([]);
   const [brightDots, setBrightDots] = useState<Set<number>>(new Set());
   const patternIndex = useRef(0);
-  const intervalId = useRef<number | null>(null);
-  const timeoutId = useRef<number | null>(null);
+  const intervalId = useRef<NodeJS.Timeout | null>(null);
+  const timeoutId = useRef<NodeJS.Timeout | null>(null);
 
   const DOT_SIZE = 20;
   const SPACING = DOT_SIZE + 15;
@@ -45,11 +44,9 @@ export default function ArtistPanel(): React.ReactElement {
   const BORDER_LEFT = 25;
   const BORDER_RIGHT = 25;
 
-  // measure
   const handleLayout = (e: LayoutChangeEvent) =>
     setLayout(e.nativeEvent.layout);
 
-  // calculate dot positions each time layout changes
   useEffect(() => {
     const { width: w, height: h } = layout;
     if (!w || !h) return;
@@ -68,26 +65,21 @@ export default function ArtistPanel(): React.ReactElement {
       (h - BORDER_TOP - BORDER_BOTTOM - DOT_SIZE) / Math.max(1, countV - 1);
 
     const newDots: DotPosition[] = [];
-    // top
     for (let i = 0; i < countH; i++) {
       newDots.push({ x: BORDER_LEFT + i * stepX, y: topY });
     }
-    // right
     for (let i = 0; i < countV; i++) {
       newDots.push({ x: rightX, y: BORDER_TOP + i * stepY });
     }
-    // bottom
     for (let i = countH - 1; i >= 0; i--) {
       newDots.push({ x: BORDER_LEFT + i * stepX, y: botY });
     }
-    // left
     for (let i = countV - 1; i >= 0; i--) {
       newDots.push({ x: leftX, y: BORDER_TOP + i * stepY });
     }
     setDots(newDots);
   }, [layout]);
 
-  // four light‑patterns
   const patterns = React.useMemo<PatternFunction[]>(
     () => [
       (all) => {
@@ -128,7 +120,6 @@ export default function ArtistPanel(): React.ReactElement {
     []
   );
 
-  // auto‑rotate patterns
   useEffect(() => {
     if (dots.length === 0) return;
     if (intervalId.current) clearInterval(intervalId.current);
@@ -137,7 +128,7 @@ export default function ArtistPanel(): React.ReactElement {
     function start() {
       intervalId.current = patterns[patternIndex.current](dots);
       timeoutId.current = setTimeout(() => {
-        if (intervalId.current) clearInterval(intervalId.current!);
+        if (intervalId.current) clearInterval(intervalId.current);
         patternIndex.current = (patternIndex.current + 1) % patterns.length;
         start();
       }, PATTERN_DURATION);
@@ -219,6 +210,7 @@ const styles = StyleSheet.create<Styles>({
   header: {
     fontSize: 18,
     fontWeight: '700',
+    fontFamily: 'Poppins_600SemiBold',
     color: '#2E4172',
     letterSpacing: 1,
     marginBottom: 4,
@@ -227,12 +219,13 @@ const styles = StyleSheet.create<Styles>({
     fontSize: 28,
     fontWeight: '900',
     color: '#2E4172',
+    fontFamily: 'Poppins_700Bold',
     marginBottom: 16,
     textAlign: 'center',
   },
   divider: {
     width: '95%',
-    height: 3,
+    height: 2,
     backgroundColor: '#2E4172',
     marginVertical: 12,
   },

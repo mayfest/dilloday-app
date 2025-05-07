@@ -21,7 +21,7 @@ export default function ContactMayfestIcon({
     <Svg
       width={width}
       height={height}
-      viewBox='0 0 139 132'
+      viewBox='0 0 135 130'
       fill='none'
       style={style}
     >

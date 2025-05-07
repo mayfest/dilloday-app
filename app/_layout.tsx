@@ -267,6 +267,7 @@ export default function RootLayout() {
                   ),
                 }}
               />
+
               <Drawer.Screen
                 name='artist'
                 options={{

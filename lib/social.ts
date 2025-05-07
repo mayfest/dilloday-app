@@ -1,5 +1,5 @@
 import { createURL, parse } from 'expo-linking';
-import { ExpoRouter } from 'expo-router';
+import { Router } from 'expo-router';
 import {
   WebBrowserRedirectResult,
   openAuthSessionAsync,
@@ -27,11 +27,9 @@ export async function connect(platform: SocialPlatform) {
     `https://app.dilloday.com/${platform}/connect?redirect_uri=${encodeURIComponent(callbackUrl)}&token=${encodeURIComponent(userToken)}`,
     callbackUrl
   );
-
   if (result.type !== 'success') {
     throw new Error('operation canceled');
   }
-
   const { url } = result as WebBrowserRedirectResult;
   const { queryParams } = parse(url);
   if (queryParams?.error) {
@@ -47,7 +45,7 @@ interface SocialNavigateConfig {
 
 export function socialNavigate(
   { config, user, userState }: SocialNavigateConfig,
-  router: ExpoRouter.Router
+  router: Router
 ) {
   if (config?.social.status === 'matched') {
     if (user && userState?.ready) {
@@ -57,9 +55,7 @@ export function socialNavigate(
       return false;
     }
   }
-
   const open = config?.social.status === 'open';
-
   if (user && isValidAuthEmail(user.email!)) {
     if (userState) {
       if (userState.ready) {
@@ -78,7 +74,6 @@ export function socialNavigate(
       }
     }
   }
-
   return false;
 }
 

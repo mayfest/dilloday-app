@@ -20,7 +20,6 @@ export default function DrawerScreen({
   banner,
 }: StackScreenProps) {
   const navigation = useNavigation();
-  const canGoBack = navigation.canGoBack();
 
   return (
     <GlobalNavivationWrapper hideNavBar={hideNavBar}>
@@ -61,5 +60,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 8,
     fontWeight: '600',
+  },
+  bannerRow: {
+    width: '100%',
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
 });

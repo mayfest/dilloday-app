@@ -54,15 +54,12 @@ export default function StackScreen({
             <View style={styles.backButtonContainer} />
           </View>
           {banner && <View style={styles.bannerRow}>{banner}</View>}
-
           <View style={styles.content}>{children}</View>
         </SafeAreaView>
       </View>
     </GlobalNavivationWrapper>
   );
 }
-
-// Styles remain unchanged
 
 const styles = StyleSheet.create({
   container: {
@@ -90,5 +87,23 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginLeft: 8,
     fontWeight: '600',
+  },
+  headerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
+  backButtonContainer: {
+    width: 80,
+  },
+  centerSpacer: {
+    flex: 1,
+  },
+  bannerRow: {
+    width: '100%',
+    paddingHorizontal: 16,
+    marginBottom: 8,
   },
 });
