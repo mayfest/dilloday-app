@@ -4,12 +4,16 @@ import DrawerContent from '@/components/map/drawer-content';
 import LocationMarker from '@/components/map/location-marker';
 import PanController from '@/components/map/pan-controller';
 import TabScreen from '@/components/tab-screen';
-import { Animated, AppState, Dimensions, StyleSheet, View } from 'react-native';
+import { Animated, AppState, Dimensions, Platform, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import ImageZoomViewer from 'react-native-image-zoom-viewer';
 import {
   Animated as AnimatedMap,
   AnimatedRegion,
   Marker,
 } from 'react-native-maps';
+
+import MapImage from '@/assets/images/dillo-53-map-graphic.png';
+import { Colors } from '@/constants/Colors';
 
 const screen = Dimensions.get('window');
 
@@ -26,6 +30,7 @@ const SNAP_WIDTH = ITEM_WIDTH + ITEM_SPACING;
 const DRAWER_EXPANDED_HEIGHT = screen.height * 0.6;
 const DRAWER_PREVIEW_HEIGHT = 300;
 const ONE = new Animated.Value(1);
+const STATUSBAR_HEIGHT = Platform.OS === 'ios' ? 44 : StatusBar.currentHeight || 0;
 
 function getMarkerState(panX: any, panY: any, scrollY: any, i: any) {
   const xLeft = -SNAP_WIDTH * i + SNAP_WIDTH / 2;
@@ -135,6 +140,7 @@ class AnimatedViews extends React.Component<any, any> {
       canMoveHorizontal: true,
       markers,
       mapKey: 0,
+      activeTab: 'interactive',
       region: new AnimatedRegion({
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -302,73 +308,207 @@ class AnimatedViews extends React.Component<any, any> {
     }
   };
 
+  setActiveTab = (tabName: string) => {
+    this.setState({ activeTab: tabName });
+  };
+
+  renderTabSelector = () => {
+    const { activeTab } = this.state;
+    if (Platform.OS === 'ios') {
+      return (
+        <SafeAreaView style={styles.iosTabOuterContainer}>
+          <View style={styles.tabContainer}>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === 'interactive' && styles.activeTabButton,
+              ]}
+              onPress={() => this.setActiveTab('interactive')}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.tabText,
+                activeTab === 'interactive' && styles.activeTabText,
+              ]}>
+                Interactive
+              </Text>
+              {activeTab === 'interactive' && <View style={styles.activeTabIndicator} />}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === 'static' && styles.activeTabButton,
+              ]}
+              onPress={() => this.setActiveTab('static')}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.tabText,
+                activeTab === 'static' && styles.activeTabText,
+              ]}>
+                Static
+              </Text>
+              {activeTab === 'static' && <View style={styles.activeTabIndicator} />}
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
+      );
+    } else {
+      // Android tab rendering
+      return (
+        <View style={styles.androidTabOuterContainer}>
+          <View style={styles.tabContainer}>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === 'interactive' && styles.activeTabButton,
+              ]}
+              onPress={() => this.setActiveTab('interactive')}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.tabText,
+                activeTab === 'interactive' && styles.activeTabText,
+              ]}>
+                Interactive
+              </Text>
+              {activeTab === 'interactive' && <View style={styles.activeTabIndicator} />}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === 'static' && styles.activeTabButton,
+              ]}
+              onPress={() => this.setActiveTab('static')}
+              activeOpacity={0.7}
+            >
+              <Text style={[
+                styles.tabText,
+                activeTab === 'static' && styles.activeTabText,
+              ]}>
+                Static
+              </Text>
+              {activeTab === 'static' && <View style={styles.activeTabIndicator} />}
+            </TouchableOpacity>
+          </View>
+        </View>
+      );
+    }
+  };
+
+  renderInteractiveView = () => {
+    const { panX, panY, animations, canMoveHorizontal, markers, region } = this.state;
+
+    return (
+      <PanController
+        style={styles.container}
+        vertical
+        horizontal={canMoveHorizontal}
+        xMode='snap'
+        yMode='decay'
+        snapSpacingX={SNAP_WIDTH}
+        yBounds={[-DRAWER_EXPANDED_HEIGHT, 0]}
+        xBounds={[-SNAP_WIDTH * (markers.length - 1), 0]}
+        panY={panY}
+        panX={panX}
+        key={`controller-${this.state.mapKey}`}
+      >
+        <AnimatedMap
+          key={`map-${this.state.mapKey}`}
+          provider={this.props.provider}
+          style={styles.map}
+          region={region}
+          scrollEnabled={false}
+          zoomEnabled={false}
+          rotateEnabled={false}
+          pitchEnabled={false}
+        >
+          {markers.map((marker: any, i: any) => {
+            const { selected, markerOpacity, markerScale } = animations[i];
+            return (
+              <Marker key={marker.id} coordinate={marker.coordinate}>
+                <LocationMarker
+                  style={{
+                    opacity: markerOpacity,
+                    transform: [{ scale: markerScale }],
+                  }}
+                  type={marker.type}
+                  selected={selected}
+                />
+              </Marker>
+            );
+          })}
+        </AnimatedMap>
+        <View style={styles.itemContainer}>
+          {markers.map((marker: any, i: any) => {
+            const { translateY, translateX, scale, opacity } = animations[i];
+            return (
+              <Animated.View
+                key={marker.id}
+                style={[
+                  styles.item,
+                  {
+                    opacity,
+                    transform: [{ translateY }, { translateX }, { scale }],
+                  },
+                ]}
+              >
+                <DrawerContent type={marker.type} />
+              </Animated.View>
+            );
+          })}
+        </View>
+      </PanController>
+    );
+  };
+
+  renderStaticView = () => {
+    const images = [
+      {
+        url: '',
+        props: {
+          source: MapImage
+        }
+      }
+    ];
+
+    return (
+      <View style={styles.staticContainer}>
+        <ImageZoomViewer
+          imageUrls={images}
+          backgroundColor="#000000"
+          renderIndicator={() => <View />}
+          enableSwipeDown={true}
+          onSwipeDown={() => this.setActiveTab('interactive')}
+          minScale={0.5}
+          onMove={(position) => {
+            if (position.scale < 0.8) {
+              setTimeout(() => this.setActiveTab('interactive'), 300);
+            }
+          }}
+        />
+      </View>
+    );
+  };
+
   render() {
-    const { panX, panY, animations, canMoveHorizontal, markers, region } =
-      this.state;
+    const { activeTab } = this.state;
+    const contentStyle = Platform.OS === 'ios'
+      ? styles.iosContentContainer
+      : styles.androidContentContainer;
 
     return (
       <TabScreen>
         <View style={styles.container}>
-          <PanController
-            style={styles.container}
-            vertical
-            horizontal={canMoveHorizontal}
-            xMode='snap'
-            yMode='decay'
-            snapSpacingX={SNAP_WIDTH}
-            yBounds={[-DRAWER_EXPANDED_HEIGHT, 0]}
-            xBounds={[-SNAP_WIDTH * (markers.length - 1), 0]}
-            panY={panY}
-            panX={panX}
-            key={`controller-${this.state.mapKey}`}
-          >
-            <AnimatedMap
-              key={`map-${this.state.mapKey}`}
-              provider={this.props.provider}
-              style={styles.map}
-              region={region}
-              scrollEnabled={false}
-              zoomEnabled={false}
-              rotateEnabled={false}
-              pitchEnabled={false}
-            >
-              {markers.map((marker: any, i: any) => {
-                const { selected, markerOpacity, markerScale } = animations[i];
-                return (
-                  <Marker key={marker.id} coordinate={marker.coordinate}>
-                    <LocationMarker
-                      style={{
-                        opacity: markerOpacity,
-                        transform: [{ scale: markerScale }],
-                      }}
-                      type={marker.type}
-                      selected={selected}
-                    />
-                  </Marker>
-                );
-              })}
-            </AnimatedMap>
-            <View style={styles.itemContainer}>
-              {markers.map((marker: any, i: any) => {
-                const { translateY, translateX, scale, opacity } =
-                  animations[i];
-                return (
-                  <Animated.View
-                    key={marker.id}
-                    style={[
-                      styles.item,
-                      {
-                        opacity,
-                        transform: [{ translateY }, { translateX }, { scale }],
-                      },
-                    ]}
-                  >
-                    <DrawerContent type={marker.type} />
-                  </Animated.View>
-                );
-              })}
-            </View>
-          </PanController>
+          <View style={contentStyle}>
+            {activeTab === 'interactive' ?
+              this.renderInteractiveView() :
+              this.renderStaticView()
+            }
+          </View>
+          {this.renderTabSelector()}
         </View>
       </TabScreen>
     );
@@ -378,6 +518,13 @@ class AnimatedViews extends React.Component<any, any> {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
+  },
+  iosContentContainer: {
+    flex: 1,
+    marginTop: 90,
+  },
+  androidContentContainer: {
+    flex: 1,
   },
   itemContainer: {
     backgroundColor: 'transparent',
@@ -389,6 +536,14 @@ const styles = StyleSheet.create({
   map: {
     backgroundColor: 'transparent',
     ...StyleSheet.absoluteFillObject,
+  },
+  staticContainer: {
+    flex: 1,
+    backgroundColor: '#000',
+  },
+  staticMapImage: {
+    width: '100%',
+    height: '100%',
   },
   item: {
     width: ITEM_WIDTH,
@@ -407,6 +562,68 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
+  },
+  // iOS-specific tab styles
+  iosTabOuterContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    width: '100%',
+    backgroundColor: '#faf6f0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+  },
+  // Android-specific tab styles
+  androidTabOuterContainer: {
+    position: 'absolute',
+    top: STATUSBAR_HEIGHT, // Account for Android status bar
+    left: 0,
+    right: 0,
+    zIndex: 100,
+    width: '100%',
+    backgroundColor: '#faf6f0',
+    elevation: 4,
+  },
+  tabContainer: {
+    flexDirection: 'row',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    width: '100%',
+  },
+  tabButton: {
+    flex: 1,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+  },
+  activeTabButton: {
+  },
+  tabText: {
+    fontSize: Platform.OS === 'android' ? 16 : 18,
+    fontWeight: '500',
+    color: '#888',
+    fontFamily: 'Poppins_600SemiBold',
+    textAlign: 'center',
+  },
+  activeTabText: {
+    color: '#000',
+    fontWeight: '700',
+  },
+  activeTabIndicator: {
+    position: 'absolute',
+    bottom: 0,
+    left: '25%',
+    width: '50%',
+    height: 3,
+    backgroundColor: Colors.light.text,
+    borderRadius: 1.5,
   },
 });
 

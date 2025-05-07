@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-
 import FAQPageBanner from '@/components/banners/faq-banner';
+import DrawerScreen from '@/components/drawer-screen';
 import FAQCategorySection from '@/components/faq/faq-category-section';
 import SearchBar from '@/components/faq/faq-search-bar';
-import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
 import { FAQ_DATA } from '@/constants/faq';
+import React, { useState } from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function FAQScreen() {
@@ -14,14 +13,12 @@ export default function FAQScreen() {
 
   const handleSearch = (query: string) => {
     setSearchQuery(query);
-
     if (!query.trim()) {
       setFilteredData(FAQ_DATA);
       return;
     }
 
     const lowercaseQuery = query.toLowerCase();
-
     const filtered = FAQ_DATA.map((category) => {
       const filteredItems = category.items.filter(
         (item) =>
@@ -30,27 +27,28 @@ export default function FAQScreen() {
             paragraph.toLowerCase().includes(lowercaseQuery)
           )
       );
-
       return {
         ...category,
         items: filteredItems,
       };
     }).filter((category) => category.items.length > 0);
-
     setFilteredData(filtered);
   };
 
+  const ListHeaderComponent = () => (
+    <View style={styles.bannerWrapper}>
+      <FAQPageBanner />
+    </View>
+  );
+
   return (
-    <StackScreen banner={
-                          <View style={styles.bannerWrapper}>
-                            <FAQPageBanner />
-                          </View>}>
+    <DrawerScreen>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
+        <ListHeaderComponent />
         <SearchBar onSearch={handleSearch} value={searchQuery} />
-
         {filteredData.length > 0 ? (
           filteredData.map((category, index) => (
             <FAQCategorySection
@@ -68,19 +66,22 @@ export default function FAQScreen() {
           </View>
         )}
       </ScrollView>
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginVertical: 10,
   },
   container: {
     flex: 1,
   },
   contentContainer: {
-    padding: 24,
+    paddingHorizontal: 24,
     paddingBottom: 40,
   },
   header: {

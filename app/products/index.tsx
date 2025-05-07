@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-
 import StorePageBanner from '@/components/banners/store-banner';
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -15,7 +14,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
 import { ThemedText } from '../../components/ThemedText';
 
 interface Product {
@@ -108,11 +106,14 @@ export default function ProductsScreen() {
     );
   };
 
+  const ListHeaderComponent = () => (
+    <View style={styles.bannerWrapper}>
+      <StorePageBanner />
+    </View>
+  );
+
   return (
-    <StackScreen banner={
-                          <View style={styles.bannerWrapper}>
-                            <StorePageBanner />
-                          </View>}>
+    <DrawerScreen>
       {loading ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size='large' color='#173885' />
@@ -139,9 +140,11 @@ export default function ProductsScreen() {
           }
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
+          ListHeaderComponent={ListHeaderComponent}
+          showsVerticalScrollIndicator={false}
         />
       )}
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 

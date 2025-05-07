@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react';
-
 import AnnouncementFrame from '@/components/announcements/announcement-frame';
 import AnnouncementItem from '@/components/announcements/announcement-item';
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { Announcement, getAnnouncements } from '@/lib/announcement';
-import { RefreshControl, ScrollView, StyleSheet, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { FlatList, RefreshControl, StyleSheet, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export default function AnnouncementScreen() {
@@ -36,14 +35,28 @@ export default function AnnouncementScreen() {
     load();
   }, []);
 
+  const ListHeaderComponent = () => (
+    <View style={styles.frameContainer}>
+      <AnnouncementFrame />
+    </View>
+  );
+
+  const renderAnnouncementItem = ({ item }: { item: Announcement }) => (
+    <AnnouncementItem
+      data={item}
+      key={`announcement-${item.id}`}
+    />
+  );
+
   return (
-    <StackScreen>
-      <View style={styles.frameContainer}>
-        <AnnouncementFrame />
-      </View>
+    <DrawerScreen>
       {announcements && (
-        <ScrollView
-          style={styles.content}
+        <FlatList
+          data={announcements}
+          keyExtractor={(item) => `announcement-${item.id}`}
+          renderItem={renderAnnouncementItem}
+          ListHeaderComponent={ListHeaderComponent}
+          contentContainerStyle={styles.content}
           refreshControl={
             <RefreshControl
               refreshing={state === 'loading'}
@@ -52,16 +65,10 @@ export default function AnnouncementScreen() {
               }}
             />
           }
-        >
-          {announcements.map((announcement) => (
-            <AnnouncementItem
-              data={announcement}
-              key={`announcement-${announcement.id}`}
-            />
-          ))}
-        </ScrollView>
+          showsVerticalScrollIndicator={false}
+        />
       )}
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 
@@ -73,7 +80,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   content: {
-    flex: 1,
     paddingHorizontal: 5,
+    paddingBottom: 20,
   },
 });

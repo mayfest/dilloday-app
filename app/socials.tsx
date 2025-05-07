@@ -1,11 +1,11 @@
-import React from 'react';
-
 import SocialsPageBanner from '@/components/banners/socials-banner';
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SOCIALS } from '@/constants/socials';
 import { FontAwesome6 } from '@expo/vector-icons';
+import React, { useEffect, useState } from 'react';
 import {
+  Dimensions,
   Linking,
   ScrollView,
   StyleSheet,
@@ -14,7 +14,21 @@ import {
   View,
 } from 'react-native';
 
-export default function SocialsScreen() {
+export default function SocialsPage() {
+  const [screenWidth, setScreenWidth] = useState(Dimensions.get('window').width);
+  useEffect(() => {
+    const updateLayout = () => {
+      setScreenWidth(Dimensions.get('window').width);
+    };
+
+    Dimensions.addEventListener('change', updateLayout);
+    return () => {
+      const subscription = Dimensions.addEventListener('change', updateLayout);
+      subscription.remove();
+    };
+  }, []);
+  const isSmallScreen = screenWidth < 375;
+
   const open = async (url: string) => {
     if (await Linking.canOpenURL(url)) {
       Linking.openURL(url);
@@ -22,18 +36,17 @@ export default function SocialsScreen() {
   };
 
   return (
-    <StackScreen banner={
-                              <View style={styles.bannerWrapper}>
-                                <SocialsPageBanner />
-                              </View>}>
+    <DrawerScreen>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <Text style={styles.header}>DILLO DAY SOCIALS</Text> */}
-        {/* <View style={styles.underline} /> */}
+        <View style={styles.bannerWrapper}>
+          <SocialsPageBanner />
+        </View>
         {SOCIALS.map(({ label, handle, url, icon }, i) => (
           <TouchableOpacity
             key={i}
             style={[
               styles.row,
+              isSmallScreen && styles.smallScreenRow,
               i === SOCIALS.length - 1 && { borderBottomWidth: 0 },
             ]}
             activeOpacity={0.7}
@@ -46,18 +59,41 @@ export default function SocialsScreen() {
                 color={Colors.light.action}
               />
             </View>
-            <Text style={styles.label}>{label.toUpperCase()}</Text>
-            <Text style={styles.handle}>{handle}</Text>
+            <View style={styles.textContainer}>
+              <Text
+                style={[
+                  styles.label,
+                  isSmallScreen && styles.smallScreenLabel
+                ]}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {label.toUpperCase()}
+              </Text>
+              <Text
+                style={[
+                  styles.handle,
+                  isSmallScreen && styles.smallScreenHandle
+                ]}
+                numberOfLines={1}
+                ellipsizeMode="tail"
+              >
+                {handle}
+              </Text>
+            </View>
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 20,
   },
   container: {
     paddingHorizontal: 24,
@@ -83,6 +119,10 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1.25,
     borderBottomColor: Colors.light.text,
   },
+  smallScreenRow: {
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+  },
   iconWrapper: {
     width: 36,
     height: 36,
@@ -90,9 +130,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  label: {
+  textContainer: {
     flex: 1,
     marginLeft: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
+    width: '100%',
+  },
+  label: {
+    flex: 1,
     fontSize: 18,
     fontWeight: '700',
     color: Colors.light.text,
@@ -103,5 +150,12 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     color: Colors.light.action,
     fontFamily: 'Poppins_700Bold',
+    marginLeft: 8,
+  },
+  smallScreenLabel: {
+    fontSize: 16,
+  },
+  smallScreenHandle: {
+    fontSize: 16,
   },
 });

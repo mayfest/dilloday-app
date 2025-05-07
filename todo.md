@@ -13,3 +13,6 @@
 - [ ] reintegration of store page
 - [ ] onboarding section / page
 - [x] fix css on artist page
+
+- smart dillo graphics cut off
+- acitvities page

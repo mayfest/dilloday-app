@@ -1,9 +1,8 @@
-import React from 'react';
-
 import SponsorsPageBanner from '@/components/banners/sponsors-banner';
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SPONSORS } from '@/constants/sponsors';
+import React from 'react';
 import {
   Image,
   Linking,
@@ -22,14 +21,12 @@ export default function SponsorsScreen() {
   };
 
   return (
-    <StackScreen banner={
-                          <View style={styles.bannerWrapper}>
-                            <SponsorsPageBanner />
-                          </View>}>
+    <DrawerScreen>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* <Text style={styles.header}>Check out our amazing sponsors</Text> */}
+        <View style={styles.bannerWrapper}>
+          <SponsorsPageBanner />
+        </View>
         <View style={styles.underline} />
-
         {SPONSORS.map(({ name, logo, url }, i) => (
           <TouchableOpacity
             key={name}
@@ -53,13 +50,16 @@ export default function SponsorsScreen() {
           </TouchableOpacity>
         ))}
       </ScrollView>
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    marginBottom: 16,
   },
   container: {
     paddingHorizontal: 24,

@@ -75,6 +75,9 @@ export default function ScheduleCarouselItem({
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
+        scrollEventThrottle={16}
+        contentContainerStyle={{ paddingBottom: 20 }}
         refreshControl={
           <RefreshControl
             refreshing={state === 'loading'}

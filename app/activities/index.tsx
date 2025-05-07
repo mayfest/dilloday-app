@@ -1,12 +1,12 @@
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { Text, View } from 'react-native';
 
 export default function ActivitiesScreen() {
   return (
-    <StackScreen>
+    <DrawerScreen>
       <View>
         <Text>Activities</Text>
       </View>
-    </StackScreen>
+    </DrawerScreen>
   );
 }

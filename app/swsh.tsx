@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import SwshPageBanner from '@/components/banners/swsh-banner';
-import StackScreen from '@/components/stack-screen';
+import DrawerScreen from '@/components/drawer-screen';
 import { CircularReel } from '@/components/swsh-integration/circle-reel';
 import { CurvedHeader } from '@/components/swsh-integration/curved-text-view';
 import { SwshRedirectButton } from '@/components/swsh-integration/swsh-redirect-button';
@@ -46,7 +46,7 @@ export default function SwshPage() {
   }, []);
 
   return (
-    <StackScreen
+    <DrawerScreen
       banner={
         <View style={styles.bannerWrapper}>
           <SwshPageBanner />
@@ -65,7 +65,14 @@ export default function SwshPage() {
         </View>
 
         <StatusBar style="dark" />
-
+      <View style={[styles.container, { paddingTop: insets.top }]}>
+        <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
+        <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
+        <SwshRedirectButton
+          text='Add your Dillo Day pics to Swsh!'
+          url='https://www.joinswsh.com/album/pg5rftklzxfb'
+        />
+        <StatusBar style='dark' />
         <Modal
           animationType="slide"
           transparent={true}
@@ -102,7 +109,7 @@ export default function SwshPage() {
           </View>
         </Modal>
       </View>
-    </StackScreen>
+    </DrawerScreen>
   );
 }
 
