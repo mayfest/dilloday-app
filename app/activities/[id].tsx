@@ -43,13 +43,6 @@ export default function SponsorDetail() {
           <Text style={styles.sectionTitle}>{sponsor.activity.name}</Text>
           <Text style={styles.description}>{sponsor.activity.description}</Text>
 
-          <View style={styles.locationContainer}>
-            <Text style={styles.locationLabel}>Location:</Text>
-            <Text style={styles.locationValue}>
-              {sponsor.activity.location}
-            </Text>
-          </View>
-
           {sponsor.url && (
             <TouchableOpacity
               style={styles.websiteButton}
@@ -58,14 +51,6 @@ export default function SponsorDetail() {
               <Text style={styles.websiteButtonText}>Visit Website</Text>
             </TouchableOpacity>
           )}
-
-          <View style={styles.imageContainer}>
-            <Image
-              source={sponsor.activity.image}
-              style={styles.activityImage}
-              resizeMode='cover'
-            />
-          </View>
         </View>
       </ScrollView>
     </StackScreen>

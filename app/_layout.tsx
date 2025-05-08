@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { CartProvider } from '@/app/contexts/cart-context';
 import { ConfigContextProvider } from '@/app/contexts/config-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { registerForPushNotifications } from '@/lib/notifications';
 import { Cabin_400Regular } from '@expo-google-fonts/cabin';
 import {
   Poppins_400Regular,
@@ -41,15 +42,28 @@ export default function RootLayout() {
     Poppins_600SemiBold,
   });
 
+  const [notificationToken, setNotificationToken] = useState<string | null>(null);
+
   useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
+    const init = async () => {
+      if (loaded) {
+        SplashScreen.hideAsync();
+      }
+
+      const token = await registerForPushNotifications();
+      if (token) {
+        setNotificationToken(token);
+        console.log('Notification Token:', token); // Optional: For debugging
+      }
+    };
+
+    init();
   }, [loaded]);
 
   if (!loaded) {
     return null;
   }
+
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

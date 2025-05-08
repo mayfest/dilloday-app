@@ -16,7 +16,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'White Sox Booth',
       description:
-        'Visit the Chicago White Sox booth for team merchandise and interactive experiences.',
+        'The Chicago White Sox will be selling merch and interacting with fans! Come support the team.',
       image: require('@/assets/images/company-logos/chicago-white-sox.png'),
       location: 'Sponsor Area',
     },
@@ -28,7 +28,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'Ice Cream Booth',
       description:
-        'Enjoy delicious ice cream treats from Pretty Cool Ice Cream.',
+        'Come try unique ice cream flavors at Pretty Cool Ice Cream!',
       image: require('@/assets/images/company-logos/pretty-cool.png'),
       location: 'Food Court',
     },
@@ -40,7 +40,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: "L'Oreal Activation",
       description:
-        "Experience L'Oreal's in-person activation and visit their booth for beauty product samples.",
+        "Experience what L'Oreal has to say about the importance of ending street harassment",
       image: require('@/assets/images/company-logos/l-oreal.png'),
       location: 'Beauty Zone',
     },
@@ -52,7 +52,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'Animal Records Booth',
       description:
-        'Discover new music and artists at the Animal Records booth.',
+        'Shop for vinyls and look for your favorite artists at Animal Records!',
       image: require('@/assets/images/company-logos/animal-records.png'),
       location: 'Music Area',
     },
@@ -64,7 +64,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'Crossroads Booth',
       description:
-        'Visit the Crossroads booth to learn more about their products and services.',
+        'Find a last minute Dillo accessory when thrifting at Crossroads',
       image: require('@/assets/images/company-logos/crossroads.png'),
       location: 'Main Pavilion',
     },
@@ -74,11 +74,33 @@ export const SPONSOR_BOOTHS: {
     logo: require('@/assets/images/company-logos/photobooth-awh.jpg'),
     url: 'https://www.awh-photo.com',
     activity: {
-      name: 'Photo Booth',
+      name: 'Armadillo World Headquarters Photo Booth',
       description:
-        'Capture memories at the AWH Photo Booth with friends and family.',
+        'Come take a picture with friends at the Armadillo World Headquarters Photo Booth for a chance to win cool merch.',
       image: require('@/assets/images/company-logos/photobooth-awh.jpg'),
       location: 'Entertainment Area',
+    },
+  },
+  {
+    name: 'Sprite',
+    logo: require('@/assets/images/off-white.png'),
+    url: 'https://www.sprite.com',
+    activity: {
+      name: 'Sprite Booth',
+      description: "Try Sprite's newest flavor at their booth!",
+      image: require('@/assets/images/off-white.png'),
+      location: 'Beverage Area',
+    },
+  },
+  {
+    name: 'Smartwater',
+    logo: require('@/assets/images/off-white.png'),
+    url: 'https://www.smartwater.com',
+    activity: {
+      name: 'Smartwater Booth',
+      description: 'Quench your thirst with Smartwater.',
+      image: require('@/assets/images/off-white.png'),
+      location: 'Beverage Area',
     },
   },
   {
@@ -87,9 +109,20 @@ export const SPONSOR_BOOTHS: {
     url: 'https://www.costa.co.uk',
     activity: {
       name: 'Costa Coffee Booth',
-      description: "Grab a delicious coffee or tea from Costa Coffee's booth.",
+      description: "Get a jolt of energy at the Costa Coffee booth.",
       image: require('@/assets/images/company-logos/coasta-coffee.png'),
       location: 'Beverage Area',
+    },
+  },
+  {
+    name: 'LineLeap',
+    logo: require('@/assets/images/off-white.png'),
+    url: 'https://www.lineleap.com',
+    activity: {
+      name: 'LineLeap Booth',
+      description: 'Grab a ticket to ride the carousel on LineLeap.',
+      image: require('@/assets/images/off-white.png'),
+      location: 'Entertainment Area',
     },
   },
   {
@@ -99,7 +132,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'Lifetime Booth',
       description:
-        'Learn about fitness programs and wellness offerings at the Lifetime booth.',
+        'Check out the newest gym in Evanston at Life Time for a chance to score a day pass.',
       image: require('@/assets/images/off-white.png'),
       location: 'Wellness Zone',
     },
@@ -109,23 +142,35 @@ export const SPONSOR_BOOTHS: {
     logo: require('@/assets/images/company-logos/LOOK-app.png'),
     url: 'https://www.lookapp.com',
     activity: {
-      name: 'LOOK App Booth',
+      name: 'LOOK Nook',
       description:
-        'Discover the LOOK App at their self-operated booth with exclusive app demos.',
+        'Take a breather and charge your phone at the LOOK nook.',
       image: require('@/assets/images/company-logos/LOOK-app.png'),
       location: 'Tech Corner',
     },
   },
   {
-    name: 'Postmates (Intern Queen)',
+    name: 'Postmates',
     logo: require('@/assets/images/off-white.png'),
     url: 'https://www.postmates.com',
     activity: {
       name: 'Postmates Booth',
       description:
-        'Visit the Postmates booth featuring Intern Queen for merchandise and special offers.',
+        'Come grab a bite to eat and some exclusive merch, with a chance at exclusive discount codes at the Postmates booth.',
       image: require('@/assets/images/off-white.png'),
       location: 'Sponsor Row',
+    },
+  },
+  {
+    name: 'Long Drink',
+    logo: require('@/assets/images/off-white.png'),
+    url: 'https://www.longdrink.com',
+    activity: {
+      name: 'Beer Garden',
+      description:
+        'Experience Long Drink at the Beer Garden. Must be 21+ to enter.',
+      image: require('@/assets/images/off-white.png'),
+      location: 'Beer Garden',
     },
   },
 ];

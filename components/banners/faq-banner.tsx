@@ -5,7 +5,7 @@ import Svg, { Path, Rect } from 'react-native-svg';
 
 export default function FAQPageBanner() {
   const windowWidth = Dimensions.get('window').width;
-  const svgWidth = windowWidth - 32; // 32
+  const svgWidth = windowWidth - 32;
   const svgHeight = (svgWidth * 65) / 250;
 
   return (
