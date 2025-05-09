@@ -12,7 +12,8 @@ export interface Announcement {
 }
 
 export async function getAnnouncements() {
-  const docs = await getDocs(collection(db, 'announcements'));
+  const docs = await getDocs(collection(db, 'announcements-2025'));
+  console.log('docs', docs);
   return docs.docs.map(
     (doc) => ({ ...doc.data(), id: doc.id }) as Announcement
   );

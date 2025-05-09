@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "dillo-app",
+    "name": "Dillo Day 2025",
     "slug": "dillo-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/icons/app-icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
@@ -13,10 +13,13 @@
       "bundleIdentifier": "com.anonymous.dillo-app",
       "runtimeVersion": "1.0.0"
     },
+    "notification": {
+      "iosDisplayInForeground": true
+    },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./assets/icons/app-icon.png",
+        "backgroundColor": "#173885"
       },
       "package": "com.mayfest.dillo",
       "runtimeVersion": {
@@ -33,10 +36,10 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/icons/app-splash.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#173885"
         }
       ],
       "expo-font"
