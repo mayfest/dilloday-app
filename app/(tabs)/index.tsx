@@ -4,36 +4,92 @@ import COMINGSOONBanner from '@/components/banners/COMINGSOON-banner';
 import HomeWelcomeBanner from '@/components/banners/home-banner';
 import AnnouncementPanel from '@/components/home/announcement-panel';
 import ArtistPanel from '@/components/home/artist-panel';
+import LoadingIndicator from '@/components/loading-indicator';
 import TabScreen from '@/components/tab-screen';
-import { Colors } from '@/constants/Colors';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { getAnnouncements } from '@/lib/announcement';
+import {
+  Dimensions,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  View,
+} from 'react-native';
+import Toast from 'react-native-toast-message';
 
 export default function HomeScreen() {
   const [screenWidth, setScreenWidth] = useState(
     Dimensions.get('window').width
   );
+  const [latestMessage, setLatestMessage] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState<boolean>(false);
+
   useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({ window }) => {
+    const sub = Dimensions.addEventListener('change', ({ window }) => {
       setScreenWidth(window.width);
     });
-    return () => subscription.remove();
+    return () => sub.remove();
   }, []);
+
+  const loadAnnouncements = async () => {
+    setLoading(true);
+    try {
+      const data = await getAnnouncements();
+      // sort newest first
+      data.sort((a, b) => b.sent.toMillis() - a.sent.toMillis());
+      if (data.length > 0) {
+        setLatestMessage(data[0].title);
+      }
+    } catch (err: any) {
+      Toast.show({
+        type: 'error',
+        text1: 'Couldn’t load announcement',
+        text2: err.message,
+      });
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    loadAnnouncements();
+  }, []);
+
+  // pull-to-refresh handler
+  const onRefresh = () => {
+    setRefreshing(true);
+    loadAnnouncements();
+  };
 
   return (
     <TabScreen>
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContent}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        >
+          {/* title */}
           <View style={styles.titleContainer}>
             <HomeWelcomeBanner />
           </View>
-          <View style={styles.contentWrapper}>
-            <AnnouncementPanel value='CARNIVAL DILLO IS FINALLY HERE!!!' />
-            <ArtistPanel />
-            <View style={styles.tarotWrapper}>
-              {/* <GrassLBanner/> */}
-              <COMINGSOONBanner />
-              {/* <GrassRBanner/> */}
-            </View>
+
+          {/* announcement panel */}
+          {loading ? (
+            <LoadingIndicator />
+          ) : (
+            <AnnouncementPanel
+              value={latestMessage || 'No announcements right now.'}
+            />
+          )}
+
+          {/* rest of your content */}
+          <ArtistPanel />
+
+          <View style={styles.tarotWrapper}>
+            <COMINGSOONBanner />
           </View>
         </ScrollView>
       </View>
@@ -47,45 +103,14 @@ const styles = StyleSheet.create({
     position: 'relative',
     width: '100%',
   },
-  backgroundImage: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    opacity: 0.8,
-    width: '100%',
-    height: '100%',
-  },
-  titleContainer: {
-    alignItems: 'center',
-  },
-  titleSecondary: {
-    fontSize: 18,
-    textTransform: 'uppercase',
-    fontWeight: '700',
-    marginBottom: 4,
-    color: Colors.light.background,
-    fontFamily: 'Rye_400Regular',
-  },
-  titlePrimary: {
-    fontSize: 40,
-    fontWeight: '600',
-    color: Colors.light.background,
-    fontFamily: 'Rye_400Regular',
-  },
-  ticketContainer: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   scrollViewContent: {
     flexGrow: 1,
     width: '100%',
     paddingHorizontal: 16,
   },
-  contentWrapper: {
-    width: '100%',
+  titleContainer: {
+    alignItems: 'center',
+    marginVertical: 16,
   },
   tarotWrapper: {
     paddingTop: 10,

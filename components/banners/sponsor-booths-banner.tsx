@@ -8,7 +8,6 @@ export default function SponsorBoothsBanner() {
   const svgWidth = windowWidth - 32;
   const svgHeight = (svgWidth * 29) / 118;
 
-
   return (
     <Svg width={svgWidth} height={svgHeight} viewBox='0 0 118 29' fill='none'>
       <Path

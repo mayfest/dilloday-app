@@ -109,7 +109,7 @@ export const SPONSOR_BOOTHS: {
     url: 'https://www.costa.co.uk',
     activity: {
       name: 'Costa Coffee Booth',
-      description: "Get a jolt of energy at the Costa Coffee booth.",
+      description: 'Get a jolt of energy at the Costa Coffee booth.',
       image: require('@/assets/images/company-logos/coasta-coffee.png'),
       location: 'Beverage Area',
     },
@@ -143,8 +143,7 @@ export const SPONSOR_BOOTHS: {
     url: 'https://www.lookapp.com',
     activity: {
       name: 'LOOK Nook',
-      description:
-        'Take a breather and charge your phone at the LOOK nook.',
+      description: 'Take a breather and charge your phone at the LOOK nook.',
       image: require('@/assets/images/company-logos/LOOK-app.png'),
       location: 'Tech Corner',
     },

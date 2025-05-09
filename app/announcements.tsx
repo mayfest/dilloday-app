@@ -1,20 +1,17 @@
+import { useEffect, useState } from 'react';
+
 import AnnouncementFrame from '@/components/announcements/announcement-frame';
 import AnnouncementItem from '@/components/announcements/announcement-item';
 import DrawerScreen from '@/components/drawer-screen';
 import LoadingIndicator from '@/components/loading-indicator';
 import { Announcement, getAnnouncements } from '@/lib/announcement';
-import { useEffect, useState } from 'react';
-import {
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { FlatList, RefreshControl, StyleSheet, Text, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 
 export default function AnnouncementScreen() {
-  const [announcements, setAnnouncements] = useState<Announcement[] | null>(null);
+  const [announcements, setAnnouncements] = useState<Announcement[] | null>(
+    null
+  );
   const [state, setState] = useState<'loading' | 'error' | 'idle'>('loading');
 
   const load = async () => {
@@ -60,7 +57,7 @@ export default function AnnouncementScreen() {
         />
       </DrawerScreen>
     );
-}
+  }
 
   return (
     <DrawerScreen>

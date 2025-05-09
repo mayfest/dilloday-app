@@ -54,7 +54,9 @@ export default function SponsorBoothsScreen() {
   };
 
   const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}><SponsorBoothsBanner /></View>
+    <View style={styles.bannerWrapper}>
+      <SponsorBoothsBanner />
+    </View>
   );
 
   return (

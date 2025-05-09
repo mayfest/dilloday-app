@@ -74,7 +74,10 @@ export async function registerForPushNotifications() {
 
 export async function savePushNotificationToken(token: string) {
   const getToken = await getDocs(
-    query(collection(db, 'notification-tokens-2025'), where('token', '==', token))
+    query(
+      collection(db, 'notification-tokens-2025'),
+      where('token', '==', token)
+    )
   );
 
   if (getToken.docs.length > 0) {
