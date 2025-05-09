@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import StorePageBanner from '@/components/banners/store-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
-import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import {
   ActivityIndicator,
@@ -101,9 +100,6 @@ export default function ProductsScreen() {
             ${value} {curr}
           </ThemedText>
         </View>
-        <TouchableOpacity style={styles.favoriteIcon}>
-          <FontAwesome6 name='heart' size={18} color={Colors.light.text} />
-        </TouchableOpacity>
       </TouchableOpacity>
     );
   };
