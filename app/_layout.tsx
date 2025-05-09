@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 
-import { CartProvider } from '@/app/contexts/cart-context';
 import { ConfigContextProvider } from '@/app/contexts/config-context';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
@@ -68,7 +67,6 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ConfigContextProvider>
-        <CartProvider>
           <ThemeProvider
             value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
           >
@@ -132,13 +130,6 @@ export default function RootLayout() {
               />
 
               <Drawer.Screen
-                name='product/cart'
-                options={{
-                  drawerItemStyle: { display: 'none' },
-                }}
-              />
-
-              <Drawer.Screen
                 name='(drawer)/product/[id]'
                 options={{
                   drawerItemStyle: { display: 'none' },
@@ -165,32 +156,6 @@ export default function RootLayout() {
                   drawerIcon: ({ color }) => (
                     <FontAwesome6
                       name='street-view'
-                      size={20}
-                      color={Colors.light.tint}
-                    />
-                  ),
-                }}
-              />
-              <Drawer.Screen
-                name='games'
-                options={{
-                  title: 'Games',
-                  drawerIcon: ({ color }) => (
-                    <FontAwesome6
-                      name='gamepad'
-                      size={20}
-                      color={Colors.light.tint}
-                    />
-                  ),
-                }}
-              />
-              <Drawer.Screen
-                name='settings'
-                options={{
-                  title: 'Settings',
-                  drawerIcon: ({ color }) => (
-                    <FontAwesome6
-                      name='gear'
                       size={20}
                       color={Colors.light.tint}
                     />
@@ -298,7 +263,6 @@ export default function RootLayout() {
             </Drawer>
             <StatusBar style='auto' />
           </ThemeProvider>
-        </CartProvider>
       </ConfigContextProvider>
     </GestureHandlerRootView>
   );
