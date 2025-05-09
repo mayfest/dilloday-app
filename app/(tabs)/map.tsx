@@ -153,7 +153,7 @@ class AnimatedViews extends React.Component<any, any> {
       canMoveHorizontal: true,
       markers,
       mapKey: 0,
-      activeTab: 'interactive', // Default to interactive mode
+      activeTab: 'static', // Default to interactive mode
       region: new AnimatedRegion({
         latitude: LATITUDE,
         longitude: LONGITUDE,
@@ -336,27 +336,6 @@ class AnimatedViews extends React.Component<any, any> {
             <TouchableOpacity
               style={[
                 styles.tabButton,
-                activeTab === 'interactive' && styles.activeTabButton,
-              ]}
-              onPress={() => this.setActiveTab('interactive')}
-              activeOpacity={0.7}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'interactive' && styles.activeTabText,
-                ]}
-              >
-                Interactive
-              </Text>
-              {activeTab === 'interactive' && (
-                <View style={styles.activeTabIndicator} />
-              )}
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[
-                styles.tabButton,
                 activeTab === 'static' && styles.activeTabButton,
               ]}
               onPress={() => this.setActiveTab('static')}
@@ -371,6 +350,26 @@ class AnimatedViews extends React.Component<any, any> {
                 Static
               </Text>
               {activeTab === 'static' && (
+                <View style={styles.activeTabIndicator} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.tabButton,
+                activeTab === 'interactive' && styles.activeTabButton,
+              ]}
+              onPress={() => this.setActiveTab('interactive')}
+              activeOpacity={0.7}
+            >
+              <Text
+                style={[
+                  styles.tabText,
+                  activeTab === 'interactive' && styles.activeTabText,
+                ]}
+              >
+                Interactive
+              </Text>
+              {activeTab === 'interactive' && (
                 <View style={styles.activeTabIndicator} />
               )}
             </TouchableOpacity>
