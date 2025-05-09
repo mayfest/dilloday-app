@@ -28,7 +28,7 @@ interface ConfigContextProviderProps {
   children: ReactNode;
 }
 
-export function ConfigContextProvider({
+export default function ConfigContextProvider({
   children,
 }: ConfigContextProviderProps) {
   const [state, setState] = useState<AppStateType>({});

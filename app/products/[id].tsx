@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { useCartContext } from '@/app/contexts/cart-context';
 import { ThemedText } from '@/components/ThemedText';
 import StackScreen from '@/components/stack-screen';
 import { Colors } from '@/constants/Colors';
@@ -47,7 +46,6 @@ const DRAWER_HEIGHT = height * 0.6;
 
 export default function ProductDetail() {
   const { id } = useLocalSearchParams<{ id: string }>();
-  const { addToCart, isLoading: isCartLoading } = useCartContext();
 
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
@@ -133,18 +131,6 @@ export default function ProductDetail() {
 
   const getDefaultImages = (vars: Variant[]) =>
     vars.length ? vars[0].images : [];
-
-  const handleAddToCart = async () => {
-    if (!selectedVariant) {
-      return openSizeSelector();
-    }
-    try {
-      await addToCart(selectedVariant.id, quantity);
-      Alert.alert('Success', 'Item added to cart');
-    } catch {
-      Alert.alert('Error', 'Failed to add item to cart');
-    }
-  };
 
   const incrementQuantity = () => {
     setQuantity(quantity + 1);
@@ -355,18 +341,7 @@ export default function ProductDetail() {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity
-            onPress={handleAddToCart}
-            disabled={isCartLoading}
-            style={[
-              styles.addToCartButton,
-              isCartLoading && styles.disabledButton,
-            ]}
-          >
-            <Text style={styles.addToCartText}>
-              {isCartLoading ? 'Adding…' : 'Add to Cart'}
-            </Text>
-          </TouchableOpacity>
+          <TouchableOpacity>See Item Details</TouchableOpacity>
         </View>
       </ScrollView>
       {showSizeSelector && (

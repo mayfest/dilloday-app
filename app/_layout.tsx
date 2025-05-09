@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { ConfigContextProvider } from '@/app/contexts/config-context';
 import { Colors } from '@/constants/Colors';
+import ConfigContextProvider from '@/contexts/config-context';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { registerForPushNotifications } from '@/lib/notifications';
 import { Cabin_400Regular } from '@expo-google-fonts/cabin';
@@ -123,19 +123,12 @@ export default function RootLayout() {
               }}
             />
 
-            <Drawer.Screen
+            {/* <Drawer.Screen
               name='product/[id]'
               options={{
                 drawerItemStyle: { display: 'none' },
               }}
-            />
-
-            <Drawer.Screen
-              name='(drawer)/product/[id]'
-              options={{
-                drawerItemStyle: { display: 'none' },
-              }}
-            />
+            /> */}
 
             <Drawer.Screen
               name='announcements'
@@ -189,12 +182,13 @@ export default function RootLayout() {
                 ),
               }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
               name='food-trucks/[id]'
               options={{
                 drawerItemStyle: { display: 'none' },
               }}
-            />
+            /> */}
+
             <Drawer.Screen
               name='faq'
               options={{
@@ -245,13 +239,6 @@ export default function RootLayout() {
                     color={Colors.light.tint}
                   />
                 ),
-              }}
-            />
-
-            <Drawer.Screen
-              name='artist'
-              options={{
-                drawerItemStyle: { display: 'none' },
               }}
             />
             <Drawer.Screen

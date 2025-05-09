@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import ArtistDetailModal from '@/components/home/artist-detail-modal';
 import { Colors } from '@/constants/Colors';
 import { useConfig } from '@/lib/config';
 import {
+  Image,
   LayoutChangeEvent,
   StyleSheet,
   Text,
   TextStyle,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
@@ -23,15 +26,15 @@ export default function ArtistPanel(): React.ReactElement {
   const panels = config?.home?.panels ?? [];
   const nowKey = panels.find((p) => p.type === 'schedule-now')?.value;
   const nextKey = panels.find((p) => p.type === 'schedule-next')?.value;
-
   const nowArtist =
     nowKey && config?.artists ? config.artists[nowKey] : undefined;
   const nextArtist =
     nextKey && config?.artists ? config.artists[nextKey] : undefined;
-
   const [layout, setLayout] = useState({ width: 0, height: 0 });
   const [dots, setDots] = useState<DotPosition[]>([]);
   const [brightDots, setBrightDots] = useState<Set<number>>(new Set());
+  const [selectedKey, setSelectedKey] = useState<string | null>(null);
+  const [modalVisible, setModalVisible] = useState(false);
   // Initialize countdown with 0s to prevent NaN issues
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -177,6 +180,15 @@ export default function ArtistPanel(): React.ReactElement {
   );
 
   useEffect(() => {
+    if (nowArtist?.image) {
+      Image.prefetch(nowArtist.image);
+    }
+    if (nextArtist?.image) {
+      Image.prefetch(nextArtist.image);
+    }
+  }, [nowArtist, nextArtist]);
+
+  useEffect(() => {
     if (dots.length === 0) return;
     if (intervalId.current) clearInterval(intervalId.current);
     if (timeoutId.current) clearTimeout(timeoutId.current);
@@ -242,32 +254,57 @@ export default function ArtistPanel(): React.ReactElement {
     }
   };
 
+  const openModal = (key: string) => {
+    setSelectedKey(key);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedKey(null);
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.marquee} onLayout={handleLayout}>
-        {dots.map(({ x, y }, i) => (
-          <View
-            key={i}
-            style={[
-              styles.dot,
-              { left: x, top: y },
-              brightDots.has(i) && styles.dotBright,
-            ]}
-          />
-        ))}
-        <View style={styles.content}>
-          {nowKey != null && nextKey != null && (
-            <>
+    <>
+      <View style={styles.container}>
+        <View style={styles.marquee} onLayout={handleLayout}>
+          {dots.map(({ x, y }, i) => (
+            <View
+              key={i}
+              style={[
+                styles.dot,
+                { left: x, top: y },
+                brightDots.has(i) && styles.dotBright,
+              ]}
+            />
+          ))}
+
+          <View style={styles.content}>
+            <TouchableOpacity
+              onPress={() => nowKey !== 'countdown' && openModal(nowKey!)}
+              style={styles.touchableBlock}
+            >
               {renderNowContent()}
+            </TouchableOpacity>
 
-              <View style={styles.divider} />
+            <View style={styles.divider} />
 
+            <TouchableOpacity
+              onPress={() => nextKey !== 'countdown' && openModal(nextKey!)}
+              style={styles.touchableBlock}
+            >
               {renderNextContent()}
-            </>
-          )}
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </View>
+
+      <ArtistDetailModal
+        visible={modalVisible}
+        artist={selectedKey ? config.artists[selectedKey] : null}
+        onClose={closeModal}
+      />
+    </>
   );
 }
 
@@ -291,7 +328,7 @@ const styles = StyleSheet.create<Styles>({
   },
   marquee: {
     width: '100%',
-    height: 250,
+    height: 350,
     backgroundColor: Colors.light.alert,
     borderRadius: 10,
     overflow: 'hidden',
@@ -307,13 +344,13 @@ const styles = StyleSheet.create<Styles>({
     borderRadius: 6,
     padding: 20,
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
     zIndex: 2,
   },
   header: {
     fontSize: 18,
     fontWeight: '700',
-    fontFamily: 'Poppins_600SemiBold',
+    fontFamily: 'Poppins_700Bold',
     color: '#2E4172',
     letterSpacing: 1,
     marginBottom: 4,
@@ -321,15 +358,15 @@ const styles = StyleSheet.create<Styles>({
   artistName: {
     fontSize: 28,
     fontWeight: '900',
-    color: '#2E4172',
-    fontFamily: 'Poppins_700Bold',
+    color: Colors.light.text,
+    fontFamily: 'Poppins_600SemiBold',
     marginBottom: 10,
     textAlign: 'center',
   },
   artistTime: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#4A5D96',
+    color: Colors.light.text,
     fontFamily: 'Poppins_600SemiBold',
     marginBottom: 16,
     textAlign: 'center',

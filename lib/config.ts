@@ -9,14 +9,13 @@ import { Schedule } from './schedule';
 import { SocialConfig } from './social';
 import { UserState } from './user';
 
-export { useConfig } from '@/app/contexts/config-context';
+export { useConfig } from '@/contexts/config-context';
 
 export interface Config {
   home: Home;
   artists: Artists;
   schedule: Schedule;
   social: SocialConfig;
-  food_truck_menus: Record<string, Record<string, string>>;
 }
 
 export interface ConfigInformation {

@@ -1,4 +1,3 @@
-// screens/FoodTruckDetail.tsx
 import React, { useMemo } from 'react';
 
 import DrawerScreen from '@/components/drawer-screen';

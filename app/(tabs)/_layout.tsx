@@ -1,16 +1,5 @@
 import { Tabs } from 'expo-router';
 
-const icons = {
-  announcements: 'bullhorn',
-  schedule: 'calendar',
-  index: 'house-chimney',
-  map: 'map',
-  information: 'circle-info',
-  explore: 'compass',
-  settings: 'gear',
-  more: 'ellipsis',
-};
-
 export default function TabLayout() {
   return (
     <Tabs

@@ -1,21 +1,22 @@
+// app/(tabs)/schedule/_layout.tsx
 import { Stack } from 'expo-router';
 
-export default function InformationLayout() {
+export default function ScheduleLayout() {
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-        animation: 'slide_from_right',
-        animationTypeForReplace: 'push',
-      }}
-    >
-      <Stack.Screen name='index' />
+    <Stack screenOptions={{ headerShown: false }}>
+      <Stack.Screen
+        name='index'
+        options={{
+          animation: 'slide_from_right',
+        }}
+      />
+
       <Stack.Screen
         name='artist'
-        // options={{
-        //   presentation: 'modal',
-        //   animation: 'slide_from_right',
-        // }}
+        options={{
+          presentation: 'modal', // ← make it a modal
+          animation: 'slide_from_bottom', // ← slide up from bottom
+        }}
       />
     </Stack>
   );
