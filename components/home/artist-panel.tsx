@@ -224,13 +224,24 @@ export default function ArtistPanel(): React.ReactElement {
       );
     } else {
       return (
-        <>
+        <View>
           <Text style={styles.header}>NOW SHOWING</Text>
           <Text style={styles.artistName}>
             {nowArtist?.name ?? 'Unknown Artist'}
           </Text>
-          <Text style={styles.artistTime}>{nowArtist?.time ?? 'TBD'}</Text>
-        </>
+          <View style={styles.timeStageRow}>
+            <Text style={[styles.timeStageText, styles.timeLeft]}>
+              {/* {nowArtist?.time ?? 'TBD'} */}
+              {nowArtist?.stage === 'main' ? 'Main Stage' : nowArtist?.stage}
+            </Text>
+            {/* <Text style={styles.timeStageBar}>|</Text> */}
+            <Text style={[styles.timeStageText, styles.timeRight]}>
+              {/* {nowArtist?.stage === 'main' ? 'Main Stage' : nowArtist?.stage}
+               */}
+              {nowArtist?.time ?? 'TBD'}
+            </Text>
+          </View>
+        </View>
       );
     }
   };
@@ -245,11 +256,22 @@ export default function ArtistPanel(): React.ReactElement {
       );
     } else {
       return (
-        <>
+        <View>
           <Text style={styles.header}>NEXT UP</Text>
           <Text style={styles.artistName}>{nextArtist?.name ?? 'TBD'}</Text>
-          <Text style={styles.artistTime}>{nextArtist?.time ?? 'TBD'}</Text>
-        </>
+          <View style={styles.timeStageRow}>
+            <Text style={[styles.timeStageText, styles.timeLeft]}>
+              {nextArtist?.stage === 'main' ? 'Main Stage' : nowArtist?.stage}
+              {/* {nowArtist?.time ?? 'TBD'} */}
+            </Text>
+            {/* <Text style={styles.timeStageBar}>|</Text> */}
+            <Text style={[styles.timeStageText, styles.timeRight]}>
+              {/* {nowArtist?.stage === 'main' ? 'Main Stage' : nowArtist?.stage}
+               */}
+              {nextArtist?.time ?? 'TBD'}
+            </Text>
+          </View>
+        </View>
       );
     }
   };
@@ -344,7 +366,7 @@ const styles = StyleSheet.create<Styles>({
     borderRadius: 6,
     padding: 20,
     alignItems: 'center',
-    // justifyContent: 'center',
+    justifyContent: 'center',
     zIndex: 2,
   },
   header: {
@@ -353,6 +375,7 @@ const styles = StyleSheet.create<Styles>({
     fontFamily: 'Poppins_700Bold',
     color: '#2E4172',
     letterSpacing: 1,
+    textAlign: 'center',
     marginBottom: 4,
   },
   artistName: {
@@ -403,5 +426,35 @@ const styles = StyleSheet.create<Styles>({
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,
     shadowRadius: 15,
+  },
+  touchableBlock: {
+    width: '100%',
+    alignItems: 'center',
+  },
+  timeStageRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 0,
+    width: '100%',
+  },
+  timeStageText: {
+    fontSize: 20,
+    fontWeight: '600',
+    fontFamily: 'Poppins_600SemiBold',
+    color: Colors.light.text,
+  },
+  timeLeft: {
+    flex: 1,
+    // marginRight: 10,
+    textAlign: 'left', // hugs the pipe from the left
+  },
+  timeStageBar: {
+    width: 20,
+    textAlign: 'center', // bar itself is centered in its box
+  },
+  timeRight: {
+    flex: 1,
+    textAlign: 'right', // hugs the pipe from the right
   },
 });
