@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import ArtistDetailModal from '@/components/home/artist-detail-modal';
+import LoadingIndicator from '@/components/loading-indicator';
 import { Colors } from '@/constants/Colors';
 import { useConfig } from '@/lib/config';
 import {
@@ -22,7 +23,7 @@ interface DotPosition {
 type PatternFunction = (dots: DotPosition[]) => NodeJS.Timeout;
 
 export default function ArtistPanel(): React.ReactElement {
-  const { config } = useConfig();
+  const { config, loading } = useConfig();
   const panels = config?.home?.panels ?? [];
   const nowKey = panels.find((p) => p.type === 'schedule-now')?.value;
   const nextKey = panels.find((p) => p.type === 'schedule-next')?.value;
@@ -285,6 +286,10 @@ export default function ArtistPanel(): React.ReactElement {
     setModalVisible(false);
     setSelectedKey(null);
   };
+
+  if (loading || !config?.home?.panels?.length) {
+    return <LoadingIndicator />;
+  }
 
   return (
     <>
