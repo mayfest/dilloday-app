@@ -13,18 +13,19 @@ import {
 } from '@expo-google-fonts/poppins';
 import { Rye_400Regular } from '@expo-google-fonts/rye';
 import { FontAwesome6 } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { Slot, useRouter } from 'expo-router';
 import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
-
 import '../global.css';
 
 SplashScreen.preventAutoHideAsync();
@@ -40,10 +41,35 @@ export default function RootLayout() {
     Poppins_500Medium,
     Poppins_600SemiBold,
   });
-
+  const [checked, setChecked] = useState(false);
+  const [firstLaunch, setFirstLaunch] = useState(false);
   const [notificationToken, setNotificationToken] = useState<string | null>(
     null
   );
+  const router = useRouter();
+
+  // check AsyncStorage once
+  useEffect(() => {
+    (async () => {
+      const seen = await AsyncStorage.getItem('hasSeenOnboarding');
+      if (!seen) {
+        setFirstLaunch(true);
+        router.replace('/onboarding/step-1');
+      }
+      setChecked(true);
+    })();
+  }, []);
+
+  // // don’t show anything until fonts+splash are ready AND we know firstLaunch
+  if (!checked || !loaded) {
+    return null;
+  }
+
+  // **key change**: if firstLaunch, hand off to child routes
+  if (firstLaunch) {
+    return <Slot />;
+  }
+
 
   useEffect(() => {
     const init = async () => {
