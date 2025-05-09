@@ -66,7 +66,7 @@ export const SPONSORS: {
   {
     name: 'Pretty Cool',
     logo: require('@/assets/images/company-logos/pretty-cool.png'),
-    url: 'https://pretty-cool.com',
+    url: 'https://www.prettycoolicecream.com/',
   },
   // {
   //   name: 'Red Bull',

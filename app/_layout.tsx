@@ -65,6 +65,12 @@ export default function RootLayout() {
     return null;
   }
 
+  const DISABLED_SWIPE_ROUTES = [
+    'product/[id]',
+    'food-trucks/[id]',
+    'sponsors/[id]',
+  ];
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ConfigContextProvider>
@@ -72,12 +78,11 @@ export default function RootLayout() {
           value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}
         >
           <Drawer
-            screenOptions={{
+            screenOptions={({ route }) => ({
               headerShown: false,
               drawerType: 'slide',
-              drawerActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-              drawerInactiveTintColor:
-                Colors[colorScheme ?? 'light'].tabIconDefault,
+              drawerActiveTintColor: Colors.light.tint,
+              drawerInactiveTintColor: Colors.light.tabIconDefault,
               drawerItemStyle: {
                 paddingLeft: 12,
                 paddingVertical: 8,
@@ -85,14 +90,16 @@ export default function RootLayout() {
               drawerStyle: {
                 paddingTop: 40,
                 width: '80%',
-                backgroundColor: Colors[colorScheme ?? 'light'].background,
+                backgroundColor: Colors.light.background,
               },
               drawerLabelStyle: {
-                color: '#ffffff',
+                color: '#fff',
                 fontSize: 20,
                 fontFamily: 'Poppins_500Medium',
               },
-            }}
+              // disable drawer-swipe whenever route.name is in our list
+              swipeEnabled: !DISABLED_SWIPE_ROUTES.includes(route.name),
+            })}
           >
             <Drawer.Screen
               name='(tabs)'

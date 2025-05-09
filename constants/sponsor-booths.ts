@@ -163,7 +163,7 @@ export const SPONSOR_BOOTHS: {
   {
     name: 'Pretty Cool Ice Cream',
     logo: require('@/assets/images/company-logos/pretty-cool.png'),
-    url: 'https://www.prettycoolcream.com',
+    url: 'https://www.prettycoolicecream.com/',
     activity: {
       name: 'Ice Cream Booth',
       description:
