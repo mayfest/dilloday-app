@@ -34,13 +34,30 @@ export default function SponsorDetail() {
   return (
     <StackScreen>
       <ScrollView contentContainerStyle={styles.container}>
-        <Image source={sponsor.logo} style={styles.hero} resizeMode='contain' />
-        <Text style={styles.title}>{sponsor.name}</Text>
+        {sponsor.name === 'Pretty Cool Ice Cream' ? (
+          <View style={styles.imageContainer}>
+            <View style={styles.PrettyCoolBackground}>
+              <Image
+                source={sponsor.logo}
+                style={styles.PrettyCoolImage}
+                resizeMode='contain'
+              />
+            </View>
+          </View>
+        ) : (
+          <Image
+            source={sponsor.logo}
+            style={styles.hero}
+            resizeMode='contain'
+          />
+        )}
+
+        {/* page title is now the activity name */}
+        <Text style={styles.sectionTitle}>{sponsor.activity.name}</Text>
 
         <View style={styles.divider} />
 
         <View style={styles.activityContainer}>
-          <Text style={styles.sectionTitle}>{sponsor.activity.name}</Text>
           <Text style={styles.description}>{sponsor.activity.description}</Text>
 
           {sponsor.url && (
@@ -61,61 +78,45 @@ const styles = StyleSheet.create({
   container: {
     padding: 24,
     paddingBottom: 40,
+    alignItems: 'center',
   },
   hero: {
     width: width - 48,
     height: (width - 48) * 0.5,
-    alignSelf: 'center',
     marginBottom: 24,
   },
-  title: {
-    fontSize: 28,
-    fontWeight: '700',
-    textAlign: 'center',
+  sectionTitle: {
+    fontSize: 26,
+    fontFamily: 'Poppins_700Bold',
+    fontWeight: '600',
     color: Colors.light.text,
-    marginBottom: 8,
+    marginBottom: 12,
+    textAlign: 'center',
   },
   divider: {
     height: 1,
     backgroundColor: Colors.light.text,
     marginVertical: 16,
+    alignSelf: 'stretch',
   },
   activityContainer: {
+    width: '100%',
     marginTop: 8,
-  },
-  sectionTitle: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: Colors.light.text,
-    marginBottom: 12,
   },
   description: {
     fontSize: 16,
     lineHeight: 24,
+    fontFamily: 'Poppins_400Regular',
     color: Colors.light.text,
     marginBottom: 24,
-  },
-  locationContainer: {
-    flexDirection: 'row',
-    marginBottom: 24,
-    alignItems: 'center',
-  },
-  locationLabel: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: Colors.light.text,
-    marginRight: 8,
-  },
-  locationValue: {
-    fontSize: 16,
-    color: Colors.light.text,
+    textAlign: 'center',
   },
   websiteButton: {
-    backgroundColor: Colors.light.tint,
+    backgroundColor: Colors.light.action,
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    alignSelf: 'flex-start',
+    alignSelf: 'center',
     marginBottom: 24,
   },
   websiteButtonText: {
@@ -129,8 +130,32 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     overflow: 'hidden',
     marginTop: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   activityImage: {
+    width: '100%',
+    height: '100%',
+  },
+  PrettyCoolBackground: {
+    width: 80,
+    height: 60,
+    padding: 2,
+    backgroundColor: '#f297a7',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  PrettyCoolContainer: {
+    width: '100%',
+    height: 600,
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginTop: 8,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  PrettyCoolImage: {
     width: '100%',
     height: '100%',
   },

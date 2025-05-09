@@ -6,7 +6,7 @@ import NUPDIcon from '@/components/information/nupud';
 import SmartDilloIcon from '@/components/information/smart-dillo-icon';
 import ScreenBackground from '@/components/screen-background';
 import { VERSION } from '@/lib/app';
-import { call, link } from '@/lib/link';
+import { call } from '@/lib/link';
 import { Link, useRouter } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
@@ -35,13 +35,7 @@ export default function InfoScreenTwo() {
               />
             </Link>
 
-            <TouchableOpacity
-              onPress={() =>
-                link(
-                  'https://www.northwestern.edu/wellness/hpaw/campaigns/smart-dillo/'
-                )
-              }
-            >
+            <TouchableOpacity onPress={() => router.push('/smart-dillo')}>
               <SmartDilloIcon
                 width={BUTTON_SIZE}
                 height={BUTTON_SIZE}

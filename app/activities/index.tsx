@@ -37,11 +37,21 @@ export default function SponsorBoothsScreen() {
         }
       >
         <View style={styles.imageContainer}>
-          <Image
-            source={item.logo}
-            style={styles.logoImage}
-            resizeMode='contain'
-          />
+          {item.name === 'Pretty Cool Ice Cream' ? (
+            <View style={styles.PrettyCoolBackground}>
+              <Image
+                source={item.logo}
+                style={styles.logoImage}
+                resizeMode='contain'
+              />
+            </View>
+          ) : (
+            <Image
+              source={item.logo}
+              style={styles.logoImage}
+              resizeMode='contain'
+            />
+          )}
         </View>
         <View style={styles.infoBar}>
           <ThemedText style={styles.infoName} numberOfLines={2}>
@@ -108,7 +118,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logoImage: {
-    width: '75%',
+    width: '85%',
     height: '75%',
   },
   infoBar: {
@@ -138,5 +148,14 @@ const styles = StyleSheet.create({
     top: 8,
     right: 8,
     zIndex: 10,
+  },
+  PrettyCoolBackground: {
+    width: 80,
+    height: 60,
+    padding: 2,
+    backgroundColor: '#f297a7',
+    borderRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });

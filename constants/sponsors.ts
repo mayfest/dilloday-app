@@ -59,9 +59,9 @@ export const SPONSORS: {
     url: 'https://partiful.com/events',
   },
   {
-    name: 'Photobooth',
-    logo: require('@/assets/images/company-logos/photobooth-awh.jpg'),
-    url: 'https://photobooth.awh.co.id/index.html',
+    name: 'Armadillo World Headquarters',
+    logo: require('@/assets/images/company-logos/armadillo-world-headquarters.png'),
+    url: 'https://armadilloworld.com/',
   },
   {
     name: 'Pretty Cool',

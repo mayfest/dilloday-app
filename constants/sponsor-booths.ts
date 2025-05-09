@@ -22,18 +22,6 @@ export const SPONSOR_BOOTHS: {
     },
   },
   {
-    name: 'Pretty Cool Ice Cream',
-    logo: require('@/assets/images/company-logos/pretty-cool.png'),
-    url: 'https://www.prettycoolcream.com',
-    activity: {
-      name: 'Ice Cream Booth',
-      description:
-        'Come try unique ice cream flavors at Pretty Cool Ice Cream!',
-      image: require('@/assets/images/company-logos/pretty-cool.png'),
-      location: 'Food Court',
-    },
-  },
-  {
     name: "L'Oreal",
     logo: require('@/assets/images/company-logos/l-oreal.png'),
     url: 'https://www.loreal.com',
@@ -70,11 +58,11 @@ export const SPONSOR_BOOTHS: {
     },
   },
   {
-    name: 'AWH Photo',
-    logo: require('@/assets/images/company-logos/photobooth-awh.jpg'),
+    name: 'Armadillo World Headquarters',
+    logo: require('@/assets/images/company-logos/armadillo-world-headquarters.png'),
     url: 'https://www.awh-photo.com',
     activity: {
-      name: 'Armadillo World Headquarters Photo Booth',
+      name: 'Photo Booth',
       description:
         'Come take a picture with friends at the Armadillo World Headquarters Photo Booth for a chance to win cool merch.',
       image: require('@/assets/images/company-logos/photobooth-awh.jpg'),
@@ -83,7 +71,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Sprite',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/sprite-logo.png'),
     url: 'https://www.sprite.com',
     activity: {
       name: 'Sprite Booth',
@@ -94,7 +82,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Smartwater',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/smart-water.png'),
     url: 'https://www.smartwater.com',
     activity: {
       name: 'Smartwater Booth',
@@ -116,7 +104,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'LineLeap',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/line-leap.jpeg'),
     url: 'https://www.lineleap.com',
     activity: {
       name: 'LineLeap Booth',
@@ -127,7 +115,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Lifetime',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/line.jpeg'),
     url: 'https://www.lifetime.life',
     activity: {
       name: 'Lifetime Booth',
@@ -150,7 +138,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Postmates',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/postmates-logo.png'),
     url: 'https://www.postmates.com',
     activity: {
       name: 'Postmates Booth',
@@ -162,7 +150,7 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Long Drink',
-    logo: require('@/assets/images/off-white.png'),
+    logo: require('@/assets/images/company-logos/long-drink-logo.png'),
     url: 'https://www.longdrink.com',
     activity: {
       name: 'Beer Garden',
@@ -170,6 +158,18 @@ export const SPONSOR_BOOTHS: {
         'Experience Long Drink at the Beer Garden. Must be 21+ to enter.',
       image: require('@/assets/images/off-white.png'),
       location: 'Beer Garden',
+    },
+  },
+  {
+    name: 'Pretty Cool Ice Cream',
+    logo: require('@/assets/images/company-logos/pretty-cool.png'),
+    url: 'https://www.prettycoolcream.com',
+    activity: {
+      name: 'Ice Cream Booth',
+      description:
+        'Come try unique ice cream flavors at Pretty Cool Ice Cream!',
+      image: require('@/assets/images/company-logos/pretty-cool.png'),
+      location: 'Food Court',
     },
   },
 ];
