@@ -16,6 +16,7 @@ export interface Config {
   artists: Artists;
   schedule: Schedule;
   social: SocialConfig;
+  food_truck_menus: Record<string, Record<string, string>>;
 }
 
 export interface ConfigInformation {

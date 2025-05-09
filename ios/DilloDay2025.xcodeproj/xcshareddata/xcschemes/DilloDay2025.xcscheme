@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "dilloapp.app"
-               BlueprintName = "dilloapp"
-               ReferencedContainer = "container:dilloapp.xcodeproj">
+               BuildableName = "DilloDay2025.app"
+               BlueprintName = "DilloDay2025"
+               ReferencedContainer = "container:DilloDay2025.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "dilloappTests.xctest"
-               BlueprintName = "dilloappTests"
-               ReferencedContainer = "container:dilloapp.xcodeproj">
+               BuildableName = "DilloDay2025Tests.xctest"
+               BlueprintName = "DilloDay2025Tests"
+               ReferencedContainer = "container:DilloDay2025.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "dilloapp.app"
-            BlueprintName = "dilloapp"
-            ReferencedContainer = "container:dilloapp.xcodeproj">
+            BuildableName = "DilloDay2025.app"
+            BlueprintName = "DilloDay2025"
+            ReferencedContainer = "container:DilloDay2025.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "dilloapp.app"
-            BlueprintName = "dilloapp"
-            ReferencedContainer = "container:dilloapp.xcodeproj">
+            BuildableName = "DilloDay2025.app"
+            BlueprintName = "DilloDay2025"
+            ReferencedContainer = "container:DilloDay2025.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -21,7 +21,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
   }
 }
 
-rootProject.name = 'dillo-app'
+rootProject.name = 'Dillo Day 2025'
 
 dependencyResolutionManagement {
   versionCatalogs {

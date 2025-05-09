@@ -9,8 +9,8 @@ interface SmartDilloIconProps {
 }
 
 export default function SmartDilloIcon({
-  width = 215,
-  height = 180,
+  width = 175,
+  height = 175,
   style,
 }: SmartDilloIconProps & {
   style?: object;

@@ -28,33 +28,21 @@ export default function InfoScreenTwo() {
         <View>
           <View style={styles.buttonRow}>
             <Link href='/information/contact'>
-              <ContactMayfestIcon
-                width={BUTTON_SIZE}
-                height={BUTTON_SIZE}
-                style={styles.svg}
-              />
+              <ContactMayfestIcon style={styles.svg} />
             </Link>
 
             <TouchableOpacity onPress={() => router.push('/smart-dillo')}>
-              <SmartDilloIcon
-                width={BUTTON_SIZE}
-                height={BUTTON_SIZE}
-                style={styles.svg}
-              />
+              <SmartDilloIcon style={styles.svg} />
             </TouchableOpacity>
           </View>
 
           <View style={styles.buttonRow}>
             <TouchableOpacity onPress={() => call('911')}>
-              <NineOneOneButton style={styles.svg} />
+              <NineOneOneButton style={styles.svg} height={170} width={170} />
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => call('18474913456')}>
-              <NUPDIcon
-                width={BUTTON_SIZE}
-                height={BUTTON_SIZE}
-                style={styles.svg}
-              />
+              <NUPDIcon style={styles.svg} />
             </TouchableOpacity>
           </View>
 

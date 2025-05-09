@@ -9,8 +9,8 @@ interface NineOneOneButtonProps {
 }
 
 export default function NineOneOneButton({
-  width = 150,
-  height = 200,
+  width = 175,
+  height = 175,
   style,
 }: NineOneOneButtonProps) {
   return (
