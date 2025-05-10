@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Colors } from '@/constants/Colors';
 import ConfigContextProvider from '@/contexts/config-context';
 import { useColorScheme } from '@/hooks/useColorScheme';
+import { AppState as AppStateType, Config, getConfig } from '@/lib/config';
 import { registerForPushNotifications } from '@/lib/notifications';
 import { Cabin_400Regular } from '@expo-google-fonts/cabin';
 import {
@@ -22,6 +23,7 @@ import { useFonts } from 'expo-font';
 import { Drawer } from 'expo-router/drawer';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
+import { AppState } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
@@ -40,12 +42,32 @@ export default function RootLayout() {
     Poppins_500Medium,
     Poppins_600SemiBold,
   });
-
+  const [state, setState] = useState<AppStateType>({});
   const [notificationToken, setNotificationToken] = useState<string | null>(
     null
   );
+  const [config, setConfig] = useState<Config | null>(null);
+
+  const reload = async () => {
+    if (!notificationToken) {
+      const token = await registerForPushNotifications();
+      if (token) {
+        setNotificationToken(token);
+      }
+    }
+    const { config } = await getConfig();
+    if (config) {
+      setConfig(config);
+    }
+  };
 
   useEffect(() => {
+    reload();
+
+    const changeEvent = AppState.addEventListener('change', (newState) => {
+      setState((prev) => ({ ...prev, state: newState }));
+    });
+
     const init = async () => {
       if (loaded) {
         SplashScreen.hideAsync();
@@ -54,7 +76,7 @@ export default function RootLayout() {
       const token = await registerForPushNotifications();
       if (token) {
         setNotificationToken(token);
-        console.log('Notification Token:', token); // Optional: For debugging
+        // console.log('Notification Token:', token); // Optional: For debugging
       }
     };
 
