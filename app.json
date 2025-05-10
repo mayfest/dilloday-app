@@ -48,6 +48,14 @@
           "backgroundColor": "#173885"
         }
       ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icons/notification-icon.png",
+          "color": "#FF231F7C",
+          "enableBackgroundRemoteNotifications": false
+        }
+      ],
       "expo-font"
     ],
     "experiments": {
