@@ -22,8 +22,8 @@ import MapView, { Callout, Marker } from 'react-native-maps';
 
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
-const LATITUDE = 42.055126;
-const LONGITUDE = -87.670787;
+const LATITUDE = 42.05165;
+const LONGITUDE = -87.67184;
 const LATITUDE_DELTA = 0.0111;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
 
