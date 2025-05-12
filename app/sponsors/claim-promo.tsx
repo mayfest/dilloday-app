@@ -22,7 +22,7 @@ const OptimizedImage = ({ source, style, alt }: any) => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 1000);
+    const timer = setTimeout(() => setLoading(false), 100);
     return () => clearTimeout(timer);
   }, []);
 

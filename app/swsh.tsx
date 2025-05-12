@@ -53,7 +53,7 @@ export default function SwshPage() {
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
         <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
         <SwshRedirectButton
-          text='Add your Dillo Day pics to Swsh!'
+          text='Add your Dillo Day pics to SWSH!'
           url='https://www.joinswsh.com/album/pg5rftklzxfb'
         />
         <StatusBar style='dark' />

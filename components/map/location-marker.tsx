@@ -1,58 +1,57 @@
 import React from 'react';
 
-import ParkAttraction from '@/assets/images/parkattraction.svg';
-import Popcorn from '@/assets/images/popcorn.svg';
-import Tent from '@/assets/images/tent.svg';
-import { Animated, StyleSheet } from 'react-native';
+import { Colors } from '@/constants/Colors';
+import { FontAwesome5 } from '@expo/vector-icons';
+import { StyleSheet, Text, View } from 'react-native';
 
-const LocationMarker = ({ type, selected, style }) => {
-  const MarkerComponent = (() => {
-    switch (type) {
-      case 'main':
-        return Tent;
-      case 'fmo':
-        return ParkAttraction;
-      case 'food':
-        return Popcorn;
-      default:
-        return Tent;
-    }
-  })();
+type IconType =
+  | 'truck'
+  | 'store'
+  | 'restroom'
+  | 'door-open'
+  | 'record-vinyl'
+  | 'tent'
+  | 'briefcase-medical'
+  | 'water'
+  | 'door-closed'
+  | 'magnifying-glass-location'
+  | 'ticket-simple'
+  | 'person-booth'
+  | 'id-card'
+  | 'users'
+  | 'exit'
+  | 'food';
+interface Props {
+  icon: IconType;
+  label?: string;
+  selected?: boolean;
+}
 
-  // Animate the marker scale based on selection
-  const scale = selected.interpolate({
-    inputRange: [0, 1],
-    outputRange: [1, 1.2],
-  });
-
-  const opacity = selected.interpolate({
-    inputRange: [0, 1],
-    outputRange: [0.8, 1],
-  });
-
+const ICON_SIZE = 20;
+export default function IconMarker({ icon, label, selected = false }: Props) {
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        style,
-        {
-          transform: [{ scale }],
-          opacity,
-        },
-      ]}
-    >
-      <MarkerComponent width={40} height={40} />
-    </Animated.View>
+    <View style={[styles.container, selected && styles.selected]}>
+      <FontAwesome5 name={icon} size={ICON_SIZE} solid color={'#fff'} />
+      {label != null && <Text style={styles.label}>{label}</Text>}
+    </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
-    justifyContent: 'center',
-    width: 40,
-    height: 40,
+    padding: 6,
+    backgroundColor: Colors.light.background,
+    borderRadius: 8,
+  },
+  selected: {
+    backgroundColor: Colors.light.action,
+    color: '#fff',
+  },
+  label: {
+    marginTop: 2,
+    fontSize: 10,
+    textAlign: 'center',
+    color: '#fff',
   },
 });
-
-export default LocationMarker;
