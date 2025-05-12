@@ -109,20 +109,25 @@ export default function LineupComingSoonModal({ visible, onClose }) {
   };
 
   const { width, height } = dimensions;
-  const isLargeDevice = width >= 428; // iPhone Pro Max width threshold
+
+  // Determine if device is iPad
+  const isIpad = width >= 768;
+  const isLargeDevice = !isIpad && width >= 428;
+
+  console.log('Device info:', { width, height, isIpad, isLargeDevice });
 
   // Calculate responsive ticket positions based on screen size
-  // Positioning from the bottom of the container
+  // Only used for non-iPad devices
   const ticketPositions = [
     {
       x: isLargeDevice ? width * 0.1 : width * 0.05,
-      bottom: isLargeDevice ? height * 0.2 : height * 0.15, // Distance from bottom
+      bottom: isLargeDevice ? height * 0.2 : height * 0.15,
       angle: -30,
       isMainStage: true,
     },
     {
       x: isLargeDevice ? width * 0.2 : width * 0.1,
-      bottom: isLargeDevice ? height * 0.3 : height * 0.25, // Distance from bottom
+      bottom: isLargeDevice ? height * 0.3 : height * 0.25,
       angle: -15,
       isMainStage: false,
     },
@@ -133,7 +138,7 @@ export default function LineupComingSoonModal({ visible, onClose }) {
       animationType='slide'
       transparent={true}
       visible={visible}
-      onRequestClose={handleBackNavigation} // Handle hardware back button press
+      onRequestClose={handleBackNavigation}
     >
       <View style={styles.modalContainer}>
         <Animated.View
@@ -150,45 +155,83 @@ export default function LineupComingSoonModal({ visible, onClose }) {
               style={styles.navigationButton}
               onPress={handleBackNavigation}
             >
-              <Text style={styles.navigationButtonText}>GO BACK</Text>
-              <FontAwesome6 name='arrow-right' size={16} color='#FFFFFF' />
+              <Text
+                style={[
+                  styles.navigationButtonText,
+                  isIpad && { fontSize: 18 },
+                ]}
+              >
+                GO BACK
+              </Text>
+              <FontAwesome6
+                name='arrow-right'
+                size={isIpad ? 18 : 16}
+                color='#FFFFFF'
+              />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.contentContainer}>
-            <View style={styles.textContentContainer}>
-              <Text style={styles.heading}>DILLO DAY SCHEDULE COMING SOON</Text>
-              <Text style={styles.comingSoonText}>
+          <View
+            style={[
+              styles.contentContainer,
+              isIpad && styles.ipadContentContainer,
+            ]}
+          >
+            <View
+              style={[
+                styles.textContentContainer,
+                isIpad && styles.ipadTextContainer,
+              ]}
+            >
+              <Text style={[styles.heading, isIpad && styles.ipadHeading]}>
+                DILLO DAY SCHEDULE COMING SOON
+              </Text>
+              <Text style={[styles.comingSoonText, isIpad && styles.ipadText]}>
                 The Dillo Day lineup hasn't been fully announced yet and we're
                 working hard to finalize our schedule. For now, please make sure
                 to follow us on Instagram at @dillo_day for the latest
                 information and updates!
               </Text>
+
+              {/* Additional iPad-only content */}
+              {isIpad && (
+                <View style={styles.ipadAdditionalInfo}>
+                  <Text style={styles.ipadInfoText}>
+                    We're excited to share the full lineup with you soon!
+                  </Text>
+                  <Text style={styles.ipadInfoText}>
+                    Stay tuned for artist announcements and event details.
+                  </Text>
+                </View>
+              )}
             </View>
 
-            <View style={styles.ticketsContainer}>
-              {ticketPositions.map((position, index) => (
-                <View
-                  key={index}
-                  style={[
-                    styles.ticket,
-                    {
-                      left: position.x,
-                      bottom: position.bottom,
-                      transform: [{ rotate: `${position.angle}deg` }],
-                      width: isLargeDevice ? 150 : 120,
-                      height: isLargeDevice ? 100 : 80,
-                    },
-                  ]}
-                >
-                  {position.isMainStage ? (
-                    <MyDynamicSvg artistName='Coming Soon' time='TBA' />
-                  ) : (
-                    <MainStageTicket artistName='Coming Soon' time='TBA' />
-                  )}
-                </View>
-              ))}
-            </View>
+            {/* Only render tickets on non-iPad devices */}
+            {!isIpad && (
+              <View style={styles.ticketsContainer}>
+                {ticketPositions.map((position, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      styles.ticket,
+                      {
+                        left: position.x,
+                        bottom: position.bottom,
+                        transform: [{ rotate: `${position.angle}deg` }],
+                        width: isLargeDevice ? 150 : 120,
+                        height: isLargeDevice ? 100 : 80,
+                      },
+                    ]}
+                  >
+                    {position.isMainStage ? (
+                      <MyDynamicSvg artistName='Coming Soon' time='TBA' />
+                    ) : (
+                      <MainStageTicket artistName='Coming Soon' time='TBA' />
+                    )}
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
         </Animated.View>
       </View>
@@ -250,10 +293,18 @@ const styles = StyleSheet.create({
     padding: 10,
     justifyContent: 'flex-start',
   },
+  ipadContentContainer: {
+    justifyContent: 'center', // Center content vertically on iPad
+    paddingTop: 0,
+  },
   textContentContainer: {
     width: '100%',
     alignItems: 'center',
     zIndex: 2,
+  },
+  ipadTextContainer: {
+    maxWidth: 700,
+    paddingHorizontal: 30,
   },
   heading: {
     fontSize: 30,
@@ -263,12 +314,33 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 20,
   },
+  ipadHeading: {
+    fontSize: 42,
+    marginBottom: 30,
+  },
   comingSoonText: {
     fontSize: 16,
     color: '#FFFFFF',
     textAlign: 'center',
     marginHorizontal: 20,
     marginBottom: 20,
+  },
+  ipadText: {
+    fontSize: 22,
+    marginHorizontal: 40,
+    lineHeight: 30,
+    marginBottom: 30,
+  },
+  ipadAdditionalInfo: {
+    marginTop: 20,
+    alignItems: 'center',
+  },
+  ipadInfoText: {
+    fontSize: 20,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    marginBottom: 15,
+    opacity: 0.8,
   },
   ticketsContainer: {
     position: 'absolute',

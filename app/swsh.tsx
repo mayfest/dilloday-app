@@ -11,7 +11,9 @@ import { fetchSwshPhotos } from '@/lib/swsh';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
+  Dimensions,
   Modal,
+  Platform,
   ScrollView,
   StyleSheet,
   Text,
@@ -24,6 +26,12 @@ export default function SwshPage() {
   const insets = useSafeAreaInsets();
   const [modalVisible, setModalVisible] = useState(false);
   const [defaultImages, setDefaultImages] = useState<string[]>([]);
+  const windowWidth = Dimensions.get('window').width;
+  const windowHeight = Dimensions.get('window').height;
+
+  // Check if device is an iPad
+  const isIPad =
+    Platform.OS === 'ios' && Math.min(windowWidth, windowHeight) >= 768;
 
   useEffect(() => {
     setModalVisible(true);
@@ -49,67 +57,87 @@ export default function SwshPage() {
   return (
     <DrawerScreen banner={<SwshPageBanner />}>
       <StatusBar style='dark' />
-      <View style={[styles.container, { paddingTop: insets.top }]}>
-        <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
-        <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
-        <SwshRedirectButton
-          text='Add your Dillo Day pics to SWSH!'
-          url='https://www.joinswsh.com/album/pg5rftklzxfb'
-        />
-        <StatusBar style='dark' />
-        <Modal
-          animationType='slide'
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => setModalVisible(false)}
-        >
-          <View style={styles.modalContainer}>
-            <View style={styles.modalContent}>
-              <View style={styles.navigationBar}>
-                <TouchableOpacity
-                  style={styles.navigationButton}
-                  onPress={() => setModalVisible(false)}
-                >
-                  <Text style={styles.navigationButtonText}>CLOSE</Text>
-                  <FontAwesome6 name='xmark' size={16} color='#FFFFFF' />
-                </TouchableOpacity>
-              </View>
+      <ScrollView
+        contentContainerStyle={[
+          styles.scrollViewContent,
+          { paddingTop: insets.top },
+        ]}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+          <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
+          <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
+          <SwshRedirectButton
+            text='Add your Dillo Day pics to SWSH!'
+            url='https://www.joinswsh.com/album/pg5rftklzxfb'
+          />
+          <View style={styles.spacer} />
+        </View>
+      </ScrollView>
 
-              <ScrollView contentContainerStyle={styles.modalScrollContent}>
-                <Text style={styles.titleSecondary}>Welcome to</Text>
-                <Text style={styles.titlePrimary}>DILLO DAY x SWSH</Text>
-                <Text style={styles.text}>
-                  Share your Dillo Day memories with the Northwestern community!
-                  We've partnered with SWSH to create a special photo album
-                  where you can upload and view pictures from the festival.
-                </Text>
-                <Text style={styles.text}>
-                  Simply click the button below to add your photos to the
-                  community album. You can also view photos shared by other
-                  attendees in the circular reel above.
-                </Text>
-              </ScrollView>
+      <StatusBar style='dark' />
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <View style={styles.navigationBar}>
+              <TouchableOpacity
+                style={styles.navigationButton}
+                onPress={() => setModalVisible(false)}
+              >
+                <Text style={styles.navigationButtonText}>CLOSE</Text>
+                <FontAwesome6 name='xmark' size={16} color='#FFFFFF' />
+              </TouchableOpacity>
             </View>
+
+            <ScrollView contentContainerStyle={styles.modalScrollContent}>
+              <Text style={styles.titleSecondary}>Welcome to</Text>
+              <Text style={styles.titlePrimary}>DILLO DAY x SWSH</Text>
+              <Text style={styles.text}>
+                Share your Dillo Day memories with the Northwestern community!
+                We've partnered with SWSH to create a special photo album where
+                you can upload and view pictures from the festival.
+              </Text>
+              <Text style={styles.text}>
+                To add your photos, press the "CLOSE" button and then click on
+                the "Add your Dillo Day pics to SWSH!" button above. This will
+                take you to the SWSH website where you can upload your images.
+                You can also view other photos that have been shared by your
+                fellow Dillo Day attendees.
+              </Text>
+            </ScrollView>
           </View>
-        </Modal>
-      </View>
+        </View>
+      </Modal>
     </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    alignItems: 'center',
+  },
   bannerWrapper: {
     paddingLeft: 16,
     width: '100%',
     paddingHorizontal: 1,
   },
   container: {
-    flex: 1,
+    width: '100%',
     alignItems: 'center',
-    justifyContent: 'flex-start', // align at top
+    justifyContent: 'flex-start',
+    paddingBottom: 40, // Add padding at the bottom for scrolling
+  },
+  spacer: {
+    height: 60, // Extra space at the bottom for better scrolling
   },
   liftedGroup: {
-    transform: [{ translateY: -20 }], // move up by 20px
+    transform: [{ translateY: -20 }],
     alignItems: 'center',
   },
   modalContainer: {
@@ -120,7 +148,7 @@ const styles = StyleSheet.create({
   },
   modalContent: {
     width: '100%',
-    height: '90%',
+    height: '80%',
     backgroundColor: Colors.light.text,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
