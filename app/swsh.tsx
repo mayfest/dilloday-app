@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import { ArrowSignSVG } from '@/components/arrow-sign';
 import SwshPageBanner from '@/components/banners/swsh-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { CircularReel } from '@/components/swsh-integration/circle-reel';
 import { CurvedHeader } from '@/components/swsh-integration/curved-text-view';
+import { SwshRedirectButton } from '@/components/swsh-integration/swsh-redirect-button';
 import { Colors } from '@/constants/Colors';
 import { REEL_SIZE } from '@/constants/circle-reel';
 import { fetchSwshPhotos } from '@/lib/swsh';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
-  Linking,
   Modal,
   ScrollView,
   StyleSheet,
@@ -31,6 +30,7 @@ export default function SwshPage() {
     const loadImages = async () => {
       try {
         const images = await fetchSwshPhotos();
+        console.log('Fetched images:', images);
         setDefaultImages(images);
       } catch (error) {
         console.error('Error loading images:', error);
@@ -46,35 +46,16 @@ export default function SwshPage() {
     loadImages();
   }, []);
 
-  const handleOpenSwsh = () => {
-    Linking.openURL('https://www.joinswsh.com/album/pg5rftklzxfb');
-  };
-
   return (
-    <DrawerScreen
-      banner={
-        <View style={styles.bannerWrapper}>
-          <SwshPageBanner />
-        </View>
-      }
-    >
+    <DrawerScreen banner={<SwshPageBanner />}>
       <StatusBar style='dark' />
       <View style={[styles.container, { paddingTop: insets.top }]}>
         <CurvedHeader text='DILLO DAY x SWSH' size={REEL_SIZE} />
         <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
-
-        {/* Replace SwshRedirectButton with our new ArrowSignSVG component */}
-        <ArrowSignSVG
-          text='Add your your Pictures!'
-          onPress={handleOpenSwsh}
-          width={320}
-          height={60}
-          textColor='#b33b3b'
-          borderColor='#b33b3b'
-          backgroundColor='#f0e6c3'
-          fontSize={20}
+        <SwshRedirectButton
+          text='Add your Dillo Day pics to Swsh!'
+          url='https://www.joinswsh.com/album/pg5rftklzxfb'
         />
-
         <StatusBar style='dark' />
         <Modal
           animationType='slide'
@@ -117,7 +98,11 @@ export default function SwshPage() {
 }
 
 const styles = StyleSheet.create({
-  bannerWrapper: {},
+  bannerWrapper: {
+    paddingLeft: 16,
+    width: '100%',
+    paddingHorizontal: 1,
+  },
   container: {
     flex: 1,
     alignItems: 'center',

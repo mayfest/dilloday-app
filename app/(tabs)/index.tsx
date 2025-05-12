@@ -116,5 +116,6 @@ const styles = StyleSheet.create({
     paddingTop: 10,
     flexDirection: 'row',
     justifyContent: 'center',
+    marginBottom: 80,
   },
 });

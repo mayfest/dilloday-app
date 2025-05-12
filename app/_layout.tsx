@@ -137,20 +137,6 @@ export default function RootLayout() {
                 ),
               }}
             />
-            <Drawer.Screen
-              name='products'
-              options={{
-                drawerLabel: 'Dillo Store',
-                title: 'Products',
-                drawerIcon: ({ color }) => (
-                  <FontAwesome6
-                    name='bag-shopping'
-                    size={20}
-                    color={Colors.light.tint}
-                  />
-                ),
-              }}
-            />
 
             {/* <Drawer.Screen
               name='product/[id]'
@@ -166,6 +152,32 @@ export default function RootLayout() {
                 drawerIcon: ({ color }) => (
                   <FontAwesome6
                     name='bullhorn'
+                    size={20}
+                    color={Colors.light.tint}
+                  />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='food-trucks'
+              options={{
+                title: 'Food Trucks',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6
+                    name='utensils'
+                    size={20}
+                    color={Colors.light.tint}
+                  />
+                ),
+              }}
+            />
+            <Drawer.Screen
+              name='smart-dillo'
+              options={{
+                title: 'Smart Dillo',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6
+                    name='shield'
                     size={20}
                     color={Colors.light.tint}
                   />
@@ -192,19 +204,6 @@ export default function RootLayout() {
                 drawerIcon: ({ color }) => (
                   <FontAwesome6
                     name='camera'
-                    size={20}
-                    color={Colors.light.tint}
-                  />
-                ),
-              }}
-            />
-            <Drawer.Screen
-              name='food-trucks'
-              options={{
-                title: 'Food Trucks',
-                drawerIcon: ({ color }) => (
-                  <FontAwesome6
-                    name='utensils'
                     size={20}
                     color={Colors.light.tint}
                   />
@@ -245,12 +244,13 @@ export default function RootLayout() {
               }}
             />
             <Drawer.Screen
-              name='smart-dillo'
+              name='products'
               options={{
-                title: 'Smart Dillo',
+                drawerLabel: 'Dillo Store',
+                title: 'Products',
                 drawerIcon: ({ color }) => (
                   <FontAwesome6
-                    name='shield'
+                    name='bag-shopping'
                     size={20}
                     color={Colors.light.tint}
                   />

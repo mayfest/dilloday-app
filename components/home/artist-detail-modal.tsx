@@ -7,7 +7,6 @@ import {
   Image,
   Modal,
   PanResponder,
-  ScrollView,
   StyleSheet,
   Text,
   View,
@@ -110,14 +109,14 @@ export default function ArtistDetailModal({ visible, artist, onClose }: Props) {
           {...panResponder.panHandlers}
         >
           <View style={styles.indicator} />
-          <ScrollView contentContainerStyle={styles.content}>
+          <View style={styles.content}>
             <Image source={{ uri: artist.image }} style={styles.image} />
             <Text style={styles.name}>{artist.name}</Text>
             <Text style={styles.time}>{artist.time}</Text>
             {artist.description && (
               <Text style={styles.desc}>{artist.description}</Text>
             )}
-          </ScrollView>
+          </View>
         </Animated.View>
       </Animated.View>
     </Modal>

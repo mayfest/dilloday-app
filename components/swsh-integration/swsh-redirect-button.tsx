@@ -27,5 +27,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: '#000',
     fontWeight: 'bold',
+    fontFamily: 'Poppins_700Bold',
   },
 });

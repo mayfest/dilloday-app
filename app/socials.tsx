@@ -39,11 +39,8 @@ export default function SocialsPage() {
   };
 
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<SocialsPageBanner />}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.bannerWrapper}>
-          <SocialsPageBanner />
-        </View>
         {SOCIALS.map(({ label, handle, url, icon }, i) => (
           <TouchableOpacity
             key={i}

@@ -7,8 +7,6 @@ import { CommonActions, useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-import ScreenBackground from './screen-background';
-
 interface StackScreenProps {
   children?: React.ReactNode;
   hideNavBar?: boolean;
@@ -17,7 +15,7 @@ interface StackScreenProps {
 
 export default function StackScreen({
   children,
-  hideNavBar = false,
+  hideNavBar = true,
   banner,
 }: StackScreenProps) {
   const navigation = useNavigation();
@@ -32,7 +30,6 @@ export default function StackScreen({
   return (
     <GlobalNavivationWrapper hideNavBar={hideNavBar}>
       <View style={styles.container}>
-        <ScreenBackground />
         <SafeAreaView style={styles.screen}>
           <View style={styles.headerRow}>
             <View style={styles.backButtonContainer}>

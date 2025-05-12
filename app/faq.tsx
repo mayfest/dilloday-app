@@ -36,19 +36,12 @@ export default function FAQScreen() {
     setFilteredData(filtered);
   };
 
-  const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}>
-      <FAQPageBanner />
-    </View>
-  );
-
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<FAQPageBanner />}>
       <ScrollView
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        <ListHeaderComponent />
         <SearchBar onSearch={handleSearch} value={searchQuery} />
         {filteredData.length > 0 ? (
           filteredData.map((category, index) => (

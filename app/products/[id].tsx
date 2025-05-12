@@ -295,6 +295,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 12,
     paddingHorizontal: 32,
+    marginBottom: 60,
   },
   viewWebsiteButtonText: {
     color: '#fff',

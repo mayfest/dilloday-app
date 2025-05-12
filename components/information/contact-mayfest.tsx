@@ -9,8 +9,8 @@ interface ContactMayfestIconProps {
 }
 
 export default function ContactMayfestIcon({
-  width = 150,
-  height = 150,
+  width,
+  height,
   style,
 }: ContactMayfestIconProps & {
   width?: number;

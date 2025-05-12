@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   content: {
-    padding: 16,
+    padding: 12,
   },
   name: {
     fontSize: 36,
@@ -117,5 +117,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 32,
+    marginBottom: 80,
   },
 });

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from 'react';
 
+import LoadingIndicator from '@/components/loading-indicator';
 import ScheduleCarouselItem from '@/components/schedule/schedule-carousel-item';
 import PageIndicator from '@/components/schedule/schedule-page-indicator';
 import { useConfig } from '@/lib/config';
@@ -63,10 +64,10 @@ export default function ScheduleCarousel() {
           </GestureHandlerRootView>
         </>
       )}
-      {/* {state === 'loading' && !config && <LoadingIndicator />} */}
-      {state === 'loading' && (
+      {state === 'loading' && !config && <LoadingIndicator />}
+      {/* {state === 'loading' && (
         <Text style={styles.text}>Loading schedule...</Text>
-      )}
+      )} */}
       {state === 'error' && (
         <Text style={styles.text}>
           No internet connection. Swipe down to refresh.
@@ -79,6 +80,7 @@ export default function ScheduleCarousel() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginBottom: 95,
   },
   text: {
     fontSize: 16,

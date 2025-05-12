@@ -1,4 +1,3 @@
-// app/(tabs)/schedule/_layout.tsx
 import { Stack } from 'expo-router';
 
 export default function ScheduleLayout() {
@@ -15,7 +14,7 @@ export default function ScheduleLayout() {
         name='artist'
         options={{
           presentation: 'modal', // ← make it a modal
-          animation: 'slide_from_bottom', // ← slide up from bottom
+          animation: 'slide_from_right', // ← slide up from bottom
         }}
       />
     </Stack>

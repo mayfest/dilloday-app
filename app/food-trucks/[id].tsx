@@ -54,7 +54,15 @@ export default function FoodTruckDetail() {
         }
       >
         {/* Hero image at 50% width */}
-        <Image source={meta.logo} style={styles.hero} resizeMode='contain' />
+        {meta.name === 'D&Ds' ? (
+          <Image
+            source={meta.logo}
+            style={styles.blackHero}
+            resizeMode='contain'
+          />
+        ) : (
+          <Image source={meta.logo} style={styles.hero} resizeMode='contain' />
+        )}
 
         {/* Title constrained to one line */}
         <Text style={styles.title} numberOfLines={1} ellipsizeMode='tail'>
@@ -86,6 +94,7 @@ export default function FoodTruckDetail() {
 const styles = StyleSheet.create({
   container: {
     padding: 24,
+    marginBottom: 60,
   },
   hero: {
     width: width * 0.5, // half the screen
@@ -131,5 +140,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: Colors.light.text,
     marginTop: 20,
+  },
+  blackHero: {
+    width: width * 0.5,
+    aspectRatio: 2,
+    height: '80%',
+    alignSelf: 'center',
+    marginBottom: 24,
+    backgroundColor: '#000000',
   },
 });

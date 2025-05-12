@@ -60,22 +60,17 @@ export default function AnnouncementScreen() {
   }
 
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<AnnouncementFrame />}>
       <FlatList
         data={announcements!}
         keyExtractor={(item) => `announcement-${item.id}`}
         renderItem={({ item }) => <AnnouncementItem data={item} />}
-        ListHeaderComponent={() => (
-          <View style={styles.frameContainer}>
-            <AnnouncementFrame />
-          </View>
-        )}
         contentContainerStyle={styles.content}
-        // pull-to-refresh
         refreshing={state === 'loading'}
         onRefresh={load}
         showsVerticalScrollIndicator={false}
       />
+      <View style={{ height: 60 }} />
     </DrawerScreen>
   );
 }

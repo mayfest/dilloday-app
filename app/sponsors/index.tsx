@@ -4,6 +4,7 @@ import SponsorsPageBanner from '@/components/banners/sponsors-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
 import { SPONSORS } from '@/constants/sponsors';
+import { Link } from 'expo-router';
 import {
   Image,
   Linking,
@@ -22,12 +23,19 @@ export default function SponsorsScreen() {
   };
 
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<SponsorsPageBanner />}>
       <ScrollView contentContainerStyle={styles.container}>
-        <View style={styles.bannerWrapper}>
-          <SponsorsPageBanner />
-        </View>
+        {/* ==== your new promo banner ==== */}
+        <Link href='/sponsors/claim-promo' asChild>
+          <TouchableOpacity style={styles.promoContainer}>
+            <Text style={styles.promoText}>
+              Exclusive claim deal — tap to learn more
+            </Text>
+          </TouchableOpacity>
+        </Link>
+
         <View style={styles.underline} />
+
         {SPONSORS.map(({ name, logo, url }, i) => (
           <TouchableOpacity
             key={name}
@@ -56,23 +64,10 @@ export default function SponsorsScreen() {
 }
 
 const styles = StyleSheet.create({
-  bannerWrapper: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    marginBottom: 16,
-  },
   container: {
     paddingHorizontal: 24,
     paddingTop: 24,
     paddingBottom: 40,
-  },
-  header: {
-    fontSize: 32,
-    fontWeight: '800',
-    textAlign: 'center',
-    color: Colors.light.action,
-    fontFamily: 'Rye_400Regular',
   },
   underline: {
     height: 1,
@@ -112,6 +107,23 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '800',
     color: Colors.light.text,
+    fontFamily: 'Poppins_600SemiBold',
+  },
+
+  /* —— new promo styles —— */
+  promoContainer: {
+    width: '100%',
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    backgroundColor: Colors.light.text,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  promoText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#fff',
     fontFamily: 'Poppins_600SemiBold',
   },
 });

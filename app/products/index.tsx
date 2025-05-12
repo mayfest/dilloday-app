@@ -104,14 +104,14 @@ export default function ProductsScreen() {
     );
   };
 
-  const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}>
-      <StorePageBanner />
-    </View>
-  );
+  // const ListHeaderComponent = () => (
+  //   <View style={styles.bannerWrapper}>
+  //     <StorePageBanner />
+  //   </View>
+  // );
 
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<StorePageBanner />}>
       {loading ? (
         <View style={styles.centerContainer}>
           <ActivityIndicator size='large' color='#173885' />
@@ -138,17 +138,17 @@ export default function ProductsScreen() {
           }
           numColumns={2}
           columnWrapperStyle={styles.columnWrapper}
-          ListHeaderComponent={ListHeaderComponent}
           showsVerticalScrollIndicator={false}
         />
       )}
+      <View style={{ height: 40 }} />
     </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
+    // paddingLeft: 15,
     paddingBottom: 15,
   },
   centerContainer: {

@@ -63,14 +63,8 @@ export default function FoodTrucksScreen() {
     );
   };
 
-  const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}>
-      <FoodPageBanner />
-    </View>
-  );
-
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<FoodPageBanner />}>
       <FlatList
         data={FOOD_TRUCKS}
         keyExtractor={(item) => item.id}
@@ -78,16 +72,17 @@ export default function FoodTrucksScreen() {
         contentContainerStyle={styles.listContainer}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
-        ListHeaderComponent={ListHeaderComponent}
+        // ListHeaderComponent={ListHeaderComponent}
         showsVerticalScrollIndicator={false}
       />
+      <View style={{ height: 40 }} />
     </DrawerScreen>
   );
 }
 
 const styles = StyleSheet.create({
   bannerWrapper: {
-    paddingLeft: 15,
+    // paddingLeft: 15,
     paddingBottom: 15,
     width: '100%',
   },

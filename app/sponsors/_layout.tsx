@@ -1,24 +1,26 @@
 import { Stack } from 'expo-router';
 
-export default function ProductsLayout() {
+export default function SponsorsLayout() {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        animation: 'slide_from_right',
+        animation: 'slide_from_bottom',
         animationTypeForReplace: 'push',
       }}
     >
       <Stack.Screen
         name='index'
         options={{
-          title: 'Dillo Store',
+          title: 'Dillo Sponsors',
         }}
       />
       <Stack.Screen
-        name='[id]'
+        name='claim-promo'
         options={{
-          title: 'Product Details',
+          title: 'Claim Promo Sponsorship',
+          animation: 'slide_from_bottom',
+          presentation: 'modal',
         }}
       />
     </Stack>

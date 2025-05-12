@@ -63,14 +63,8 @@ export default function SponsorBoothsScreen() {
     );
   };
 
-  const ListHeaderComponent = () => (
-    <View style={styles.bannerWrapper}>
-      <SponsorBoothsBanner />
-    </View>
-  );
-
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<SponsorBoothsBanner />}>
       <FlatList
         data={SPONSOR_BOOTHS}
         keyExtractor={(item) => item.name}
@@ -78,9 +72,9 @@ export default function SponsorBoothsScreen() {
         contentContainerStyle={styles.listContainer}
         numColumns={2}
         columnWrapperStyle={styles.columnWrapper}
-        ListHeaderComponent={ListHeaderComponent}
-        showsVerticalScrollIndicator={false}
+        showsVerticalScrollIndicator={true}
       />
+      <View style={{ height: 40 }} />
     </DrawerScreen>
   );
 }

@@ -9,8 +9,8 @@ interface NUPDIconProps {
 }
 
 export default function NUPDIcon({
-  width = 170,
-  height = 170,
+  width,
+  height,
   style,
 }: NUPDIconProps & {
   style?: object;

@@ -5,7 +5,7 @@ import Svg, { Path, Rect } from 'react-native-svg';
 
 export default function AnnouncementFrame() {
   const windowWidth = Dimensions.get('window').width;
-  const svgWidth = windowWidth - 32; // 32
+  const svgWidth = windowWidth * 0.9;
   const svgHeight = (svgWidth * 65) / 250;
 
   return (

@@ -9,6 +9,7 @@ import ScreenBackground from './screen-background';
 interface ScreenProps {
   children?: React.ReactNode;
   hideNavBar?: boolean;
+  banner?: React.ReactNode;
 }
 
 export default function TabScreen({
@@ -32,6 +33,6 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    paddingBottom: 20,
+    // paddingBottom: 40,
   },
 });

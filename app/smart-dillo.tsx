@@ -214,15 +214,11 @@ export default function SmartDilloScreen() {
   }, [dotPosition]);
 
   return (
-    <DrawerScreen>
+    <DrawerScreen banner={<SMARTPageBanner />}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.bannerWrapper}>
-          <SMARTPageBanner />
-        </View>
-
         <View style={styles.container}>
           <FlatList
             ref={flatListRef}
@@ -384,5 +380,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textDecorationLine: 'underline',
     fontFamily: 'Rye_400Regular',
+    marginBottom: 80,
   },
 });

@@ -11,6 +11,9 @@
     "owner": "mayfest",
     "ios": {
       "supportsTablet": true,
+      "entitlements": {
+        "aps-environment": "production"
+      },
       "bundleIdentifier": "com.anonymous.dillo-app",
       "runtimeVersion": "1.0.0"
     },
@@ -51,8 +54,8 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icons/notification-icon.png",
-          "color": "#FF231F7C",
+          "icon": "./assets/icons/app-icon.png",
+          "color": "#173885",
           "enableBackgroundRemoteNotifications": false
         }
       ],

@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
   },
   bannerRow: {
     width: '100%',
-    paddingHorizontal: 16,
-    marginBottom: 8,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    // marginLeft: 4,
   },
 });

@@ -16,33 +16,39 @@ export default function InfoScreenTwo() {
   const router = useRouter();
 
   return (
-    <DrawerScreen
-      banner={
-        <View style={styles.bannerWrapper}>
-          <InfoPageBanner />
-        </View>
-      }
-    >
+    <DrawerScreen banner={<InfoPageBanner />}>
       <ScreenBackground />
       <View style={styles.container}>
         <View>
           <View style={styles.buttonRow}>
             <Link href='/information/contact'>
-              <ContactMayfestIcon style={styles.svg} />
+              <ContactMayfestIcon
+                style={styles.svg}
+                height={BUTTON_SIZE}
+                width={BUTTON_SIZE}
+              />
             </Link>
 
-            <TouchableOpacity onPress={() => router.push('/smart-dillo')}>
-              <SmartDilloIcon style={styles.svg} />
+            <TouchableOpacity onPress={() => call('18474913456')}>
+              <NUPDIcon
+                style={styles.svg}
+                height={BUTTON_SIZE}
+                width={BUTTON_SIZE}
+              />
             </TouchableOpacity>
           </View>
 
           <View style={styles.buttonRow}>
             <TouchableOpacity onPress={() => call('911')}>
-              <NineOneOneButton style={styles.svg} height={170} width={170} />
+              <NineOneOneButton
+                style={styles.svg}
+                height={BUTTON_SIZE - 20}
+                width={BUTTON_SIZE - 20}
+              />
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => call('18474913456')}>
-              <NUPDIcon style={styles.svg} />
+            <TouchableOpacity onPress={() => router.push('/smart-dillo')}>
+              <SmartDilloIcon style={styles.svg} height={140} width={140} />
             </TouchableOpacity>
           </View>
 
@@ -54,9 +60,6 @@ export default function InfoScreenTwo() {
 }
 
 const styles = StyleSheet.create({
-  bannerWrapper: {
-    paddingTop: 20,
-  },
   container: {
     flex: 1,
     alignItems: 'center',
