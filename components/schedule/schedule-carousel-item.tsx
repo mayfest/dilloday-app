@@ -1,10 +1,10 @@
-import React from 'react';
-
 import ArtistItem from '@/components/artist/artist-item';
 import FMOStageBanner from '@/components/schedule/fmo-stage-banner';
 import MainStageBanner from '@/components/schedule/main-stage-banner';
+import { useConfig } from '@/lib/config';
 import { Stage } from '@/lib/schedule';
 import { FontAwesome6 } from '@expo/vector-icons';
+import React from 'react';
 import {
   RefreshControl,
   ScrollView,
@@ -24,6 +24,8 @@ export default function ScheduleCarouselItem({
   state,
   refresh,
 }: CarouselItemProps) {
+  const { config } = useConfig();
+
   const renderStageBanner = () => {
     if (stage.name?.toLowerCase().includes('main')) {
       return (
@@ -68,10 +70,15 @@ export default function ScheduleCarouselItem({
     }
   };
 
+  // Filter out unavailable artists
+  const availableArtists = stage.artists.filter(artistId => {
+    const artist = config?.artists?.[artistId];
+    return artist && artist.available;
+  });
+
   return (
     <View style={styles.container}>
       {renderStageBanner()}
-
       <ScrollView
         style={styles.content}
         showsVerticalScrollIndicator={false}
@@ -86,8 +93,8 @@ export default function ScheduleCarouselItem({
           />
         }
       >
-        {stage.artists.length > 0 ? (
-          stage.artists.map((artist, i) => (
+        {availableArtists.length > 0 ? (
+          availableArtists.map((artist, i) => (
             <ArtistItem key={`artist-${i}`} artistId={artist} stage={stage} />
           ))
         ) : (

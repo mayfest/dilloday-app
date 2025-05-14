@@ -268,9 +268,6 @@ export default function SmartDilloScreen() {
             accessibilityLabel='Learn more about the Smart Dillo campaign'
             accessibilityRole='link'
           >
-            <Text style={styles.link}>
-              Learn more about the Smart Dillo campaign
-            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

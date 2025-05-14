@@ -184,7 +184,7 @@ export default function RootLayout() {
                 ),
               }}
             />
-            <Drawer.Screen
+            {/* <Drawer.Screen
               name='activities'
               options={{
                 title: 'Sponsor Booths',
@@ -196,7 +196,7 @@ export default function RootLayout() {
                   />
                 ),
               }}
-            />
+            /> */}
             <Drawer.Screen
               name='swsh'
               options={{

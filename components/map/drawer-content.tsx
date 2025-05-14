@@ -100,8 +100,8 @@ const LOCATION_INFO: Record<
       'Connect with our valued partners and sponsors showcasing their latest products and services. Enjoy exclusive giveaways and networking opportunities.',
     details:
       'Stop by each booth to learn about community initiatives and pick up free swag.',
-    linkLabel: 'See all sponsor booths',
-    linkTarget: '/activities',
+    // linkLabel: 'See all sponsor booths',
+    // linkTarget: '/activities',
   },
   exit: {
     title: 'Exit',
@@ -141,8 +141,8 @@ const LOCATION_INFO: Record<
     description:
       'Need a break? The rest area is the perfect place to relax and recharge. With a comfortable seating are and shade provided by the LOOK App, as well as shopping with Crossroads thrifting and Animal Records, you can take a break from the sun and enjoy some downtime.',
     details: '',
-    linkLabel: 'See all sponsor booths',
-    linkTarget: '/activities',
+    // linkLabel: 'See all sponsor booths',
+    // linkTarget: '/activities',
   },
 };
 
