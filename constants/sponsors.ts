@@ -85,7 +85,7 @@ export const SPONSORS: {
   // },
   {
     name: 'LOOK app',
-    logo: require('@/assets/images/company-logos/look-app.png'),
+    logo: require('@/assets/images/company-logos/LOOK-app.png'),
     url: 'https://www.looktheapp.com/',
   },
   // {
