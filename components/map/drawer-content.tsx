@@ -67,9 +67,9 @@ const LOCATION_INFO: Record<
     linkTarget: '/(tabs)/schedule',
   },
   food: {
-    title: 'Food Court',
+    title: 'Food Trucks',
     description:
-      'Need to refuel? Meetup with friends? The food court is the perfect place to grab a bite. With a variety of food trucks and vendors, there’s something for everyone.',
+      'Need to refuel? Meetup with friends? The food truck area is the perfect place to grab a bite. With a variety of food trucks and vendors, there’s something for everyone.',
     details: '',
     linkLabel: 'Explore food truck menu',
     linkTarget: '/food-trucks',

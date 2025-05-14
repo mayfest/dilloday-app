@@ -24,7 +24,7 @@ export const SPONSORS: {
     url: 'https://www.mlb.com/whitesox',
   },
   {
-    name: 'Coasta Coffee',
+    name: 'Costa Coffee',
     logo: require('@/assets/images/company-logos/coasta-coffee.png'),
     url: 'https://www.us.costacoffee.com/',
   },
@@ -64,7 +64,7 @@ export const SPONSORS: {
     url: 'https://armadilloworld.com/',
   },
   {
-    name: 'Pretty Cool',
+    name: 'Pretty Cool Ice Cream',
     logo: require('@/assets/images/company-logos/pretty-cool.png'),
     url: 'https://www.prettycoolicecream.com/',
   },

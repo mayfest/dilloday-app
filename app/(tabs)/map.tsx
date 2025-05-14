@@ -1,7 +1,7 @@
 // MapScreen.tsx
 import React, { useEffect, useRef, useState } from 'react';
 
-import MapImage from '@/assets/images/dillo2025_map.jpeg';
+import MapImage from '@/assets/images/dillo_map_no_caro.jpeg';
 import DrawerContent from '@/components/map/drawer-content';
 import IconMarker from '@/components/map/location-marker';
 import TabScreen from '@/components/tab-screen';
@@ -18,7 +18,7 @@ import {
   View,
 } from 'react-native';
 import ImageZoomViewer from 'react-native-image-zoom-viewer';
-import MapView, { Callout, Marker } from 'react-native-maps';
+import MapView, { Callout, Marker, Region } from 'react-native-maps';
 
 const screen = Dimensions.get('window');
 const ASPECT_RATIO = screen.width / screen.height;
@@ -36,7 +36,7 @@ const DRAWER_PREVIEW_HEIGHT = 325;
 const STATUSBAR_HEIGHT =
   Platform.OS === 'ios' ? 44 : StatusBar.currentHeight || 0;
 
-const INITIAL_REGION = {
+const INITIAL_REGION: Region = {
   latitude: LATITUDE,
   longitude: LONGITUDE,
   latitudeDelta: LATITUDE_DELTA,
@@ -74,7 +74,9 @@ interface MarkerData {
     | 'ticket-simple'
     | 'person-booth'
     | 'id-card'
-    | 'users';
+    | 'users'
+    | 'exit'
+    | 'food';
   label: string;
   coordinate: { latitude: number; longitude: number };
 }
@@ -138,7 +140,7 @@ const markers: MarkerData[] = [
   },
   {
     id: 'z',
-    type: 'food',
+    type: 'water',
     icon: 'water',
     label: 'Water Stations',
     coordinate: { latitude: 42.052463, longitude: -87.670366 },
@@ -149,13 +151,6 @@ const markers: MarkerData[] = [
     icon: 'person-booth',
     label: 'Programming Areas',
     coordinate: { latitude: 42.052838, longitude: -87.670006 },
-  },
-  {
-    id: 'o',
-    type: 'carousel',
-    icon: 'person-booth',
-    label: 'Carousel',
-    coordinate: { latitude: 42.052194, longitude: -87.669797 },
   },
   {
     id: 'n',
@@ -187,127 +182,102 @@ const markers: MarkerData[] = [
   },
 ];
 
+// Compute map boundaries so the user can pan but not stray too far
+const PADDING = 0.0005;
+const lats = markers.map((m) => m.coordinate.latitude);
+const lngs = markers.map((m) => m.coordinate.longitude);
+const southWest = {
+  latitude: Math.min(...lats) - PADDING,
+  longitude: Math.min(...lngs) - PADDING,
+};
+const northEast = {
+  latitude: Math.max(...lats) + PADDING,
+  longitude: Math.max(...lngs) + PADDING,
+};
+
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
   const markerRefs = useRef<Array<Marker | null>>([]);
+  const drawerRef = useRef<FlatList<MarkerData>>(null);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [activeTab, setActiveTab] = useState<'interactive' | 'static'>(
     'interactive'
   );
 
-  // Center map & open just the active callout
+  useEffect(() => {
+    if (activeTab === 'interactive') {
+      drawerRef.current?.scrollToOffset({
+        offset: activeIndex * SNAP_WIDTH,
+        animated: true, // ← animate instead of jumping
+      });
+    }
+  }, [activeTab, activeIndex]);
+
+  useEffect(() => {
+    if (activeTab === 'interactive' && mapRef.current?.setMapBoundaries) {
+      mapRef.current.setMapBoundaries(northEast, southWest);
+    }
+  }, [activeTab]);
+
   useEffect(() => {
     if (activeTab !== 'interactive') return;
-
     const m = markers[activeIndex];
     markerRefs.current.forEach((r, i) => i !== activeIndex && r?.hideCallout());
-    mapRef.current?.animateToRegion(
-      {
-        ...m.coordinate,
-        latitudeDelta: LATITUDE_DELTA,
-        longitudeDelta: LONGITUDE_DELTA,
-      },
-      200
-    );
-    setTimeout(() => markerRefs.current[activeIndex]?.showCallout(), 100);
+    mapRef.current?.animateCamera
+      ? mapRef.current.animateCamera(
+          { center: m.coordinate, pitch: 0, heading: 0, zoom: 15 },
+          { duration: 200 }
+        )
+      : mapRef.current?.animateToRegion(
+          {
+            ...m.coordinate,
+            latitudeDelta: LATITUDE_DELTA,
+            longitudeDelta: LONGITUDE_DELTA,
+          },
+          200
+        );
+    setTimeout(() => markerRefs.current[activeIndex]?.showCallout(), 200);
   }, [activeIndex, activeTab]);
 
+  const handleMarkerPress = (index: number) => {
+    setActiveIndex(index);
+  };
+
   const renderTabSelector = () => {
-    if (Platform.OS === 'ios') {
-      return (
-        <SafeAreaView style={styles.iosTabOuterContainer}>
-          <View style={styles.tabContainer}>
+    const Container = Platform.OS === 'ios' ? SafeAreaView : View;
+    const containerStyle =
+      Platform.OS === 'ios'
+        ? styles.iosTabOuterContainer
+        : styles.androidTabOuterContainer;
+
+    return (
+      <Container style={containerStyle}>
+        <View style={styles.tabContainer}>
+          {(['interactive', 'static'] as const).map((tab) => (
             <TouchableOpacity
+              key={tab}
               style={[
                 styles.tabButton,
-                activeTab === 'interactive' && styles.activeTabButton,
+                activeTab === tab && styles.activeTabButton,
               ]}
-              onPress={() => setActiveTab('interactive')}
+              onPress={() => setActiveTab(tab)}
               activeOpacity={0.7}
             >
               <Text
                 style={[
                   styles.tabText,
-                  activeTab === 'interactive' && styles.activeTabText,
+                  activeTab === tab && styles.activeTabText,
                 ]}
               >
-                Interactive
+                {tab.charAt(0).toUpperCase() + tab.slice(1)}
               </Text>
-              {activeTab === 'interactive' && (
-                <View style={styles.activeTabIndicator} />
-              )}
+              {activeTab === tab && <View style={styles.activeTabIndicator} />}
             </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.tabButton,
-                activeTab === 'static' && styles.activeTabButton,
-              ]}
-              onPress={() => setActiveTab('static')}
-              activeOpacity={0.7}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'static' && styles.activeTabText,
-                ]}
-              >
-                Static
-              </Text>
-              {activeTab === 'static' && (
-                <View style={styles.activeTabIndicator} />
-              )}
-            </TouchableOpacity>
-          </View>
-        </SafeAreaView>
-      );
-    } else {
-      return (
-        <View style={styles.androidTabOuterContainer}>
-          <View style={styles.tabContainer}>
-            <TouchableOpacity
-              style={[
-                styles.tabButton,
-                activeTab === 'interactive' && styles.activeTabButton,
-              ]}
-              onPress={() => setActiveTab('interactive')}
-              activeOpacity={0.7}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'interactive' && styles.activeTabText,
-                ]}
-              >
-                Interactive
-              </Text>
-              {activeTab === 'interactive' && (
-                <View style={styles.activeTabIndicator} />
-              )}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.tabButton,
-                activeTab === 'static' && styles.activeTabButton,
-              ]}
-              onPress={() => setActiveTab('static')}
-              activeOpacity={0.7}
-            >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === 'static' && styles.activeTabText,
-                ]}
-              >
-                Static
-              </Text>
-              {activeTab === 'static' && (
-                <View style={styles.activeTabIndicator} />
-              )}
-            </TouchableOpacity>
-          </View>
+          ))}
         </View>
-      );
-    }
+      </Container>
+    );
   };
 
   const renderInteractive = () => (
@@ -316,7 +286,7 @@ export default function MapScreen() {
         ref={mapRef}
         style={StyleSheet.absoluteFill}
         initialRegion={INITIAL_REGION}
-        scrollEnabled={false}
+        scrollEnabled
         zoomEnabled={false}
         rotateEnabled={false}
         pitchEnabled={false}
@@ -328,6 +298,7 @@ export default function MapScreen() {
             ref={(r) => (markerRefs.current[i] = r)}
             anchor={{ x: 0.5, y: 1 }}
             calloutAnchor={{ x: 0.5, y: -0.1 }}
+            onPress={() => handleMarkerPress(i)}
           >
             <IconMarker icon={m.icon} selected={i === activeIndex} />
             <Callout>
@@ -338,23 +309,25 @@ export default function MapScreen() {
           </Marker>
         ))}
       </MapView>
+
       <View style={styles.drawer}>
         <FlatList
+          ref={drawerRef}
           data={markers}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(i) => i.id}
           horizontal
-          pagingEnabled
+          bounces={false}
           decelerationRate='fast'
           snapToInterval={SNAP_WIDTH}
+          snapToAlignment='center'
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{
             paddingHorizontal: (screen.width - ITEM_WIDTH) / 2,
           }}
-          onMomentumScrollEnd={(e) =>
-            setActiveIndex(
-              Math.round(e.nativeEvent.contentOffset.x / SNAP_WIDTH)
-            )
-          }
+          onMomentumScrollEnd={(e) => {
+            const idx = Math.round(e.nativeEvent.contentOffset.x / SNAP_WIDTH);
+            setActiveIndex(Math.max(0, Math.min(idx, markers.length - 1)));
+          }}
           renderItem={({ item }) => (
             <View style={styles.item}>
               <DrawerContent type={item.type} />
@@ -365,21 +338,18 @@ export default function MapScreen() {
     </>
   );
 
-  const renderStatic = () => {
-    const images = [{ url: '', props: { source: MapImage } }];
-    return (
-      <View style={styles.staticContainer}>
-        <ImageZoomViewer
-          imageUrls={images}
-          backgroundColor='#000'
-          renderIndicator={() => null}
-          enableSwipeDown
-          onSwipeDown={() => setActiveTab('interactive')}
-          minScale={0.5}
-        />
-      </View>
-    );
-  };
+  const renderStatic = () => (
+    <View style={styles.staticContainer}>
+      <ImageZoomViewer
+        imageUrls={[{ url: '', props: { source: MapImage } }]}
+        backgroundColor='#000'
+        renderIndicator={() => null}
+        enableSwipeDown
+        onSwipeDown={() => setActiveTab('interactive')}
+        minScale={0.5}
+      />
+    </View>
+  );
 
   return (
     <TabScreen>
@@ -392,18 +362,14 @@ export default function MapScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
+  container: { flex: 1 },
 
-  // iOS tab bar
   iosTabOuterContainer: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
     zIndex: 100,
-    width: '100%',
     backgroundColor: '#faf6f0',
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
@@ -411,14 +377,12 @@ const styles = StyleSheet.create({
     shadowRadius: 3,
   },
 
-  // Android tab bar
   androidTabOuterContainer: {
     position: 'absolute',
     top: STATUSBAR_HEIGHT,
     left: 0,
     right: 0,
     zIndex: 100,
-    width: '100%',
     backgroundColor: '#faf6f0',
     elevation: 4,
   },
@@ -433,20 +397,16 @@ const styles = StyleSheet.create({
 
   tabButton: {
     flex: 1,
-    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
   },
-
-  activeTabButton: {},
 
   tabText: {
     fontSize: Platform.OS === 'android' ? 16 : 18,
     fontWeight: '500',
     color: '#888',
     fontFamily: 'Poppins_600SemiBold',
-    textAlign: 'center',
   },
 
   activeTabText: {
@@ -482,7 +442,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 12,
     borderColor: Colors.light.text,
-    borderWidth: 6,
+    borderWidth: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

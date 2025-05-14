@@ -46,7 +46,7 @@ export default function SponsorsScreen() {
               i === SPONSORS.length - 1 && { borderBottomWidth: 0 },
             ]}
           >
-            {name === 'Pretty Cool' ? (
+            {name === 'Pretty Cool Ice Cream' ? (
               <View style={styles.PrettyCoolBackground}>
                 <Image source={logo} style={styles.logo} resizeMode='contain' />
               </View>

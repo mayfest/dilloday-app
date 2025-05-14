@@ -39,7 +39,7 @@ export default function FoodTrucksScreen() {
               style={styles.whiteLogoBlackBackground}
               resizeMode='contain'
             />
-          ) : item.id === 'soulAndSmoke' ? (
+          ) : item.id === 'souldAndSmoke' ? (
             <Image
               source={item.logo}
               style={styles.whiteLogoBlackBackground}

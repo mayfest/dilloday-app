@@ -8,10 +8,8 @@ export interface FoodMenuItem {
   price: string;
 }
 
-// Firestore path: collection "config", document "config-2025"
 const MENUS_COLLECTION = 'config';
 const MENUS_DOC = 'config-2025';
-const MENUS_FIELD = 'food_truck_menus';
 
 async function fetchRawMenusMap(): Promise<
   Record<string, Record<string, string>>
