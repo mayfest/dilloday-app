@@ -3,7 +3,7 @@ import DrawerScreen from '@/components/drawer-screen';
 import NineOneOneButton from '@/components/information/911-button';
 import ContactMayfestIcon from '@/components/information/contact-mayfest';
 import NUPDIcon from '@/components/information/nupud';
-import SisFormIcon from '@/components/information/sis-form-icon';
+import SisFormIcon from '@/components/information/sis-icon';
 import SmartDilloIcon from '@/components/information/smart-dillo-icon';
 import ScreenBackground from '@/components/screen-background';
 import { VERSION } from '@/lib/app';
@@ -15,7 +15,7 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
 
 export default function InfoScreenTwo() {
@@ -93,6 +93,7 @@ export default function InfoScreenTwo() {
           </View>
           <Text style={styles.version}>v{VERSION}</Text>
         </View>
+      
       </View>
     </DrawerScreen>
   );
