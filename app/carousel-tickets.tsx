@@ -1,12 +1,10 @@
 // CarouselPartnerPage.tsx
 import React from 'react';
 
-// Asset imports
-import BalloonLogoPink from '@/assets/images/balloonlogopink.svg';
+import DilloDayAppIcon from '@/assets/icons/app-icon.png';
 import LineLeapLogo from '@/assets/images/company-logos/line-leap-logo.png';
 import CarouselTicketsBanner from '@/components/banners/carousel-tickets-banner';
 import CarouselIcon from '@/components/carousel-tickets/carousel-icon';
-import SparkleRed from '@/components/carousel-tickets/sparkle-red';
 import DrawerScreen from '@/components/drawer-screen';
 import AccordionItem from '@/components/faq/accordion-item';
 import { Colors } from '@/constants/Colors';
@@ -18,161 +16,166 @@ import {
   ScrollView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const IOS_URL = 'https://apps.apple.com/us/app/lineleap/id960804043';
 const ANDROID_URL = 'https://play.google.com/store/apps/details?id=io.Lineleap';
 
-// FAQ-style steps
-const STEPS = [
-  {
-    title: 'Install & Open LineLeap',
-    content: [
-      'Download and install the LineLeap app from the App Store or Google Play.',
-      'Open the app to get started.',
-    ],
-  },
-  {
-    title: 'Create Your Free Account',
-    content: [
-      "Tap 'Sign Up' and enter your email and a secure password.",
-      'Verify your email address if prompted.',
-    ],
-  },
-  {
-    title: 'Find Dillo Day 2025',
-    content: [
-      'Use the search bar at the top of the LineLeap app.',
-      "Type 'Dillo Day 2025' and select our event from the list.",
-    ],
-  },
-  {
-    title: 'Claim Your Carousel Pass',
-    content: [
-      'Browse available time slots and pick one you like.',
-      "Tap 'Get Pass' to reserve your free carousel time-slot.",
-    ],
-  },
-];
-
 export default function CarouselPartnerPage() {
-  const insets = useSafeAreaInsets();
   const width = Dimensions.get('window').width;
   const iconSize = width * 0.6;
 
-  const openLink = (url: string) =>
+  function openLink(url: string) {
     Linking.openURL(url).catch(() => console.warn('Could not open URL:', url));
+  }
+
+  const STEPS: Array<{
+    title: string;
+    content: Array<string | React.ReactNode>;
+  }> = [
+    {
+      title: 'Step 1: Install & Open LineLeap',
+      content: [
+        <Text key='step1-1' style={styles.stepText}>
+          Download and install the LineLeap app from the{' '}
+          <Text style={styles.link} onPress={() => openLink(IOS_URL)}>
+            App Store
+          </Text>{' '}
+          or{' '}
+          <Text style={styles.link} onPress={() => openLink(ANDROID_URL)}>
+            Google Play
+          </Text>
+          .
+        </Text>,
+        'Open the app to get started.',
+      ],
+    },
+    {
+      title: 'Step 2: Create Your Free Account',
+      content: [
+        "Tap 'Sign Up' and enter your email and a secure password.",
+        'Verify your email address if prompted.',
+      ],
+    },
+    {
+      title: 'Step 3: Find Dillo Day 2025',
+      content: [
+        'Use the search bar at the top of the LineLeap app.',
+        "Type 'Dillo Day 2025 Carousel' and select our event from the list.",
+      ],
+    },
+    {
+      title: 'Step 4: Claim Your Carousel Pass',
+      content: [
+        'Browse available time slots and pick one you like.',
+        "Tap 'RSVP', fill out any additional information needed, and confirm your reservation time for the carousel.",
+        'You MUST RSVP TO THE CAROUSEL PASS IN THE LINELEAP APP.',
+        'You MUST show your RSVP to the carousel pass at the carousel entrance in order to ride the carousel.',
+        'Carousel passes are limited and will be available on a first-come, first-served basis so be sure to reserve your spot early!',
+      ],
+    },
+  ];
 
   return (
     <DrawerScreen banner={<CarouselTicketsBanner />}>
       <StatusBar style='dark' />
       <ScrollView
-        contentContainerStyle={[styles.wrapper, { paddingTop: insets.top }]}
+        contentContainerStyle={[
+          styles.wrapper,
+          {
+            marginTop: 36,
+            // ensure enough bottom padding so disclaimer never gets cut off
+            paddingBottom: iconSize + 80,
+          },
+        ]}
         showsVerticalScrollIndicator={false}
       >
         <View style={styles.backgroundContainer}>
-          {/* Sparkles */}
-          {[
-            styles.sparkleTL,
-            styles.sparkleTR,
-            styles.sparkleBL,
-            styles.sparkleBR,
-            styles.sparkleM1,
-            styles.sparkleM2,
-          ].map((pos, i) => (
-            <View key={i} style={[styles.sparkleWrapper, pos]}>
-              <SparkleRed />
-            </View>
-          ))}
+          <View style={styles.contentOverlay}>
+            <Text style={styles.introText}>
+              We’ve partnered with LineLeap to bring you a special carousel
+              experience at Dillo Day 2025! Please read through all of the steps
+              below carefully to claim and reserve your carousel pass.
+            </Text>
 
-          {/* Carousel Icon */}
-          <View style={{ marginTop: -iconSize * 0.4 }}>
-            <CarouselIcon width={iconSize} height={iconSize} />
-          </View>
-
-          {/* Logos */}
-          <View style={styles.partnerHeader}>
-            <BalloonLogoPink width={90} height={90} />
-            <Text style={styles.partnerX}>×</Text>
-            <Image
-              source={LineLeapLogo}
-              style={styles.lineLeapLogo}
-              resizeMode='contain'
-            />
-          </View>
-
-          {/* Steps */}
-          <View style={styles.stepsContainer}>
-            {STEPS.map((step, idx) => (
-              <AccordionItem
-                key={idx}
-                title={step.title}
-                content={step.content}
+            <View style={styles.partnerHeader}>
+              <Image
+                source={DilloDayAppIcon}
+                style={styles.logo}
+                resizeMode='contain'
               />
-            ))}
-          </View>
+              <Text style={styles.partnerX}>×</Text>
+              <Image
+                source={LineLeapLogo}
+                style={styles.logo}
+                resizeMode='contain'
+              />
+            </View>
 
-          {/* Buttons */}
-          <View style={styles.buttonsContainer}>
-            <TouchableOpacity
-              style={[styles.button, styles.iosButton]}
-              onPress={() => openLink(IOS_URL)}
-            >
-              <Text style={styles.buttonText}>Download on the App Store</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.button, styles.androidButton]}
-              onPress={() => openLink(ANDROID_URL)}
-            >
-              <Text style={styles.buttonText}>Get it on Google Play</Text>
-            </TouchableOpacity>
-          </View>
+            <View style={styles.stepsContainer}>
+              {STEPS.map((step, idx) => (
+                <AccordionItem
+                  key={idx}
+                  title={step.title}
+                  content={step.content}
+                />
+              ))}
+            </View>
 
-          {/* Disclaimer */}
-          <Text style={styles.disclaimer}>
-            📢 Paid partnership with LineLeap. You will now leave Dillo Day to
-            reserve your carousel pass. Please follow FTC guidelines.
-          </Text>
+            <View style={styles.carouselIconContainer}>
+              <CarouselIcon width={iconSize} height={iconSize} />
+            </View>
+
+            <Text style={[styles.disclaimer, { marginBottom: 10 }]}>
+              This is a paid partnership with Line Leap by which Dillo Day
+              benefits from. By using the Line Leap app, you agree to their
+              terms and conditions. Dillo Day nor the Dillo Day Technology
+              Committee are not responsible for any issues that may arise from
+              using the app. Please contact Line Leap support for any questions
+              or concerns.
+            </Text>
+          </View>
         </View>
       </ScrollView>
     </DrawerScreen>
   );
 }
 
-const SPARKLE_SCALE = 1.0;
 const styles = StyleSheet.create({
-  wrapper: { flexGrow: 1 },
+  wrapper: {
+    flexGrow: 1,
+  },
   backgroundContainer: {
     position: 'relative',
     alignItems: 'center',
-    justifyContent: 'flex-start',
     paddingHorizontal: 24,
-    paddingBottom: 40,
+    justifyContent: 'flex-start',
   },
-  sparkleWrapper: {
-    position: 'absolute',
-    transform: [{ scale: SPARKLE_SCALE }],
-    opacity: 0.3,
+  contentOverlay: {
+    width: '100%',
+    alignItems: 'center',
   },
-  sparkleTL: { top: 10, left: 15 },
-  sparkleTR: { top: 40, right: 15 },
-  sparkleBL: { bottom: 60, left: 25 },
-  sparkleBR: { bottom: 20, right: 35 },
-  sparkleM1: { top: 150, left: 60 },
-  sparkleM2: { bottom: 120, right: 70 },
-
+  introText: {
+    fontSize: 16,
+    color: Colors.light.text,
+    textAlign: 'center',
+    marginBottom: 16,
+    paddingHorizontal: 8,
+    fontFamily: 'Poppins_600SemiBold',
+  },
   partnerHeader: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 16,
     marginBottom: 8,
-    // ensure uniform container height for perfect centering
     height: 100,
+  },
+  logo: {
+    borderRadius: 8,
+    width: 90,
+    height: 90,
   },
   partnerX: {
     fontSize: 36,
@@ -180,30 +183,32 @@ const styles = StyleSheet.create({
     marginHorizontal: 6,
     color: Colors.light.text,
   },
-  lineLeapLogo: {
-    width: 70,
-    height: 70,
-  },
-
-  stepsContainer: { width: '100%', marginTop: 8 },
-
-  buttonsContainer: { width: '100%', marginTop: 24 },
-  button: {
+  stepsContainer: {
     width: '100%',
-    paddingVertical: 16,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginVertical: 6,
+    marginTop: 8,
   },
-  iosButton: { backgroundColor: '#0070c9' },
-  androidButton: { backgroundColor: '#3bcc5a' },
-  buttonText: { color: '#fff', fontSize: 16, fontWeight: '600' },
-
+  stepText: {
+    fontSize: 15,
+    color: '#fff',
+    lineHeight: 22,
+    marginBottom: 12,
+    fontFamily: 'Poppins_400Regular',
+  },
+  link: {
+    color: '#2296f2',
+    textDecorationLine: 'underline',
+  },
+  carouselIconContainer: {
+    marginTop: 24,
+    marginBottom: 20,
+  },
   disclaimer: {
     fontSize: 14,
-    color: Colors.dark.muted,
+    color: Colors.light.text,
     textAlign: 'center',
-    marginTop: 32,
+    marginTop: 8,
     lineHeight: 20,
+    paddingHorizontal: 8,
+    fontFamily: 'Poppins_400Regular',
   },
 });

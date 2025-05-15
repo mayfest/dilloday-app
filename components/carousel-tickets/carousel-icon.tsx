@@ -6,8 +6,8 @@ import Svg, { Path } from 'react-native-svg';
 export default function CarouselIcon() {
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
-  const svgWidth = Math.round(windowWidth * 0.85);
-  const svgHeight = Math.round(windowHeight * 0.5);
+  const svgWidth = Math.round(windowWidth * 1);
+  const svgHeight = Math.round(windowHeight * 0.45);
 
   return (
     <Svg width={svgWidth} height={svgHeight} viewBox='0 0 541 541' fill='none'>

@@ -14,7 +14,11 @@ import {
 
 interface AccordionItemProps {
   title: string;
-  content: string[];
+  /**
+   * Now accepts strings **or** React nodes, so you can
+   * do things like `<Text onPress={…}>App Store</Text>` in your steps.
+   */
+  content: Array<string | React.ReactNode>;
   highlightText?: string;
 }
 
@@ -33,11 +37,9 @@ export default function AccordionItem({
       duration: 50,
       useNativeDriver: true,
     }).start();
-
     setIsExpanded((prev) => !prev);
   };
 
-  // Interpolate for 0 → 90deg
   const spin = rotateAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '90deg'],
@@ -59,17 +61,29 @@ export default function AccordionItem({
           <FontAwesome6 name='chevron-right' size={16} color='#FFFFFF' />
         </Animated.View>
       </TouchableOpacity>
-      <View style={styles.accordionContentContainer}>
-        {isExpanded && (
+
+      {isExpanded && (
+        <View style={styles.accordionContentContainer}>
           <View style={styles.accordionContent}>
-            {content.map((para, idx) => (
-              <Text key={idx} style={styles.paragraph}>
-                {highlightText ? highlightMatches(para, highlightText) : para}
-              </Text>
-            ))}
+            {content.map((item, idx) => {
+              // -- if it's a string, highlight and wrap in <Text>
+              if (typeof item === 'string') {
+                const children = highlightText
+                  ? highlightMatches(item, highlightText)
+                  : item;
+                return (
+                  <Text key={idx} style={styles.paragraph}>
+                    {children}
+                  </Text>
+                );
+              }
+
+              // -- if it's already a React node, render it directly
+              return <View key={idx}>{item}</View>;
+            })}
           </View>
-        )}
-      </View>
+        </View>
+      )}
     </View>
   );
 }
@@ -115,12 +129,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.light.background,
     borderTopWidth: 1,
     borderTopColor: '#CCCCCC',
-    fontFamily: 'Poppins_400Regular',
   },
   paragraph: {
     fontSize: 15,
     color: '#FFFFFF',
     marginBottom: 12,
     lineHeight: 22,
+    fontFamily: 'Poppins_400Regular',
   },
 });
