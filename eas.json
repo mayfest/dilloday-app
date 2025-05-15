@@ -14,7 +14,8 @@
       "extends": "development",
       "ios": {
         "simulator": true
-      }
+      },
+      "channel": "ios-simulator"
     },
     "preview": {
       "autoIncrement": true,
@@ -26,18 +27,22 @@
     },
     "production": {
       "distribution": "store",
-      "autoIncrement": true
+      "autoIncrement": true,
+      "channel": "production"
     },
     "preview2": {
       "android": {
         "gradleCommand": ":app:assembleRelease"
-      }
+      },
+      "channel": "preview2"
     },
     "preview3": {
-      "developmentClient": true
+      "developmentClient": true,
+      "channel": "preview3"
     },
     "preview4": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "preview4"
     }
   },
   "submit": {

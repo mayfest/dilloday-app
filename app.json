@@ -15,7 +15,7 @@
         "aps-environment": "production"
       },
       "bundleIdentifier": "com.anonymous.dillo-app",
-      "runtimeVersion": "1.0.3",
+      "runtimeVersion": "1.0.2",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -34,7 +34,7 @@
         "backgroundColor": "#173885"
       },
       "package": "com.mayfest.dillo",
-      "runtimeVersion": "1.0.3"
+      "runtimeVersion": "1.0.2"
     },
     "web": {
       "bundler": "metro",
