@@ -104,6 +104,13 @@ const markers: MarkerData[] = [
     coordinate: { latitude: 42.054823, longitude: -87.670859 },
   },
   {
+    id: 'o',
+    type: 'carousel',
+    icon: 'person-booth',
+    label: 'Carousel',
+    coordinate: { latitude: 42.052194, longitude: -87.669797 },
+  },
+  {
     id: 'd',
     type: 'fmo',
     icon: 'record-vinyl',
