@@ -57,13 +57,11 @@ export default function FoodTrucksScreen() {
           <ThemedText style={styles.infoName} numberOfLines={2}>
             {item.name}
           </ThemedText>
-          {
-            item.displayName && (
-              <ThemedText style={styles.infoSubtitle} numberOfLines={2}>
-                {item.displayName}
-              </ThemedText>
-            )
-          }
+          {item.displayName && (
+            <ThemedText style={styles.infoSubtitle} numberOfLines={2}>
+              {item.displayName}
+            </ThemedText>
+          )}
           <ThemedText style={styles.infoType}>{item.tag}</ThemedText>
         </View>
       </TouchableOpacity>

@@ -9,12 +9,7 @@ export default function CarouselTicketsBanner() {
   const svgWidth = windowWidth - 32;
   const svgHeight = (svgWidth * 65) / 250;
   return (
-    <Svg
-      width={svgWidth}
-      height={svgHeight}
-      viewBox='0 0 118 29'
-      fill='none'
-    >
+    <Svg width={svgWidth} height={svgHeight} viewBox='0 0 118 29' fill='none'>
       <Path
         d='M15 18.5L17.1764 15.4643C22.8323 14.2815 27.8031 12.9686 32.1428 11.6301L31.5714 18.6217C26.6291 18.5478 20.3728 18.5804 15 18.5Z'
         fill='#EF434A'

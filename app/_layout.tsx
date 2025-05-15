@@ -172,12 +172,12 @@ export default function RootLayout() {
               }}
             />
             <Drawer.Screen
-              name='smart-dillo'
+              name='carousel-tickets'
               options={{
-                title: 'Smart Dillo',
+                title: 'Carousel Tickets',
                 drawerIcon: ({ color }) => (
                   <FontAwesome6
-                    name='shield'
+                    name='ticket-simple'
                     size={20}
                     color={Colors.light.tint}
                   />
@@ -204,6 +204,20 @@ export default function RootLayout() {
                 drawerIcon: ({ color }) => (
                   <FontAwesome6
                     name='camera'
+                    size={20}
+                    color={Colors.light.tint}
+                  />
+                ),
+              }}
+            />
+
+            <Drawer.Screen
+              name='smart-dillo'
+              options={{
+                title: 'Smart Dillo',
+                drawerIcon: ({ color }) => (
+                  <FontAwesome6
+                    name='shield'
                     size={20}
                     color={Colors.light.tint}
                   />

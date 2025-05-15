@@ -34,7 +34,7 @@ export const SPONSORS: {
     url: 'https://crossroads.com',
   },
   {
-    name: 'L’Oreal',
+    name: "L'Oreal",
     logo: require('@/assets/images/company-logos/l-oreal.png'),
     url: 'https://www.loreal.com',
   },
@@ -65,7 +65,7 @@ export const SPONSORS: {
   },
   {
     name: 'Pretty Cool Ice Cream',
-    logo: require('@/assets/images/company-logos/pretty-cool.png'),
+    logo: require('@/assets/images/company-logos/pretty-cool-ice-cream-logo.png'),
     url: 'https://www.prettycoolicecream.com/',
   },
   // {
@@ -84,7 +84,7 @@ export const SPONSORS: {
   //   url: 'https://www.vitaminwater.com',
   // },
   {
-    name: 'LOOK app',
+    name: 'LOOK App',
     logo: require('@/assets/images/company-logos/LOOK-app.png'),
     url: 'https://www.looktheapp.com/',
   },
@@ -101,6 +101,11 @@ export const SPONSORS: {
   {
     name: 'DUDE WIPES',
     logo: require('@/assets/images/company-logos/dude-wipes.png'),
+    url: 'https://dudewipes.com/',
+  },
+  {
+    name: 'Postmates',
+    logo: require('@/assets/images/company-logos/postmates-logo.png'),
     url: 'https://dudewipes.com/',
   },
   // {

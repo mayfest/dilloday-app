@@ -1,10 +1,12 @@
+// app/sponsors/index.tsx
 import React from 'react';
 
 import SponsorsPageBanner from '@/components/banners/sponsors-banner';
 import DrawerScreen from '@/components/drawer-screen';
 import { Colors } from '@/constants/Colors';
+import { SPONSOR_BOOTHS } from '@/constants/sponsor-booths';
 import { SPONSORS } from '@/constants/sponsors';
-import { Link } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import {
   Image,
   Linking,
@@ -16,8 +18,10 @@ import {
 } from 'react-native';
 
 export default function SponsorsScreen() {
-  const open = async (url?: string) => {
-    if (url && (await Linking.canOpenURL(url))) {
+  const router = useRouter();
+
+  const openUrl = (url?: string) => {
+    if (url) {
       Linking.openURL(url);
     }
   };
@@ -25,7 +29,6 @@ export default function SponsorsScreen() {
   return (
     <DrawerScreen banner={<SponsorsPageBanner />}>
       <ScrollView contentContainerStyle={styles.container}>
-        {/* ==== your new promo banner ==== */}
         <Link href='/sponsors/claim-promo' asChild>
           <TouchableOpacity style={styles.promoContainer}>
             <Text style={styles.promoText}>
@@ -36,28 +39,52 @@ export default function SponsorsScreen() {
 
         <View style={styles.underline} />
 
-        {SPONSORS.map(({ name, logo, url }, i) => (
-          <TouchableOpacity
-            key={name}
-            activeOpacity={url ? 0.7 : 1}
-            onPress={() => open(url)}
-            style={[
-              styles.row,
-              i === SPONSORS.length - 1 && { borderBottomWidth: 0 },
-            ]}
-          >
-            {name === 'Pretty Cool Ice Cream' ? (
-              <View style={styles.PrettyCoolBackground}>
-                <Image source={logo} style={styles.logo} resizeMode='contain' />
-              </View>
-            ) : (
-              <View style={styles.logoWrapper}>
-                <Image source={logo} style={styles.logo} resizeMode='contain' />
-              </View>
-            )}
-            <Text style={styles.name}>{name}</Text>
-          </TouchableOpacity>
-        ))}
+        {SPONSORS.map(({ name, logo, url }, i) => {
+          console.log('name', name);
+          const hasBooth = SPONSOR_BOOTHS.some((b) => b.name === name);
+
+          const handlePress = () => {
+            if (hasBooth) {
+              router.push({
+                pathname: '/sponsors/sponsor-details',
+                params: { name },
+              });
+            } else {
+              openUrl(url);
+            }
+          };
+
+          return (
+            <TouchableOpacity
+              key={name}
+              activeOpacity={0.7}
+              onPress={handlePress}
+              style={[
+                styles.row,
+                i === SPONSORS.length - 1 && { borderBottomWidth: 0 },
+              ]}
+            >
+              {name === 'Pretty Cool Ice Cream' ? (
+                <View style={styles.logoWrapper}>
+                  <Image
+                    source={logo}
+                    style={styles.logo}
+                    resizeMode='contain'
+                  />
+                </View>
+              ) : (
+                <View style={styles.logoWrapper}>
+                  <Image
+                    source={logo}
+                    style={styles.logo}
+                    resizeMode='contain'
+                  />
+                </View>
+              )}
+              <Text style={styles.name}>{name}</Text>
+            </TouchableOpacity>
+          );
+        })}
       </ScrollView>
     </DrawerScreen>
   );
@@ -109,8 +136,6 @@ const styles = StyleSheet.create({
     color: Colors.light.text,
     fontFamily: 'Poppins_600SemiBold',
   },
-
-  /* —— new promo styles —— */
   promoContainer: {
     width: '100%',
     paddingVertical: 14,

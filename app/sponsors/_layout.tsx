@@ -9,18 +9,23 @@ export default function SponsorsLayout() {
         animationTypeForReplace: 'push',
       }}
     >
-      <Stack.Screen
-        name='index'
-        options={{
-          title: 'Dillo Sponsors',
-        }}
-      />
+      <Stack.Screen name='index' options={{ title: 'Dillo Sponsors' }} />
+
       <Stack.Screen
         name='claim-promo'
         options={{
           title: 'Claim Promo Sponsorship',
-          animation: 'slide_from_bottom',
           presentation: 'modal',
+          animation: 'slide_from_bottom',
+        }}
+      />
+
+      <Stack.Screen
+        name='sponsor-details'
+        options={{
+          title: 'Sponsor Details',
+          presentation: 'modal',
+          animation: 'slide_from_bottom',
         }}
       />
     </Stack>

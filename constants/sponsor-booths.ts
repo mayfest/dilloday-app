@@ -36,7 +36,7 @@ export const SPONSOR_BOOTHS: {
   {
     name: 'Animal Records',
     logo: require('@/assets/images/company-logos/animal-records.png'),
-    url: 'https://www.animalrecords.com',
+    url: 'https://www.animalrecordsevanston.com/',
     activity: {
       name: 'Animal Records Booth',
       description:
@@ -65,7 +65,7 @@ export const SPONSOR_BOOTHS: {
       name: 'Photo Booth',
       description:
         'Come take a picture with friends at the Armadillo World Headquarters Photo Booth for a chance to win cool merch.',
-      image: require('@/assets/images/company-logos/photobooth-awh.jpg'),
+      image: require('@/assets/images/company-logos/armadillo-world-headquarters.png'),
       location: 'Entertainment Area',
     },
   },
@@ -103,7 +103,7 @@ export const SPONSOR_BOOTHS: {
     },
   },
   {
-    name: 'LineLeap',
+    name: 'Line Leap',
     logo: require('@/assets/images/company-logos/line-leap.jpeg'),
     url: 'https://www.lineleap.com',
     activity: {
@@ -162,13 +162,13 @@ export const SPONSOR_BOOTHS: {
   },
   {
     name: 'Pretty Cool Ice Cream',
-    logo: require('@/assets/images/company-logos/pretty-cool.png'),
+    logo: require('@/assets/images/company-logos/pretty-cool-ice-cream-logo.png'),
     url: 'https://www.prettycoolicecream.com/',
     activity: {
-      name: 'Ice Cream Booth',
+      name: 'Pretty Cool Ice Cream Booth',
       description:
         'Come try unique ice cream flavors at Pretty Cool Ice Cream!',
-      image: require('@/assets/images/company-logos/pretty-cool.png'),
+      image: require('@/assets/images/company-logos/pretty-cool-ice-cream-logo.png'),
       location: 'Food Court',
     },
   },
