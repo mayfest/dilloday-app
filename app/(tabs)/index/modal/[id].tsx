@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
     fontSize: 32,
     textAlign: 'center',
     marginTop: 60,
-    fontFamily: 'SofiaSansCondensed_700Bold',
-    letterSpacing: 2,
+    fontFamily: 'SofiaSans_800ExtraBold',
+    letterSpacing: 3,
     lineHeight: 40,
   },
 
@@ -160,8 +160,8 @@ const styles = StyleSheet.create({
     fontSize: 28,
     textAlign: 'center',
     marginBottom: 16,
-    fontFamily: 'SofiaSansCondensed_700Bold',
-    letterSpacing: 2,
+    fontFamily: 'SofiaSans_800ExtraBold',
+    letterSpacing: 3,
     lineHeight: 36,
   },
 
@@ -170,8 +170,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     textAlign: 'center',
     marginBottom: 16,
-    fontFamily: 'SofiaSansCondensed_700Bold',
-    letterSpacing: 2,
+    fontFamily: 'SofiaSans_800ExtraBold',
+    letterSpacing: 3,
     lineHeight: 32,
   },
 
