@@ -1,5 +1,3 @@
-// src/constants/dillo-sona-meanings.ts
-
 export type CardKey =
   | 'lovers'
   | 'tower'

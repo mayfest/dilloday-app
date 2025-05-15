@@ -34,9 +34,9 @@ export const SPONSORS: {
     url: 'https://crossroads.com',
   },
   {
-    name: "L'Oreal",
-    logo: require('@/assets/images/company-logos/l-oreal.png'),
-    url: 'https://www.loreal.com',
+    name: "Stand Up by L'Oreal Paris",
+    logo: require('@/assets/images/company-logos/stand-up.png'),
+    url: 'https://www.lorealparisusa.com/stand-up',
   },
   {
     name: 'Farmer’s Fridge',

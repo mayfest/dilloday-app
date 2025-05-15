@@ -20,7 +20,7 @@ import StuffedAnimalCoin from '@/assets/dillo-sonas/question-icons/stuffed-anima
 import TarotCoin from '@/assets/dillo-sonas/question-icons/tarot-coin.svg';
 import type { SvgProps } from 'react-native-svg';
 
-export type CardKey = 'moon' | 'sun' | 'chariot' | 'lovers' | 'fool';
+export type CardKey = 'moon' | 'sun' | 'chariot' | 'lovers' | 'fool' | 'tower';
 
 export interface OptionConfig {
   key: string;
@@ -37,13 +37,12 @@ export interface QuestionConfig {
 }
 
 /**
- * Full question flow:
- *  g1 → sick/snack
- *  sick → snack
- *  snack → toppings/animal
+ * Full question flow (no more “sick”):
+ *  g1 → snack
+ *  snack → toppings | animal
  *  toppings → g2
  *  animal → g2
- *  g2 → prize/dessert
+ *  g2 → prize | dessert
  *  prize → dessert
  *  dessert → final
  *  final → final-final
@@ -52,43 +51,20 @@ export interface QuestionConfig {
 export const questions: Record<string, QuestionConfig> = {
   g1: {
     id: 'g1',
-    prompt:
-      'Your day at Carnival Dillo has just begun! What will be your first ride?',
+    prompt: 'Your day at Carnival Dillo has just begun! What will be your first ride?',
     options: [
       {
         key: 'roller',
         label: 'Roller Coaster',
         tally: 'moon',
         Icon: RollerCoasterCoin,
-        next: 'sick',
+        next: 'snack',
       },
       {
         key: 'carousel',
         label: 'Carousel',
         tally: 'sun',
         Icon: CarouselCoin,
-        next: 'snack',
-      },
-    ],
-  },
-
-  sick: {
-    id: 'sick',
-    prompt:
-      'That roller coaster ride left you feeling queasy. Who will hold your hair back if you get sick?',
-    options: [
-      {
-        key: 'yourself',
-        label: 'Yourself',
-        tally: 'fool',
-        Icon: StarCoin,
-        next: 'snack',
-      },
-      {
-        key: 'friend',
-        label: 'Friend',
-        tally: 'chariot',
-        Icon: FireworksCoin,
         next: 'snack',
       },
     ],
@@ -122,21 +98,21 @@ export const questions: Record<string, QuestionConfig> = {
       {
         key: 'salt',
         label: 'More Salt',
-        tally: 'moon',
+        tally: 'moon',    // Moon slot
         Icon: SaltCoin,
         next: 'g2',
       },
       {
         key: 'pepperoni',
         label: 'Pepperoni',
-        tally: 'chariot',
+        tally: 'fool',    // Fool slot
         Icon: PeperroniCoin,
         next: 'g2',
       },
       {
         key: 'cinnamon',
         label: 'Cinnamon',
-        tally: 'lovers',
+        tally: 'tower',   // Tower slot
         Icon: CinnamonIcon,
         next: 'g2',
       },
@@ -145,21 +121,27 @@ export const questions: Record<string, QuestionConfig> = {
 
   animal: {
     id: 'animal',
-    prompt:
-      'Carnivals are full of interesting creatures. Who would you rather be your sidekick today?',
+    prompt: 'Carnivals are full of interesting creatures. Who would you rather be your sidekick today?',
     options: [
       {
-        key: 'balloonDog',
-        label: 'Balloon Dog',
-        tally: 'lovers',
+        key: 'balloonAnimal',
+        label: 'Balloon Animal',
+        tally: 'lovers',  // Lovers slot
         Icon: BalloonAnimalIcon,
         next: 'g2',
       },
       {
         key: 'circusDog',
-        label: 'Circus Dog',
-        tally: 'fool',
+        label: 'Circus Animal',
+        tally: 'fool',    // Fool second slot
         Icon: CarnivalAnimalIcon,
+        next: 'g2',
+      },
+      {
+        key: 'sunbird',
+        label: 'Fish',
+        tally: 'sun',
+        Icon: FishCoin,
         next: 'g2',
       },
     ],
@@ -167,20 +149,19 @@ export const questions: Record<string, QuestionConfig> = {
 
   g2: {
     id: 'g2',
-    prompt:
-      "After finishing your snack, you're ready to get back into the action. What game do you visit next?",
+    prompt: "After finishing your snack, you're ready to get back into the action. What game do you visit next?",
     options: [
       {
         key: 'dunk',
         label: 'Dunk Tank',
-        tally: 'chariot',
+        tally: 'chariot', // Chariot slot
         Icon: DunkCoin,
         next: 'prize',
       },
       {
         key: 'tarot',
         label: 'Tarot Readings',
-        tally: 'fool',
+        tally: 'tower',   // Tower second slot
         Icon: TarotCoin,
         next: 'dessert',
       },
@@ -194,21 +175,21 @@ export const questions: Record<string, QuestionConfig> = {
       {
         key: 'plushie',
         label: 'A Plushie',
-        tally: 'lovers',
+        tally: 'lovers',  // Lovers second slot
         Icon: StuffedAnimalCoin,
         next: 'dessert',
       },
       {
         key: 'rubberDuck',
         label: 'A Rubber Duck',
-        tally: 'sun',
+        tally: 'sun',     // Sun second slot
         Icon: DuckCoin,
         next: 'dessert',
       },
       {
         key: 'goldfish',
         label: 'A Goldfish',
-        tally: 'moon',
+        tally: 'moon',    // Moon second slot
         Icon: FishCoin,
         next: 'dessert',
       },
@@ -222,14 +203,14 @@ export const questions: Record<string, QuestionConfig> = {
       {
         key: 'apple',
         label: 'Candy Apple',
-        tally: 'sun',
+        tally: 'tower',   // Tower third slot
         Icon: AppleCoin,
         next: 'final',
       },
       {
         key: 'snowcone',
         label: 'Snow Cone',
-        tally: 'moon',
+        tally: 'fool',    // Fool third slot
         Icon: SnowconeCoin,
         next: 'final',
       },
@@ -238,20 +219,19 @@ export const questions: Record<string, QuestionConfig> = {
 
   final: {
     id: 'final',
-    prompt:
-      'You can see the sun starting to set in the distance. What activity do you pick to wrap up your day?',
+    prompt: 'You can see the sun starting to set in the distance. What activity do you pick to wrap up your day?',
     options: [
       {
         key: 'ferrisWheel',
         label: 'Ferris Wheel',
-        tally: 'sun',
+        tally: 'sun',     // Sun third slot
         Icon: FerrisWheel,
         next: 'final-final',
       },
       {
         key: 'hauntedHouse',
         label: 'Haunted House',
-        tally: 'chariot',
+        tally: 'chariot', // Chariot second slot
         Icon: HauntedHouse,
         next: 'final-final',
       },
@@ -260,20 +240,19 @@ export const questions: Record<string, QuestionConfig> = {
 
   'final-final': {
     id: 'final-final',
-    prompt:
-      "The stars are finally out. What's the last thing you do before you head home?",
+    prompt: "The stars are finally out. What's the last thing you do before you head home?",
     options: [
       {
         key: 'stargaze',
         label: 'Stargaze',
-        tally: 'fool',
+        tally: 'moon',    // Moon third slot
         Icon: StarCoin,
         next: 'result',
       },
       {
         key: 'fireworks',
         label: 'Watch Fireworks',
-        tally: 'sun',
+        tally: 'lovers',  // Lovers third slot
         Icon: FireworksCoin,
         next: 'result',
       },

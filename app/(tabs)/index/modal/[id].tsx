@@ -1,5 +1,3 @@
-import React, { useEffect, useRef } from 'react';
-
 import SmokeSvg from '@/assets/dillo-sonas/smoke.svg';
 import DilloSonaStackScreen from '@/components/dillo-sona-screen';
 import {
@@ -9,10 +7,12 @@ import {
 } from '@/constants/dillo-sona-questions';
 import { useDilloSona } from '@/contexts/dillo-sona-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   Dimensions,
   Easing,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -77,59 +77,64 @@ export default function QuestionScreen() {
           width={width}
           height={height}
           style={StyleSheet.absoluteFill}
-          preserveAspectRatio='xMidYMid slice'
+          preserveAspectRatio="xMidYMid slice"
         />
 
-        {/* wrap everything in an Animated.View */}
-        <Animated.View style={[styles.content, { opacity }]}>
-          {isBinary ? (
-            <View style={styles.binaryWrapper}>
-              <Text style={styles.promptBinary}>{config.prompt}</Text>
-              <Text style={styles.orText}>
-                {config.options[0].label}
-                {'\n'}OR{'\n'}
-                {config.options[1].label}
-              </Text>
-              <View style={styles.binaryContainer}>
-                {config.options.map((opt) => (
-                  <TouchableOpacity
-                    key={opt.key}
-                    onPress={() => onChoose(opt.key)}
-                    activeOpacity={0.8}
-                    style={styles.binaryOption}
-                  >
-                    <opt.Icon width={width * 0.4} height={width * 0.4} />
-                  </TouchableOpacity>
-                ))}
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
+          <Animated.View style={{ opacity }}>
+            {isBinary ? (
+              <View style={styles.binaryWrapper}>
+                <Text style={styles.promptBinary}>{config.prompt}</Text>
+                <Text style={styles.orText}>
+                  {config.options[0].label}
+                  {'\n'}OR{'\n'}
+                  {config.options[1].label}
+                </Text>
+                <View style={styles.binaryContainer}>
+                  {config.options.map((opt) => (
+                    <TouchableOpacity
+                      key={opt.key}
+                      onPress={() => onChoose(opt.key)}
+                      activeOpacity={0.8}
+                      style={styles.binaryOption}
+                    >
+                      <opt.Icon width={width * 0.4} height={width * 0.4} />
+                    </TouchableOpacity>
+                  ))}
+                </View>
               </View>
-            </View>
-          ) : (
-            <>
-              <Text style={styles.prompt}>{config.prompt}</Text>
-              <View
-                style={[
-                  styles.container,
-                  config.options.length > 2 && styles.containerWrap,
-                ]}
-              >
-                {config.options.map((opt: OptionConfig) => (
-                  <TouchableOpacity
-                    key={opt.key}
-                    style={[
-                      styles.option,
-                      config.options.length > 2 && styles.optionHalf,
-                    ]}
-                    onPress={() => onChoose(opt.key)}
-                    activeOpacity={0.8}
-                  >
-                    <opt.Icon width={width * 0.4} height={width * 0.4} />
-                    <Text style={styles.label}>{opt.label}</Text>
-                  </TouchableOpacity>
-                ))}
-              </View>
-            </>
-          )}
-        </Animated.View>
+            ) : (
+              <>
+                <Text style={styles.prompt}>{config.prompt}</Text>
+                <View
+                  style={[
+                    styles.container,
+                    config.options.length > 2 && styles.containerWrap,
+                  ]}
+                >
+                  {config.options.map((opt: OptionConfig) => (
+                    <TouchableOpacity
+                      key={opt.key}
+                      style={[
+                        styles.option,
+                        config.options.length > 2 && styles.optionHalf,
+                      ]}
+                      onPress={() => onChoose(opt.key)}
+                      activeOpacity={0.8}
+                    >
+                      <opt.Icon width={width * 0.4} height={width * 0.4} />
+                      <Text style={styles.label}>{opt.label}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </>
+            )}
+          </Animated.View>
+        </ScrollView>
       </View>
     </DilloSonaStackScreen>
   );
@@ -140,16 +145,20 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-  content: {
+  scrollView: {
     flex: 1,
+  },
+  contentContainer: {
+    flexGrow: 1,
     paddingHorizontal: 16,
+    paddingTop: 60,
+    paddingBottom: 30,
   },
 
   prompt: {
     color: '#D9D9D9',
-    fontSize: 32,
+    fontSize: 26,
     textAlign: 'center',
-    marginTop: 60,
     fontFamily: 'SofiaSans_800ExtraBold',
     letterSpacing: 3,
     lineHeight: 40,
@@ -157,7 +166,7 @@ const styles = StyleSheet.create({
 
   promptBinary: {
     color: '#D9D9D9',
-    fontSize: 28,
+    fontSize: 26,
     textAlign: 'center',
     marginBottom: 16,
     fontFamily: 'SofiaSans_800ExtraBold',
@@ -167,7 +176,7 @@ const styles = StyleSheet.create({
 
   orText: {
     color: '#D9D9D9',
-    fontSize: 24,
+    fontSize: 16,
     textAlign: 'center',
     marginBottom: 16,
     fontFamily: 'SofiaSans_800ExtraBold',
@@ -183,7 +192,6 @@ const styles = StyleSheet.create({
   },
 
   container: {
-    flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',

@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 16,
     color: '#D9D9D9',
-    fontSize: 64,
+    fontSize: 42,
     fontWeight: '700',
     fontFamily: 'SofiaSansCondensed_900Black',
     letterSpacing: 5,

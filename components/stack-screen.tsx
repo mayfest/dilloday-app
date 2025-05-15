@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
   },
   backButtonContainer: {
-    width: 80,
+    width: 120,
   },
   centerSpacer: {
     flex: 1,

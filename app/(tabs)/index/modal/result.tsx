@@ -21,6 +21,7 @@ import TheFool from '@/components/dillosonas/cards/the-fool';
 import TheLovers from '@/components/dillosonas/cards/the-lovers';
 import TheMoon from '@/components/dillosonas/cards/the-moon';
 import TheSun from '@/components/dillosonas/cards/the-sun';
+import TheTowerTarotCard from '@/components/dillosonas/cards/the-tower';
 
 export default function ResultScreen() {
   const { tally, skipLoading, setSkipLoading } = useDilloSona();
@@ -37,6 +38,7 @@ export default function ResultScreen() {
     chariot: TheChariot,
     lovers: TheLovers,
     fool: TheFool,
+    tower: TheTowerTarotCard,
   }[winner];
 
   // loading/result cross-fade (unchanged)...
