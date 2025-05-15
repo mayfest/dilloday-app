@@ -55,7 +55,7 @@ export default function FoodTrucksScreen() {
         </View>
         <View style={styles.infoBar}>
           <ThemedText style={styles.infoName} numberOfLines={2}>
-            {item.name}
+            {item.displayName ?? item.name}
           </ThemedText>
           <ThemedText style={styles.infoType}>{item.type}</ThemedText>
         </View>
