@@ -6,6 +6,7 @@ export interface FoodTruckMeta {
   logo: any; // local require(...) to your asset
   url?: string; // optional external link
   type?: string; // if you have categories, otherwise omit
+  displayName?: string; // optional display name
 }
 
 export const FOOD_TRUCKS: FoodTruckMeta[] = [
@@ -22,6 +23,7 @@ export const FOOD_TRUCKS: FoodTruckMeta[] = [
   {
     id: 'hungry-broz',
     name: 'Hungry Broz',
+    displayName: 'Hungry Broz (by NYC Halal Eats)',
     logo: require('@/assets/images/food-truck-logos/hungry-broz.png'),
   },
   {
