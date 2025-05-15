@@ -27,7 +27,7 @@ export default function ResultScreen() {
   const router = useRouter();
   const { width, height } = Dimensions.get('window');
 
-  // pick winner
+  // pick winner + component
   const winner = (Object.keys(tally) as Array<keyof typeof tally>).reduce(
     (a, b) => (tally[a] >= tally[b] ? a : b)
   );
@@ -39,11 +39,10 @@ export default function ResultScreen() {
     fool: TheFool,
   }[winner];
 
-  // animations
+  // loading/result cross-fade (unchanged)...
   const [loading, setLoading] = useState(!skipLoading);
-  const loadOpacity = useRef(new Animated.Value(skipLoading ? 0 : 0)).current;
+  const loadOpacity   = useRef(new Animated.Value(skipLoading ? 0 : 0)).current;
   const resultOpacity = useRef(new Animated.Value(skipLoading ? 1 : 0)).current;
-
   useEffect(() => {
     if (skipLoading) {
       loadOpacity.setValue(0);
@@ -51,8 +50,6 @@ export default function ResultScreen() {
       setLoading(false);
       return;
     }
-
-    // 1️⃣ wait 500ms, then fade in loader
     Animated.sequence([
       Animated.delay(500),
       Animated.timing(loadOpacity, {
@@ -62,8 +59,6 @@ export default function ResultScreen() {
         useNativeDriver: true,
       }),
     ]).start();
-
-    // 2️⃣ after 3s (you can adjust this) plus the 500ms above, cross-fade...
     const timer = setTimeout(() => {
       Animated.parallel([
         Animated.timing(loadOpacity, {
@@ -83,15 +78,38 @@ export default function ResultScreen() {
         setLoading(false);
         setSkipLoading(true);
       });
-    }, 3000 + 500);
-
+    }, 3500);
     return () => clearTimeout(timer);
   }, [skipLoading]);
 
+  const floatY = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(floatY, {
+          toValue: -10,
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(floatY, {
+          toValue: 10,
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+        Animated.timing(floatY, {
+          toValue: 0,
+          duration: 2000,
+          easing: Easing.inOut(Easing.ease),
+          useNativeDriver: true,
+        }),
+      ]),
+    ).start();
+  }, []);
 
-  const onMeaningPress = () => {
-    router.push('/modal/meaning');
-  };
+
+  const onMeaningPress = () => router.push('/modal/meaning');
 
   return (
     <DilloSonaStackScreen>
@@ -128,9 +146,15 @@ export default function ResultScreen() {
           />
 
           <View style={styles.content}>
-            <View style={styles.cardGraphic}>
+            {/* Animated floating card */}
+            <Animated.View
+              style={[
+                styles.cardGraphic,
+                { transform: [{ translateY: floatY }] }
+              ]}
+            >
               <CardComponent />
-            </View>
+            </Animated.View>
 
             <TouchableOpacity
               style={styles.meaningButton}
@@ -151,7 +175,6 @@ export default function ResultScreen() {
 const styles = StyleSheet.create({
   wrapper: { flex: 1, position: 'relative', backgroundColor: '#5B004F' },
 
-  // Loader styles
   loadingContainer: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: 'center',
