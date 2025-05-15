@@ -55,9 +55,16 @@ export default function FoodTrucksScreen() {
         </View>
         <View style={styles.infoBar}>
           <ThemedText style={styles.infoName} numberOfLines={2}>
-            {item.displayName ?? item.name}
+            {item.name}
           </ThemedText>
-          <ThemedText style={styles.infoType}>{item.type}</ThemedText>
+          {
+            item.displayName && (
+              <ThemedText style={styles.infoSubtitle} numberOfLines={2}>
+                {item.displayName}
+              </ThemedText>
+            )
+          }
+          <ThemedText style={styles.infoType}>{item.tag}</ThemedText>
         </View>
       </TouchableOpacity>
     );
@@ -131,6 +138,13 @@ const styles = StyleSheet.create({
   },
   infoName: {
     fontSize: 18,
+    fontWeight: '700',
+    color: '#fff',
+    textAlign: 'center',
+    fontFamily: 'Poppins_600SemiBold',
+  },
+  infoSubtitle: {
+    fontSize: 16,
     fontWeight: '700',
     color: '#fff',
     textAlign: 'center',
