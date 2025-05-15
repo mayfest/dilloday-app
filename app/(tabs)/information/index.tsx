@@ -3,6 +3,7 @@ import DrawerScreen from '@/components/drawer-screen';
 import NineOneOneButton from '@/components/information/911-button';
 import ContactMayfestIcon from '@/components/information/contact-mayfest';
 import NUPDIcon from '@/components/information/nupud';
+import SisFormIcon from '@/components/information/sis-form-icon';
 import SmartDilloIcon from '@/components/information/smart-dillo-icon';
 import ScreenBackground from '@/components/screen-background';
 import { VERSION } from '@/lib/app';
@@ -10,6 +11,7 @@ import { call } from '@/lib/link';
 import { Link, useRouter } from 'expo-router';
 import {
   Dimensions,
+  Linking,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -71,6 +73,18 @@ export default function InfoScreenTwo() {
               style={styles.buttonWrapper}
             >
               <SmartDilloIcon
+                style={styles.svg}
+                height={SMALL_BUTTON_SIZE}
+                width={SMALL_BUTTON_SIZE}
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.buttonRow}>
+            <TouchableOpacity
+              onPress={() => Linking.openURL('https://tally.so/r/w258Ej')}
+              style={styles.buttonWrapper}
+            >
+              <SisFormIcon
                 style={styles.svg}
                 height={SMALL_BUTTON_SIZE}
                 width={SMALL_BUTTON_SIZE}
