@@ -1,3 +1,5 @@
+import React, { useEffect, useRef } from 'react';
+
 import SmokeSvg from '@/assets/dillo-sonas/smoke.svg';
 import DilloSonaStackScreen from '@/components/dillo-sona-screen';
 import {
@@ -7,7 +9,6 @@ import {
 } from '@/constants/dillo-sona-questions';
 import { useDilloSona } from '@/contexts/dillo-sona-context';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   Dimensions,
@@ -77,7 +78,7 @@ export default function QuestionScreen() {
           width={width}
           height={height}
           style={StyleSheet.absoluteFill}
-          preserveAspectRatio="xMidYMid slice"
+          preserveAspectRatio='xMidYMid slice'
         />
 
         <ScrollView

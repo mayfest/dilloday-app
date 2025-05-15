@@ -1,7 +1,17 @@
+import React, { useEffect, useRef, useState } from 'react';
+
+import BallSvg from '@/assets/dillo-sonas/ball.svg';
+import LinesSvg from '@/assets/dillo-sonas/lines-background.svg';
+import SmokeSvg from '@/assets/dillo-sonas/smoke.svg';
 import DilloSonaStackScreen from '@/components/dillo-sona-screen';
+import TheChariot from '@/components/dillosonas/cards/the-chariot';
+import TheFool from '@/components/dillosonas/cards/the-fool';
+import TheLovers from '@/components/dillosonas/cards/the-lovers';
+import TheMoon from '@/components/dillosonas/cards/the-moon';
+import TheSun from '@/components/dillosonas/cards/the-sun';
+import TheTowerTarotCard from '@/components/dillosonas/cards/the-tower';
 import { useDilloSona } from '@/contexts/dillo-sona-context';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef, useState } from 'react';
 import {
   Animated,
   Dimensions,
@@ -11,17 +21,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-
-import BallSvg from '@/assets/dillo-sonas/ball.svg';
-import LinesSvg from '@/assets/dillo-sonas/lines-background.svg';
-import SmokeSvg from '@/assets/dillo-sonas/smoke.svg';
-
-import TheChariot from '@/components/dillosonas/cards/the-chariot';
-import TheFool from '@/components/dillosonas/cards/the-fool';
-import TheLovers from '@/components/dillosonas/cards/the-lovers';
-import TheMoon from '@/components/dillosonas/cards/the-moon';
-import TheSun from '@/components/dillosonas/cards/the-sun';
-import TheTowerTarotCard from '@/components/dillosonas/cards/the-tower';
 
 export default function ResultScreen() {
   const { tally, skipLoading, setSkipLoading } = useDilloSona();
@@ -43,7 +42,7 @@ export default function ResultScreen() {
 
   // loading/result cross-fade (unchanged)...
   const [loading, setLoading] = useState(!skipLoading);
-  const loadOpacity   = useRef(new Animated.Value(skipLoading ? 0 : 0)).current;
+  const loadOpacity = useRef(new Animated.Value(skipLoading ? 0 : 0)).current;
   const resultOpacity = useRef(new Animated.Value(skipLoading ? 1 : 0)).current;
   useEffect(() => {
     if (skipLoading) {
@@ -72,8 +71,8 @@ export default function ResultScreen() {
         Animated.timing(resultOpacity, {
           toValue: 1,
           duration: 600,
-          delay:   200,
-          easing:  Easing.out(Easing.ease),
+          delay: 200,
+          easing: Easing.out(Easing.ease),
           useNativeDriver: true,
         }),
       ]).start(() => {
@@ -106,10 +105,9 @@ export default function ResultScreen() {
           easing: Easing.inOut(Easing.ease),
           useNativeDriver: true,
         }),
-      ]),
+      ])
     ).start();
   }, []);
-
 
   const onMeaningPress = () => router.push('/modal/meaning');
 
@@ -125,7 +123,7 @@ export default function ResultScreen() {
             width={width}
             height={height}
             style={StyleSheet.absoluteFill}
-            preserveAspectRatio="xMidYMid slice"
+            preserveAspectRatio='xMidYMid slice'
           />
           <View style={styles.loadingContent}>
             <BallSvg width={300} height={300} />
@@ -144,7 +142,7 @@ export default function ResultScreen() {
             width={width}
             height={height}
             style={StyleSheet.absoluteFill}
-            preserveAspectRatio="xMidYMid slice"
+            preserveAspectRatio='xMidYMid slice'
           />
 
           <View style={styles.content}>
@@ -152,7 +150,7 @@ export default function ResultScreen() {
             <Animated.View
               style={[
                 styles.cardGraphic,
-                { transform: [{ translateY: floatY }] }
+                { transform: [{ translateY: floatY }] },
               ]}
             >
               <CardComponent />
@@ -163,9 +161,7 @@ export default function ResultScreen() {
               activeOpacity={0.8}
               onPress={onMeaningPress}
             >
-              <Text style={styles.meaningButtonText}>
-                what does this mean?
-              </Text>
+              <Text style={styles.meaningButtonText}>what does this mean?</Text>
             </TouchableOpacity>
           </View>
         </Animated.View>

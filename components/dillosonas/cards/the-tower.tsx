@@ -20,7 +20,12 @@ export default function TheTowerTarotCard() {
   const windowHeight = Dimensions.get('window').height;
 
   return (
-    <Svg width={windowWidth * 0.75} height={windowHeight * 0.75} viewBox='0 0 114 193' fill='none'>
+    <Svg
+      width={windowWidth * 0.75}
+      height={windowHeight * 0.75}
+      viewBox='0 0 114 193'
+      fill='none'
+    >
       <Path
         d='M14 8.75H104C106.347 8.75 108.25 10.6528 108.25 13V171C108.25 171.69 107.69 172.25 107 172.25H11C10.3096 172.25 9.75 171.69 9.75 171V13C9.75 10.6528 11.6528 8.75 14 8.75Z'
         fill='#2148A3'

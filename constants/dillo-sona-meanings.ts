@@ -1,10 +1,4 @@
-export type CardKey =
-  | 'lovers'
-  | 'tower'
-  | 'fool'
-  | 'chariot'
-  | 'sun'
-  | 'moon';
+export type CardKey = 'lovers' | 'tower' | 'fool' | 'chariot' | 'sun' | 'moon';
 
 export const cardMeanings: Record<CardKey, string> = {
   lovers: `You LOVE love – and honestly it shows. You thrive on harmony and deep emotional connection, whether you’re planning cute picnic dates or belting your heart out to love songs in your room at 2 am. You feel everything intensely, and while your heart sometimes battles with your head, we know you’ll always choose what feels right.`,

@@ -36,7 +36,9 @@ export default function DilloSonaStackScreen({
                   onPress={handleGoBack}
                 >
                   <FontAwesome6 name='chevron-left' size={16} color='#D9D9D9' />
-                  <Text numberOfLines={1} style={styles.navigationButtonText}>BACK</Text>
+                  <Text numberOfLines={1} style={styles.navigationButtonText}>
+                    BACK
+                  </Text>
                 </TouchableOpacity>
               )}
             </View>

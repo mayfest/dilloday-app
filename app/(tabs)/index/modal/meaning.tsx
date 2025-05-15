@@ -1,9 +1,10 @@
+import React, { useEffect, useRef } from 'react';
+
 import SmokeSvg from '@/assets/dillo-sonas/smoke.svg';
 import DilloSonaStackScreen from '@/components/dillo-sona-screen';
 import { CardKey, cardMeanings } from '@/constants/dillo-sona-meanings';
 import { useDilloSona } from '@/contexts/dillo-sona-context';
 import { useRouter } from 'expo-router';
-import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   Dimensions,
@@ -21,8 +22,9 @@ export default function MeaningScreen() {
   const { width, height } = Dimensions.get('window');
 
   // pick the winning key
-  const winner = (Object.keys(tally) as Array<keyof typeof tally>)
-    .reduce((a, b) => (tally[a] >= tally[b] ? a : b)) as CardKey;
+  const winner = (Object.keys(tally) as Array<keyof typeof tally>).reduce(
+    (a, b) => (tally[a] >= tally[b] ? a : b)
+  ) as CardKey;
 
   // fade-in
   const opacity = useRef(new Animated.Value(0)).current;
@@ -42,7 +44,7 @@ export default function MeaningScreen() {
           width={width}
           height={height}
           style={StyleSheet.absoluteFill}
-          preserveAspectRatio="xMidYMid slice"
+          preserveAspectRatio='xMidYMid slice'
         />
 
         <Animated.View style={[styles.content, { opacity }]}>
@@ -54,9 +56,7 @@ export default function MeaningScreen() {
             style={styles.textContainer}
             contentContainerStyle={styles.textContent}
           >
-            <Text style={styles.meaningText}>
-              {cardMeanings[winner]}
-            </Text>
+            <Text style={styles.meaningText}>{cardMeanings[winner]}</Text>
           </ScrollView>
 
           <TouchableOpacity
