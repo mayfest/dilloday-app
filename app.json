@@ -2,7 +2,7 @@
   "expo": {
     "name": "Dillo Day 2025",
     "slug": "dillo-app",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icons/app-icon.png",
     "scheme": "myapp",
@@ -15,7 +15,7 @@
         "aps-environment": "production"
       },
       "bundleIdentifier": "com.anonymous.dillo-app",
-      "runtimeVersion": "1.0.2",
+      "runtimeVersion": "1.0.3",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -34,7 +34,7 @@
         "backgroundColor": "#173885"
       },
       "package": "com.mayfest.dillo",
-      "runtimeVersion": "1.0.2"
+      "runtimeVersion": "1.0.3"
     },
     "web": {
       "bundler": "metro",

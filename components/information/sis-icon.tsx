@@ -18,18 +18,7 @@ export default function SisFormIcon({
   style?: object;
 }) {
   return (
-    <Svg
-      width={width}
-      height={height}
-      viewBox='0 0 123 48'
-      fill='none'
-      style={[
-        style,
-        {
-          transform: [{ scale: 1.5 }],
-        },
-      ]}
-    >
+    <Svg width={width} height={height} viewBox='0 0 123 48' fill='none'>
       <Path d='M105.628 0V48L123 23.5862L105.628 0Z' fill='#F6B559' />
       <Path d='M105.628 0H0L9 23.5862L0 48H105.628V0Z' fill='#F6B559' />
       <Path

@@ -12,10 +12,11 @@ import { Link, useRouter } from 'expo-router';
 import {
   Dimensions,
   Linking,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 
 export default function InfoScreenTwo() {
@@ -25,19 +26,29 @@ export default function InfoScreenTwo() {
   // Determine if we're on an iPad based on screen width
   const isIpad = windowWidth >= 768;
 
-  // Calculate button sizes - using more aggressive scaling for iPads
-  const BUTTON_SIZE = isIpad ? Math.round(windowWidth * 0.3) : 175;
-  const SMALL_BUTTON_SIZE = isIpad ? Math.round(windowWidth * 0.25) : 140;
+  // Base maximums
+  const MAX_BUTTON = 160;
+  const MAX_SMALL = 140;
 
-  // Log the dimensions to debug
-  console.log('Screen width:', windowWidth);
-  console.log('Button size:', BUTTON_SIZE);
+  // Dynamically scale, but never exceed the max values
+  const BUTTON_SIZE = Math.min(
+    isIpad ? windowWidth * 0.3 : MAX_BUTTON,
+    MAX_BUTTON
+  );
+  const SMALL_BUTTON_SIZE = Math.min(
+    isIpad ? windowWidth * 0.25 : MAX_SMALL,
+    MAX_SMALL
+  );
+  const SIS_BUTTON_SIZE = Math.min(SMALL_BUTTON_SIZE + 30, MAX_BUTTON);
 
   return (
     <DrawerScreen banner={<InfoPageBanner />}>
       <ScreenBackground />
       <View style={styles.container}>
-        <View style={styles.contentContainer}>
+        <ScrollView
+          contentContainerStyle={styles.contentContainer}
+          showsVerticalScrollIndicator={false}
+        >
           <View style={styles.buttonRow}>
             <Link href='/information/contact' style={styles.buttonWrapper}>
               <ContactMayfestIcon
@@ -57,6 +68,7 @@ export default function InfoScreenTwo() {
               />
             </TouchableOpacity>
           </View>
+
           <View style={styles.buttonRow}>
             <TouchableOpacity
               onPress={() => call('911')}
@@ -79,6 +91,7 @@ export default function InfoScreenTwo() {
               />
             </TouchableOpacity>
           </View>
+
           <View style={styles.buttonRow}>
             <TouchableOpacity
               onPress={() => Linking.openURL('https://tally.so/r/w258Ej')}
@@ -86,14 +99,14 @@ export default function InfoScreenTwo() {
             >
               <SisFormIcon
                 style={styles.svg}
-                height={SMALL_BUTTON_SIZE}
-                width={SMALL_BUTTON_SIZE}
+                height={SIS_BUTTON_SIZE + 50}
+                width={SIS_BUTTON_SIZE + 50}
               />
             </TouchableOpacity>
           </View>
+
           <Text style={styles.version}>v{VERSION}</Text>
-        </View>
-      
+        </ScrollView>
       </View>
     </DrawerScreen>
   );
@@ -102,21 +115,20 @@ export default function InfoScreenTwo() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
   },
   contentContainer: {
+    paddingVertical: 40,
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    maxWidth: 800, // Prevent excessive spreading on very large screens
+    maxWidth: 800,
   },
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginVertical: 20,
+    marginVertical: 5,
+    gap: 25,
     width: '100%',
   },
   buttonWrapper: {
@@ -129,17 +141,8 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.25,
   },
-  text: {
-    textAlign: 'center',
-    // color: theme.dark,
-    // fontFamily: theme.bodyRegular,
-    marginBottom: 12,
-    opacity: 0.75,
-  },
   version: {
     textAlign: 'center',
-    // color: theme.dark,
-    // fontFamily: theme.bodyBold,
     marginTop: 12,
     marginBottom: 20,
     opacity: 0.5,
