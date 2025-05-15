@@ -9,8 +9,8 @@ export default function TheLoversTarotCard() {
 
   return (
     <Svg
-      width={windowWidth}
-      height={windowHeight}
+      width={windowWidth * 0.75}
+      height={windowHeight * 0.75}
       viewBox='0 0 122 193'
       fill='none'
     >

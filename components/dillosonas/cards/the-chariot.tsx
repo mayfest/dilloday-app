@@ -8,7 +8,12 @@ export default function TheChariotTarotCard() {
   const windowHeight = Dimensions.get('window').height;
 
   return (
-    <Svg width={windowWidth} height={windowHeight} viewBox='0 0 113 193' fill='none'>
+    <Svg
+      width={windowWidth * 0.75}
+      height={windowHeight * 0.75}
+      viewBox='0 0 113 193'
+      fill='none'
+    >
       <Rect
         x='1'
         y='1'

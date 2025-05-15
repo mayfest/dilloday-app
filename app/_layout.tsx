@@ -13,6 +13,19 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 import { Rye_400Regular } from '@expo-google-fonts/rye';
+import {
+  SofiaSans_400Regular,
+  SofiaSans_500Medium,
+  SofiaSans_700Bold,
+  SofiaSans_800ExtraBold,
+} from '@expo-google-fonts/sofia-sans';
+import {
+  SofiaSansCondensed_400Regular,
+  SofiaSansCondensed_600SemiBold,
+  SofiaSansCondensed_700Bold,
+  SofiaSansCondensed_800ExtraBold,
+  SofiaSansCondensed_900Black,
+} from '@expo-google-fonts/sofia-sans-condensed';
 import { FontAwesome6 } from '@expo/vector-icons';
 import {
   DarkTheme,
@@ -41,6 +54,15 @@ export default function RootLayout() {
     Poppins_700Bold,
     Poppins_500Medium,
     Poppins_600SemiBold,
+    SofiaSans_400Regular,
+    SofiaSansCondensed_400Regular,
+    SofiaSansCondensed_700Bold,
+    SofiaSansCondensed_800ExtraBold,
+    SofiaSansCondensed_900Black,
+    SofiaSans_500Medium,
+    SofiaSans_700Bold,
+    SofiaSans_800ExtraBold,
+    SofiaSansCondensed_600SemiBold,
   });
   const [state, setState] = useState<AppStateType>({});
   const [notificationToken, setNotificationToken] = useState<string | null>(

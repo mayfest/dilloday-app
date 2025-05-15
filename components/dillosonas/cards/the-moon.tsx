@@ -9,8 +9,8 @@ export default function TheMoonTarotCard() {
 
   return (
     <Svg
-      width={windowWidth}
-      height={windowHeight}
+      width={windowWidth * 0.75}
+      height={windowHeight * 0.75}
       viewBox='0 0 113 193'
       fill='none'
     >

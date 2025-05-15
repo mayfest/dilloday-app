@@ -1,4 +1,3 @@
-// app/home/modal.tsx
 import React from 'react';
 
 import { useRouter } from 'expo-router';
