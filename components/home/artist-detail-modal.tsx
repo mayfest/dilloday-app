@@ -1,14 +1,18 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
 import { Colors } from '@/constants/Colors';
+import { FontAwesome6 } from '@expo/vector-icons';
 import {
   Animated,
   Dimensions,
   Image,
   Modal,
   PanResponder,
+  Pressable,
+  ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -27,19 +31,16 @@ interface Props {
 
 export default function ArtistDetailModal({ visible, artist, onClose }: Props) {
   const screenHeight = Dimensions.get('window').height;
+  const modalHeight = screenHeight * 0.7;
 
-  // 1) panY for the slide
   const panY = useRef(new Animated.Value(screenHeight)).current;
-
-  // 2) backdropOpacity for the fade
   const backdropOpacity = useRef(new Animated.Value(0)).current;
 
-  // On open: slide up AND fade in backdrop
+  // Animate in/out on visible change
   useEffect(() => {
     if (visible) {
       panY.setValue(screenHeight);
       backdropOpacity.setValue(0);
-
       Animated.parallel([
         Animated.timing(panY, {
           toValue: 0,
@@ -55,7 +56,6 @@ export default function ArtistDetailModal({ visible, artist, onClose }: Props) {
     }
   }, [visible, panY, backdropOpacity, screenHeight]);
 
-  // close: slide down + fade out
   const closeModal = useCallback(() => {
     Animated.parallel([
       Animated.timing(panY, {
@@ -68,12 +68,10 @@ export default function ArtistDetailModal({ visible, artist, onClose }: Props) {
         duration: 300,
         useNativeDriver: true,
       }),
-    ]).start(() => {
-      onClose();
-    });
+    ]).start(onClose);
   }, [panY, backdropOpacity, screenHeight, onClose]);
 
-  // panResponder for swipe-down
+  // Only the small handle lets you drag down
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -101,39 +99,93 @@ export default function ArtistDetailModal({ visible, artist, onClose }: Props) {
       animationType='none'
       onRequestClose={closeModal}
     >
-      {/* fade-in/fade-out backdrop */}
-      <Animated.View style={[styles.backdrop, { opacity: backdropOpacity }]}>
-        {/* sliding panel */}
+      <View style={styles.container}>
+        {/* backdrop — catches taps outside modal */}
+        <Pressable style={styles.backdropTouchable} onPress={closeModal}>
+          <Animated.View
+            style={[styles.backdrop, { opacity: backdropOpacity }]}
+          />
+        </Pressable>
+
+        {/* sliding modal */}
         <Animated.View
-          style={[styles.modal, { transform: [{ translateY: panY }] }]}
-          {...panResponder.panHandlers}
+          style={[
+            styles.modal,
+            {
+              height: modalHeight,
+              transform: [{ translateY: panY }],
+            },
+          ]}
         >
-          <View style={styles.indicator} />
-          <View style={styles.content}>
+          {/* navigation bar with CLOSE button */}
+          <View style={styles.navigationBar}>
+            <TouchableOpacity
+              style={styles.navigationButton}
+              onPress={closeModal}
+            >
+              <Text style={styles.navigationButtonText}>CLOSE</Text>
+              <FontAwesome6 name='xmark' size={16} color='#FFFFFF' />
+            </TouchableOpacity>
+          </View>
+
+          {/* scrollable content */}
+          <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
+            nestedScrollEnabled={true}
+          >
             <Image source={{ uri: artist.image }} style={styles.image} />
             <Text style={styles.name}>{artist.name}</Text>
             <Text style={styles.time}>{artist.time}</Text>
             {artist.description && (
               <Text style={styles.desc}>{artist.description}</Text>
             )}
-          </View>
+          </ScrollView>
         </Animated.View>
-      </Animated.View>
+      </View>
     </Modal>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  backdropTouchable: {
+    ...StyleSheet.absoluteFillObject,
+  },
   backdrop: {
     flex: 1,
     backgroundColor: 'rgba(0,0,0,0.4)',
-    justifyContent: 'flex-end',
   },
   modal: {
-    height: '70%',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
     backgroundColor: Colors.light.background,
     borderTopLeftRadius: 16,
     borderTopRightRadius: 16,
+    overflow: 'hidden',
+  },
+  navigationBar: {
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'flex-end',
+    padding: 8,
+    backgroundColor: Colors.light.background,
+  },
+  navigationButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 8,
+  },
+  navigationButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    marginRight: 8,
+    fontWeight: '400',
   },
   indicator: {
     width: 40,
@@ -141,11 +193,16 @@ const styles = StyleSheet.create({
     backgroundColor: '#ccc',
     borderRadius: 2.5,
     alignSelf: 'center',
-    marginVertical: 8,
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  scrollView: {
+    flex: 1,
   },
   content: {
     padding: 16,
     alignItems: 'center',
+    paddingTop: 0,
   },
   image: {
     width: '100%',

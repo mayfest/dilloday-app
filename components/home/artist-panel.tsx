@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   View,
   ViewStyle,
+  useWindowDimensions,
 } from 'react-native';
 
 interface DotPosition {
@@ -23,6 +24,7 @@ interface DotPosition {
 type PatternFunction = (dots: DotPosition[]) => NodeJS.Timeout;
 
 export default function ArtistPanel(): React.ReactElement {
+  const { height: screenHeight } = useWindowDimensions();
   const { config, loading } = useConfig();
   const panels = config?.home?.panels ?? [];
   const nowKey = panels.find((p) => p.type === 'schedule-now')?.value;
@@ -36,6 +38,7 @@ export default function ArtistPanel(): React.ReactElement {
   const [brightDots, setBrightDots] = useState<Set<number>>(new Set());
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const marqueeHeight = Math.min(screenHeight * 0.75, 350);
   // Initialize countdown with 0s to prevent NaN issues
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -65,7 +68,7 @@ export default function ArtistPanel(): React.ReactElement {
     const calculateCountdown = () => {
       try {
         // strict ISO-8601 string
-        const dilloDay = Date.parse('2025-05-17T00:00:00');
+        const dilloDay = Date.parse('2025-05-18T00:00:00');
 
         const now = new Date().getTime();
         const difference = dilloDay - now;
@@ -294,7 +297,10 @@ export default function ArtistPanel(): React.ReactElement {
   return (
     <>
       <View style={styles.container}>
-        <View style={styles.marquee} onLayout={handleLayout}>
+        <View
+          style={[styles.marquee, { height: marqueeHeight }]}
+          onLayout={handleLayout}
+        >
           {dots.map(({ x, y }, i) => (
             <View
               key={i}
