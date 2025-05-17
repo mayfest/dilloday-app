@@ -38,7 +38,7 @@ export default function ArtistPanel(): React.ReactElement {
   const [brightDots, setBrightDots] = useState<Set<number>>(new Set());
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
-  const marqueeHeight = Math.min(screenHeight * 0.75, 350);
+  const marqueeHeight = Math.min(screenHeight * 0.75, 475);
   // Initialize countdown with 0s to prevent NaN issues
   const [countdown, setCountdown] = useState({
     days: 0,
