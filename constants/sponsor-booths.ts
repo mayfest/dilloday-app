@@ -16,7 +16,7 @@ export const SPONSOR_BOOTHS: {
     activity: {
       name: 'White Sox Booth',
       description:
-        'The Chicago White Sox will be selling merch and interacting with fans! Come support the team.',
+        'The Chicago White Sox will be giving away free merch and tickets at their sponsor booth. Stop by and support the local South Side baseball team!',
       image: require('@/assets/images/company-logos/chicago-white-sox.png'),
       location: 'Sponsor Area',
     },

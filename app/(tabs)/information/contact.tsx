@@ -1,90 +1,77 @@
-import React from 'react';
-
 import ContactMayfestIcon from '@/components/information/contact-mayfest';
-import { call, link, mail } from '@/lib/link';
+import { call } from '@/lib/link';
 import { theme, toastConfig } from '@/lib/theme';
 import { FontAwesome6 } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
-import {
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React from 'react';
+import { Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Toast from 'react-native-toast-message';
+
+function getCoordinatorNumber() {
+  const now = new Date();
+  const fmt = now.toLocaleTimeString('en-US', {
+    timeZone: 'America/Chicago',
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+  const [hourStr, minuteStr] = fmt.split(':');
+  const hour = parseInt(hourStr, 10);
+  const minute = parseInt(minuteStr, 10);
+
+  if (hour < 13 || (hour === 13 && minute < 30)) {
+    return { name: 'Danielle', number: '+12406786015' };
+  } else {
+    return { name: 'Anya', number: '+13103390032' };
+  }
+}
 
 export default function ContactScreen() {
   const router = useRouter();
+  const handleClose = () => router.back();
 
-  const handleClose = () => {
-    router.back();
-  };
+  const { name, number } = getCoordinatorNumber();
+  const handleCallAccessibility = () => call(number);
 
   return (
     <View style={styles.container}>
-      <View style={[styles.modalContent]}>
+      <View style={styles.modalContent}>
         <View style={styles.modalHandle} />
 
         <View style={styles.navigationBar}>
-          <TouchableOpacity
-            style={styles.navigationButton}
-            onPress={handleClose}
-          >
+          <TouchableOpacity style={styles.navigationButton} onPress={handleClose}>
             <Text style={styles.navigationButtonText}>CLOSE</Text>
-            <FontAwesome6
-              name='xmark'
-              size={16}
-              color={theme.socialModalText}
-            />
+            <FontAwesome6 name="xmark" size={16} color={theme.socialModalText} />
           </TouchableOpacity>
         </View>
 
         <ScrollView contentContainerStyle={styles.contentContainer}>
-          {/* Icon */}
           <ContactMayfestIcon width={180} height={180} style={styles.svg} />
 
-          {/* Actions */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => mail('support@dilloday.com')}
-          >
-            <FontAwesome6
-              name='people-group'
-              size={24}
-              color={theme.socialModalBackground}
-            />
+          <TouchableOpacity style={styles.button} onPress={() => mail('support@dilloday.com')}>
+            <FontAwesome6 name="people-group" size={24} color={theme.socialModalBackground} />
             <Text style={styles.buttonText}>Email Mayfest Support</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => call('+12406786015')}
-          >
+          <TouchableOpacity style={styles.button} onPress={handleCallAccessibility}>
             <FontAwesome6
-              name='universal-access'
+              name="universal-access"
               size={24}
               color={theme.socialModalBackground}
             />
-            <Text style={styles.buttonText}>
-              Call Accessibility Coordinator
-            </Text>
+            <View>
+              <Text style={styles.buttonText}>Call {name} (Accessibility)</Text>
+              <Text style={styles.subText}>{number} CST</Text>
+            </View>
           </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.button}
             onPress={() => link('https://app.dilloday.com/feedback')}
           >
-            <FontAwesome6
-              name='mobile'
-              size={24}
-              color={theme.socialModalBackground}
-            />
-            <Text style={styles.buttonText}>
-              Submit feedback to Mayfest Tech
-            </Text>
+            <FontAwesome6 name="mobile" size={24} color={theme.socialModalBackground} />
+            <Text style={styles.buttonText}>Submit feedback to Mayfest Tech</Text>
           </TouchableOpacity>
         </ScrollView>
 

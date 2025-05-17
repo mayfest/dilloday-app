@@ -69,7 +69,7 @@ export default function SwshPage() {
           <CircularReel size={REEL_SIZE} defaultImages={defaultImages} />
           <SwshRedirectButton
             text='Add your Dillo Day pics to SWSH!'
-            url='https://www.joinswsh.com/album/pg5rftklzxfb'
+            url='https://www.joinswsh.com/album/nv8py0svl0l6'
           />
           <View style={styles.spacer} />
         </View>
